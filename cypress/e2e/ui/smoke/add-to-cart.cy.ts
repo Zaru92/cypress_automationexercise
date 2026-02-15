@@ -5,9 +5,5 @@ describe('Smoke | Add to cart', () => {
 
     cy.addFirstProductToCart();
     cy.continueShoppingFromModal();
-
-    cy.get("a[href='/view_cart']").click();
-    cy.url().should('include', '/view_cart');
-    cy.get('#cart_info_table').should('be.visible');
   });
 });

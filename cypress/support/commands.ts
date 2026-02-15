@@ -13,7 +13,7 @@ Cypress.Commands.add('openHome', () => {
  */
 Cypress.Commands.add('openProducts', () => {
   cy.visit('/products');
-  cy.contains(/All Products/i).should('be.visible');
+  cy.get('#search_product').should('be.visible');
 });
 
 /**
@@ -21,7 +21,7 @@ Cypress.Commands.add('openProducts', () => {
  * Assumes you are already on /products.
  */
 Cypress.Commands.add('searchProduct', (query: string) => {
-  cy.get("input[name='search']").should('be.visible').clear().type(query);
+  cy.get('#search_product').should('be.visible').clear().type(query);
   cy.get('#submit_search').should('be.enabled').click();
   cy.contains(/Searched Products/i).should('be.visible');
 });
@@ -35,7 +35,7 @@ Cypress.Commands.add('addFirstProductToCart', () => {
   cy.get('.features_items .product-image-wrapper')
     .first()
     .within(() => {
-      cy.contains(/Add to cart/i).click({ force: true });
+      cy.get('.add-to-cart').first().click();
     });
 
   // Modal after adding
@@ -46,6 +46,6 @@ Cypress.Commands.add('addFirstProductToCart', () => {
  * Close the "Added to cart" modal (Continue Shopping).
  */
 Cypress.Commands.add('continueShoppingFromModal', () => {
-  cy.contains(/Continue Shopping/i).click();
-  cy.get('.modal-content').should('not.exist');
+  cy.get('[data-dismiss="modal"]').click();
+  cy.get('.modal-content').should('not.be.visible');
 });
