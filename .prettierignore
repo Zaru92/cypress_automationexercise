@@ -1,0 +1,9 @@
+node_modules
+dist
+build
+coverage
+cypress/videos
+cypress/screenshots
+.allure
+allure-results
+allure-report
