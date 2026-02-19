@@ -35,4 +35,9 @@ export class HomePage {
     cy.contains(`Logged in as ${name}`).should('not.exist');
     return this;
   }
+
+  logout() {
+    cy.get('[href="/logout"]').click();
+    return this;
+  }
 }
