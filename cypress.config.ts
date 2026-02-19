@@ -10,9 +10,6 @@ export default defineConfig({
       html: true,
       json: true,
     },
-    setupNodeEvents(on, config) {
-      require('cypress-mochawesome-reporter/plugin')(on);
-    },
     video: true,
     screenshotOnRunFailure: true,
     viewportWidth: 1280,

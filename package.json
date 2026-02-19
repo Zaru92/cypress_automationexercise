@@ -6,8 +6,9 @@
   "scripts": {
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "test:smoke": "cypress run --spec \"cypress/e2e/ui/smoke/**/*.cy.ts\"",
-    "test:api": "cypress run --spec \"cypress/e2e/api/**/*.cy.ts\"",
+    "test:regression": "node scripts/run-tagged-tests.js Regression",
+    "test:smoke": "node scripts/run-tagged-tests.js Smoke",
+    "test:api": "node scripts/run-tagged-tests.js API",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "prepare": "husky",
