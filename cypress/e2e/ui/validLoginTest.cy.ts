@@ -34,8 +34,6 @@ describe('Regression | "Test Case 2: Login User with correct email and password"
 
     cy.ensureAppDomain();
 
-    cy.ensureAppDomain();
-
     home.logout();
   });
 
