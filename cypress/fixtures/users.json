@@ -1,7 +1,7 @@
-[
-  {
-    "id": 1,
+{
+  "validUser": {
+    "name": "Test",
     "email": "testcypress1@test.test",
     "password": "Password1234"
   }
-]
+}
