@@ -4,16 +4,17 @@ import { HomePage } from '../../pageObjects/HomePage';
 import { SignupPage } from '../../pageObjects/SignupPage';
 import { createRandomUser, User } from '../../testData/userFactory';
 
-describe('Regression | "Test Case 2: Login User with correct email and password"', () => {
+describe('Regression | "Test Case 3: Login User with incorrect email and password"', () => {
   let user: User;
 
-  it('logs in with correct credentials and deletes the account', () => {
+  it('logs in with incorrect credentials', () => {
     const home = new HomePage();
     const auth = new AuthPage();
 
     home.visit().assertLoaded().goToSignupLoginPage();
 
     auth
+      .assertLoginOrSignupPageVisible()
       .enterLoginEmail('test@test.test')
       .enterPassword('invalidPassword')
       .clickLoginButton()
