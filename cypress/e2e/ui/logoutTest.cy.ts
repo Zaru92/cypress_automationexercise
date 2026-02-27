@@ -37,6 +37,25 @@ describe('Smoke | "Test Case 4: Logout User"', () => {
     home.logout();
   });
 
+  after(() => {
+    const home = new HomePage();
+    const auth = new AuthPage();
+
+    home.visit().assertLoaded().goToSignupLoginPage();
+
+    auth
+      .assertLoginOrSignupPageVisible()
+      .enterLoginEmail(user.email)
+      .enterPassword(user.password)
+      .clickLoginButton();
+
+    home
+      .assertLoggedInAs(user.name)
+      .deleteAccount()
+      .continueAfterDeleted()
+      .assertAccountDeleted(user.name);
+  });
+
   it('logout current user', () => {
     const home = new HomePage();
     const auth = new AuthPage();
