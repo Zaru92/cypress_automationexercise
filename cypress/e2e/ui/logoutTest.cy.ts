@@ -4,7 +4,7 @@ import { HomePage } from '../../pageObjects/HomePage';
 import { SignupPage } from '../../pageObjects/SignupPage';
 import { createRandomUser, User } from '../../testData/userFactory';
 
-describe('Smoke | "Test Case 2: Login User with correct email and password"', () => {
+describe('Smoke | "Test Case 4: Logout User"', () => {
   let user: User;
 
   before(() => {
@@ -37,7 +37,7 @@ describe('Smoke | "Test Case 2: Login User with correct email and password"', ()
     home.logout();
   });
 
-  it('logs in with correct credentials and deletes the account', () => {
+  it('logout current user', () => {
     const home = new HomePage();
     const auth = new AuthPage();
 
@@ -49,10 +49,8 @@ describe('Smoke | "Test Case 2: Login User with correct email and password"', ()
       .enterPassword(user.password)
       .clickLoginButton();
 
-    home
-      .assertLoggedInAs(user.name)
-      .deleteAccount()
-      .continueAfterDeleted()
-      .assertAccountDeleted(user.name);
+    home.assertLoggedInAs(user.name).logout();
+
+    auth.assertLoginOrSignupPageVisible();
   });
 });
