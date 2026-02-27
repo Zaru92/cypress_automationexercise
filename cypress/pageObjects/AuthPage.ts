@@ -34,4 +34,9 @@ export class AuthPage {
     cy.get("[data-qa='signup-button']").click();
     return this;
   }
+
+  assertErrorMessageVisible() {
+    cy.contains('Your email or password is incorrect!').should('be.visible');
+    return this;
+  }
 }
