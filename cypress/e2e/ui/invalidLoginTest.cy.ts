@@ -13,6 +13,6 @@ describe('Regression | "Test Case 3: Login User with incorrect email and passwor
       .enterLoginEmail('test@test.test')
       .enterPassword('invalidPassword')
       .clickLoginButton()
-      .assertErrorMessageVisible();
+      .assertInvalidLoginErrorMessageVisible();
   });
 });

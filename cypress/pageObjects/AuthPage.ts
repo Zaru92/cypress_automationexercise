@@ -35,8 +35,13 @@ export class AuthPage {
     return this;
   }
 
-  assertErrorMessageVisible() {
+  assertInvalidLoginErrorMessageVisible() {
     cy.contains('Your email or password is incorrect!').should('be.visible');
+    return this;
+  }
+
+  assertInvalidSignUpErrorMessageVisible() {
+    cy.contains('Email Address already exist!').should('be.visible');
     return this;
   }
 }
