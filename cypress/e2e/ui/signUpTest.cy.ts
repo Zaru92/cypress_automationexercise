@@ -4,7 +4,7 @@ import { AuthPage } from '../../pageObjects/AuthPage';
 import { HomePage } from '../../pageObjects/HomePage';
 import { SignupPage } from '../../pageObjects/SignupPage';
 
-describe('Regression | "Test Case 1: Register User"', () => {
+describe('Smoke | "Test Case 1: Register User"', () => {
   it('registers a new user and deletes the account', () => {
     const user = createRandomUser();
 

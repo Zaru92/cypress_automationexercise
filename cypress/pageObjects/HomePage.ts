@@ -15,6 +15,11 @@ export class HomePage {
     return this;
   }
 
+  goToContactUsPage() {
+    cy.get('[href="/contact_us"]').click();
+    return this;
+  }
+
   assertLoggedInAs(name: string) {
     cy.contains(`Logged in as ${name}`).should('be.visible');
     return this;

@@ -4,7 +4,7 @@ import { HomePage } from '../../pageObjects/HomePage';
 import { SignupPage } from '../../pageObjects/SignupPage';
 import { createRandomUser, User } from '../../testData/userFactory';
 
-describe('Smoke | "Test Case 4: Logout User"', () => {
+describe('Regression | "Test Case 4: Logout User"', () => {
   let user: User;
 
   before(() => {
