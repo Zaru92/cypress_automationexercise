@@ -26,14 +26,6 @@ export class ContactUsPage {
     return this;
   }
 
-  acceptAlert() {
-    // Krok 9: OK w okienku alertu po submit
-    cy.on('window:confirm', () => true);
-    // czasem jest window:alert, wtedy:
-    cy.on('window:alert', () => true);
-    return this;
-  }
-
   assertSuccessMessageVisible() {
     cy.contains('Success! Your details have been submitted successfully.').should('be.visible');
     return this;

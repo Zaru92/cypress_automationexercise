@@ -15,7 +15,6 @@ describe('Regression | "Test Case 6: Contact Us Form"', () => {
       .fillForm(data)
       .uploadFile('sample_upload.txt')
       .submit()
-      .acceptAlert()
       .assertSuccessMessageVisible()
       .clickHome();
 
