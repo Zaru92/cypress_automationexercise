@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "cy:open": "cypress open",
-    "cy:run": "cypress run",
+    "cy:run": "node scripts/run-cypress-with-report.js",
+    "report:clean": "rm -rf cypress/reports/mochawesome && mkdir -p cypress/reports/mochawesome",
+    "report:build": "mochawesome-merge \"cypress/reports/mochawesome/.jsons/*.json\" > cypress/reports/mochawesome/merged.json && marge cypress/reports/mochawesome/merged.json -f report -o cypress/reports/mochawesome/html",
     "test:regression": "node scripts/run-tagged-tests.js Regression",
     "test:smoke": "node scripts/run-tagged-tests.js Smoke",
     "test:api": "node scripts/run-tagged-tests.js API",

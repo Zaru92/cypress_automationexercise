@@ -20,6 +20,11 @@ export class HomePage {
     return this;
   }
 
+  goToTestCasesPage() {
+    cy.contains('a', 'Test Cases').click();
+    return this;
+  }
+
   assertLoggedInAs(name: string) {
     cy.contains(`Logged in as ${name}`).should('be.visible');
     return this;

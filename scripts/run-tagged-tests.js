@@ -52,9 +52,13 @@ if (matchedSpecs.length === 0) {
   process.exit(1);
 }
 
-const result = spawnSync('npx', ['cypress', 'run', '--spec', matchedSpecs.join(',')], {
-  stdio: 'inherit',
-  shell: false,
-});
+const result = spawnSync(
+  'node',
+  ['scripts/run-cypress-with-report.js', '--spec', matchedSpecs.join(',')],
+  {
+    stdio: 'inherit',
+    shell: false,
+  },
+);
 
 process.exit(result.status || 0);
