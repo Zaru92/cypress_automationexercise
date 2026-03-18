@@ -67,6 +67,7 @@ export class HomePage {
 
   assertSubscriptionSuccessMessageVisible() {
     cy.get(`#success-subscribe`).should('be.visible');
+    cy.contains('You have been successfully subscribed!').should('be.visible');
     return this;
   }
 }
