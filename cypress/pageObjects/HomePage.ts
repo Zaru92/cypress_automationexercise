@@ -1,3 +1,5 @@
+import { User } from '../testData/userFactory';
+
 export class HomePage {
   visit() {
     cy.visit('/');
@@ -53,6 +55,18 @@ export class HomePage {
 
   logout() {
     cy.get('[href="/logout"]').click();
+    return this;
+  }
+
+  submitSubscription(email: string) {
+    cy.contains('Subscription').should('be.visible');
+    cy.get('#susbscribe_email').click().clear().type(email);
+    cy.get('#subscribe').click();
+    return this;
+  }
+
+  assertSubscriptionSuccessMessageVisible() {
+    cy.get(`#success-subscribe`).should('be.visible');
     return this;
   }
 }
