@@ -18,11 +18,28 @@ export class CartPage {
     return this;
   }
 
-  assertProductAddedToCartVisible(productId: number) {
-    cy.get(`#product-${productId}`).should('be.visible');
-    cy.get(`#product-${productId} > .cart_price`).should('be.visible');
-    cy.get(`#product-${productId} > .cart_quantity`).should('be.visible');
-    cy.get(`#product-${productId} > .cart_total`).should('be.visible');
+  assertProductAddedToCartVisible(
+    productId: number,
+    expectedPrice: string,
+    expectedQuantity: string,
+  ) {
+    const priceValue = Number(expectedPrice.replace(/[^\d.]/g, ''));
+    const quantityValue = Number(expectedQuantity);
+    const expectedTotalValue = priceValue * quantityValue;
+
+    cy.get(`#product-${productId}`)
+      .should('be.visible')
+      .within(() => {
+        cy.get('.cart_price').should('contain', expectedPrice);
+        cy.get('.cart_quantity').should('contain', expectedQuantity);
+        cy.get('.cart_total')
+          .invoke('text')
+          .then((text) => {
+            const totalValue = Number(text.replace(/[^\d.]/g, ''));
+            expect(totalValue).to.eq(expectedTotalValue);
+          });
+      });
+
     return this;
   }
 }

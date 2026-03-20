@@ -27,6 +27,16 @@ export class ProductsPage {
     return this;
   }
 
+  getProductPrice(productId: number) {
+    return cy
+      .get(`a[data-product-id="${productId}"]`)
+      .first()
+      .closest('.product-image-wrapper')
+      .find('.productinfo h2')
+      .invoke('text')
+      .then((text) => text.trim());
+  }
+
   searchProduct(productName: string) {
     cy.get('#search_product').click().clear().type(productName);
     cy.get('#submit_search').click();
