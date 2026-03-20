@@ -17,4 +17,12 @@ export class CartPage {
     cy.contains('You have been successfully subscribed!').should('be.visible');
     return this;
   }
+
+  assertProductAddedToCartVisible(productId: number) {
+    cy.get(`#product-${productId}`).should('be.visible');
+    cy.get(`#product-${productId} > .cart_price`).should('be.visible');
+    cy.get(`#product-${productId} > .cart_quantity`).should('be.visible');
+    cy.get(`#product-${productId} > .cart_total`).should('be.visible');
+    return this;
+  }
 }
