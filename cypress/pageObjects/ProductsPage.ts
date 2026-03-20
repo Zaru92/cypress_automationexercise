@@ -12,6 +12,31 @@ export class ProductsPage {
     return this;
   }
 
+  addToCart(productId: number) {
+    cy.get(`a[data-product-id="${productId}"]`).first().click();
+    return this;
+  }
+
+  continueShopping() {
+    cy.get('.close-modal').click();
+    return this;
+  }
+
+  viewCart() {
+    cy.get('[href="/view_cart"]').first().click();
+    return this;
+  }
+
+  getProductPrice(productId: number) {
+    return cy
+      .get(`a[data-product-id="${productId}"]`)
+      .first()
+      .closest('.product-image-wrapper')
+      .find('.productinfo h2')
+      .invoke('text')
+      .then((text) => text.trim());
+  }
+
   searchProduct(productName: string) {
     cy.get('#search_product').click().clear().type(productName);
     cy.get('#submit_search').click();
