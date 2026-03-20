@@ -12,13 +12,18 @@ export class HomePage {
     return this;
   }
 
+  goToProductsPage() {
+    cy.get('[href="/products"]').click();
+    return this;
+  }
+
   goToSignupLoginPage() {
     cy.get('[href="/login"]').click();
     return this;
   }
 
-  goToContactUsPage() {
-    cy.get('[href="/contact_us"]').click();
+  goToCartPage() {
+    cy.get('[href="/view_cart"]').first().click();
     return this;
   }
 
@@ -27,8 +32,8 @@ export class HomePage {
     return this;
   }
 
-  goToProductsPage() {
-    cy.get('[href="/products"]').click();
+  goToContactUsPage() {
+    cy.get('[href="/contact_us"]').click();
     return this;
   }
 
