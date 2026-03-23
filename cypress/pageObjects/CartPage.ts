@@ -42,4 +42,9 @@ export class CartPage {
 
     return this;
   }
+
+  assertProductQuantity(quantity: Number) {
+    cy.get('.cart_quantity').should('contain', quantity);
+    return this;
+  }
 }

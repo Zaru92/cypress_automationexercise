@@ -37,6 +37,11 @@ export class HomePage {
     return this;
   }
 
+  viewFirstProduct() {
+    cy.get('[href="/product_details/1"]').click();
+    return this;
+  }
+
   assertLoggedInAs(name: string) {
     cy.contains(`Logged in as ${name}`).should('be.visible');
     return this;

@@ -10,4 +10,19 @@ export class ProductDetailsPage {
     cy.contains('Brand:').should('be.visible');
     return this;
   }
+
+  setQuantiy(quantity: number) {
+    cy.get('#quantity').clear().type(String(quantity));
+    return this;
+  }
+
+  addToCart() {
+    cy.get(`.cart`).first().click();
+    return this;
+  }
+
+  viewCart() {
+    cy.contains('View Cart').click();
+    return this;
+  }
 }
