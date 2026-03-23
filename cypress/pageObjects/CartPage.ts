@@ -42,4 +42,13 @@ export class CartPage {
 
     return this;
   }
+
+  assertProductQuantity(quantity: Number) {
+    cy.get('.cart_quantity')
+      .invoke('text')
+      .then((text) => {
+        expect(text.trim()).to.eq(String(quantity));
+      });
+    return this;
+  }
 }

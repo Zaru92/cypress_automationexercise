@@ -3,7 +3,7 @@ import { ProductsPage } from '../../pageObjects/ProductsPage';
 import { CartPage } from '../../pageObjects/CartPage';
 
 describe('Smoke | Test Case 12: Add Products in Cart', () => {
-  it('open page with products', () => {
+  it('add two products to the cart', () => {
     const home = new HomePage();
     const products = new ProductsPage();
     const cart = new CartPage();
