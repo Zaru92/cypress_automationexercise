@@ -44,7 +44,11 @@ export class CartPage {
   }
 
   assertProductQuantity(quantity: Number) {
-    cy.get('.cart_quantity').should('contain', quantity);
+    cy.get('.cart_quantity')
+      .invoke('text')
+      .then((text) => {
+        expect(text.trim()).to.eq(String(quantity));
+      });
     return this;
   }
 }
