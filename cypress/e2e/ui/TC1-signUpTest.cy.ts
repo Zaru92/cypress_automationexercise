@@ -1,8 +1,9 @@
 import { createRandomUser } from '../../testData/userFactory';
-import { AccountCreationSuccessPage } from '../../pageObjects/AccountCreationSuccessPage';
-import { AuthPage } from '../../pageObjects/AuthPage';
+
 import { HomePage } from '../../pageObjects/HomePage';
+import { AuthPage } from '../../pageObjects/AuthPage';
 import { SignupPage } from '../../pageObjects/SignupPage';
+import { AccountCreationSuccessPage } from '../../pageObjects/AccountCreationSuccessPage';
 
 describe('Smoke | "Test Case 1: Register User"', () => {
   it('registers a new user and deletes the account', () => {

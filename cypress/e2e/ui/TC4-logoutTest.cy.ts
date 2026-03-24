@@ -1,8 +1,9 @@
-import { AuthPage } from '../../pageObjects/AuthPage';
-import { AccountCreationSuccessPage } from '../../pageObjects/AccountCreationSuccessPage';
-import { HomePage } from '../../pageObjects/HomePage';
-import { SignupPage } from '../../pageObjects/SignupPage';
 import { createRandomUser, User } from '../../testData/userFactory';
+
+import { HomePage } from '../../pageObjects/HomePage';
+import { AuthPage } from '../../pageObjects/AuthPage';
+import { SignupPage } from '../../pageObjects/SignupPage';
+import { AccountCreationSuccessPage } from '../../pageObjects/AccountCreationSuccessPage';
 
 describe('Regression | "Test Case 4: Logout User"', () => {
   let user: User;

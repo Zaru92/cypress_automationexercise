@@ -1,6 +1,5 @@
-import { createRandomUser } from '../../testData/userFactory';
-import { AuthPage } from '../../pageObjects/AuthPage';
 import { HomePage } from '../../pageObjects/HomePage';
+import { AuthPage } from '../../pageObjects/AuthPage';
 
 describe('Regression | "Test Case 5: Register User with existing email"', () => {
   it('registers a new user with existing email and verify error message is displayed', () => {

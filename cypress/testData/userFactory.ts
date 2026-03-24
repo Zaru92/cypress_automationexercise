@@ -1,5 +1,3 @@
-// cypress/testData/userFactory.ts
-
 export type MonthName =
   | 'January'
   | 'February'
