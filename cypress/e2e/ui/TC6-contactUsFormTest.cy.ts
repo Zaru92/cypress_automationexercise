@@ -1,12 +1,14 @@
-import { ContactUsPage } from '../../pageObjects/ContactUsPage';
-import { HomePage } from '../../pageObjects/HomePage';
 import { createRandomContactMessage } from '../../testData/contactFactory';
+
+import { HomePage } from '../../pageObjects/HomePage';
+import { ContactUsPage } from '../../pageObjects/ContactUsPage';
 
 describe('Regression | "Test Case 6: Contact Us Form"', () => {
   it('fill in and submit contact form', () => {
+    const data = createRandomContactMessage();
+
     const home = new HomePage();
     const contact = new ContactUsPage();
-    const data = createRandomContactMessage();
 
     home.visit().assertLoaded().goToContactUsPage();
 

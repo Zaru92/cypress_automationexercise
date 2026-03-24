@@ -1,8 +1,9 @@
-import { AuthPage } from '../../pageObjects/AuthPage';
-import { AccountCreationSuccessPage } from '../../pageObjects/AccountCreationSuccessPage';
-import { HomePage } from '../../pageObjects/HomePage';
-import { SignupPage } from '../../pageObjects/SignupPage';
 import { createRandomUser, User } from '../../testData/userFactory';
+
+import { HomePage } from '../../pageObjects/HomePage';
+import { AuthPage } from '../../pageObjects/AuthPage';
+import { SignupPage } from '../../pageObjects/SignupPage';
+import { AccountCreationSuccessPage } from '../../pageObjects/AccountCreationSuccessPage';
 
 describe('Smoke | "Test Case 2: Login User with correct email and password"', () => {
   let user: User;

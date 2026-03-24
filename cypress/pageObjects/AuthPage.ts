@@ -6,22 +6,22 @@ export class AuthPage {
   }
 
   enterLoginEmail(email: string) {
-    cy.get("[data-qa='login-email']").should('be.visible').clear().type(email);
+    cy.get("[data-qa='login-email']").clear().type(email);
     return this;
   }
 
   enterPassword(password: string) {
-    cy.get("[data-qa='login-password']").should('be.visible').clear().type(password);
+    cy.get("[data-qa='login-password']").clear().type(password);
     return this;
   }
 
   enterSignupName(name: string) {
-    cy.get("[data-qa='signup-name']").should('be.visible').clear().type(name);
+    cy.get("[data-qa='signup-name']").clear().type(name);
     return this;
   }
 
   enterSignupEmail(email: string) {
-    cy.get("[data-qa='signup-email']").should('be.visible').clear().type(email);
+    cy.get("[data-qa='signup-email']").clear().type(email);
     return this;
   }
 

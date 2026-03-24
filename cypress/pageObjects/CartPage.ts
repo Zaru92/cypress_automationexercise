@@ -5,6 +5,16 @@ export class CartPage {
     return this;
   }
 
+  proceedToCheckout() {
+    cy.get('.check_out').click();
+    return this;
+  }
+
+  goToAuthPage() {
+    cy.get('#checkoutModal a').click();
+    return this;
+  }
+
   submitSubscription(email: string) {
     cy.contains('Subscription').should('be.visible');
     cy.get('#susbscribe_email').click().clear().type(email);

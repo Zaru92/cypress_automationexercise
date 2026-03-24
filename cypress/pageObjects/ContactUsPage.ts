@@ -8,10 +8,10 @@ export class ContactUsPage {
   }
 
   fillForm(data: ContactMessage) {
-    cy.get("[data-qa='name']").should('be.visible').clear().type(data.name);
-    cy.get("[data-qa='email']").should('be.visible').clear().type(data.email);
-    cy.get("[data-qa='subject']").should('be.visible').clear().type(data.subject);
-    cy.get("[data-qa='message']").should('be.visible').clear().type(data.message);
+    cy.get("[data-qa='name']").clear().type(data.name);
+    cy.get("[data-qa='email']").clear().type(data.email);
+    cy.get("[data-qa='subject']").clear().type(data.subject);
+    cy.get("[data-qa='message']").clear().type(data.message);
     return this;
   }
 

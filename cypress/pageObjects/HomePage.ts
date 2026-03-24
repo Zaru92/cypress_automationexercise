@@ -42,6 +42,21 @@ export class HomePage {
     return this;
   }
 
+  addToCart(productId: number) {
+    cy.get(`a[data-product-id="${productId}"]`).first().click();
+    return this;
+  }
+
+  continueShopping() {
+    cy.get('.close-modal').click();
+    return this;
+  }
+
+  viewCart() {
+    cy.get('[href="/view_cart"]').first().click();
+    return this;
+  }
+
   assertLoggedInAs(name: string) {
     cy.contains(`Logged in as ${name}`).should('be.visible');
     return this;
