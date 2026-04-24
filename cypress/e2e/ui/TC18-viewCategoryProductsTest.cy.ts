@@ -1,8 +1,8 @@
 import { HomePage } from '../../pageObjects/HomePage';
 import { CategoryPage } from '../../pageObjects/CategoryPage';
 
-describe('Smoke | Test Case 8: Verify All Products and product detail page', () => {
-  it('open page with products', () => {
+describe('Smoke | Test Case 18: View Category Products', () => {
+  it('open category page', () => {
     const home = new HomePage();
     const category = new CategoryPage();
 

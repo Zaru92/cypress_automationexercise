@@ -5,8 +5,7 @@ export class CategoryPage {
   }
 
   assertProperCategoryVisible(category: string, subcategory: string) {
-    cy.contains(`${category}`).should('be.visible');
-    cy.contains(`${subcategory}`).should('be.visible');
+    cy.contains(`${category} - ${subcategory} Products`).should('be.visible');
     return this;
   }
 
