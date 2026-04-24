@@ -1,14 +1,14 @@
 import { HomePage } from '../../pageObjects/HomePage';
-import { CategoryPage } from '../../pageObjects/CategoryPage';
+import { ProductsPage } from '../../pageObjects/ProductsPage';
 
 describe('Smoke | Test Case 18: View Category Products', () => {
   it('open category page', () => {
     const home = new HomePage();
-    const category = new CategoryPage();
+    const products = new ProductsPage();
 
     home.visit().assertLoaded().viewCategory('Women', 'Dress');
 
-    category
+    products
       .assertCategoryPageVisible()
       .assertProperCategoryVisible('Women', 'Dress')
       .viewCategory('Men', 'Jeans')

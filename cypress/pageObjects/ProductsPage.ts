@@ -12,6 +12,19 @@ export class ProductsPage {
     return this;
   }
 
+  viewCategory(category: string, subcategory: string) {
+    cy.get('#accordian').should('be.visible');
+    cy.get(`#accordian a[href="#${category}"]`).click();
+    cy.contains(`#${category} a`, subcategory).click();
+    return this;
+  }
+
+  viewBrand(brand: string) {
+    cy.get('.brands_products').should('be.visible');
+    cy.get(`.brands_products a[href="/brand_products/${brand}"]`).click();
+    return this;
+  }
+
   addToCart(productId: number) {
     cy.get(`a[data-product-id="${productId}"]`).first().click();
     return this;
@@ -56,6 +69,22 @@ export class ProductsPage {
           0,
         );
       });
+    return this;
+  }
+
+  assertCategoryPageVisible() {
+    cy.url().should('include', 'category_products');
+    return this;
+  }
+
+  assertProperCategoryVisible(category: string, subcategory: string) {
+    cy.contains(`${category} - ${subcategory} Products`).should('be.visible');
+    return this;
+  }
+
+  assertProperBrandVisible(brand: string) {
+    cy.url().should('include', `${brand}`);
+    cy.contains(`Brand - ${brand} Products`).should('be.visible');
     return this;
   }
 }
