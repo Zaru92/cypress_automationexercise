@@ -42,6 +42,8 @@ describe('Regression | Test Case 16: Place Order: Login before Checkout', () => 
     cy.ensureAppDomain();
 
     home.logout();
+
+    auth.assertLoginOrSignupPageVisible();
   });
 
   it('logs in with correct credentials before placing order and deletes the account', () => {

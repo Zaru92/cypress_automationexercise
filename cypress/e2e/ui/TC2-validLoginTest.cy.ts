@@ -36,6 +36,8 @@ describe('Smoke | "Test Case 2: Login User with correct email and password"', ()
     cy.ensureAppDomain();
 
     home.logout();
+
+    auth.assertLoginOrSignupPageVisible();
   });
 
   it('logs in with correct credentials and deletes the account', () => {
