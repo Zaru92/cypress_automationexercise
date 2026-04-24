@@ -10,6 +10,11 @@ export class CartPage {
     return this;
   }
 
+  removeProduct(productId: Number) {
+    cy.get(`#product-${productId}`).find('.cart_quantity_delete').click();
+    return this;
+  }
+
   goToAuthPage() {
     cy.get('#checkoutModal a').click();
     return this;
@@ -59,6 +64,11 @@ export class CartPage {
       .then((text) => {
         expect(text.trim()).to.eq(String(quantity));
       });
+    return this;
+  }
+
+  assertCartIsEmpty() {
+    cy.contains('Cart is empty! Click here to buy products.').should('be.visible');
     return this;
   }
 }

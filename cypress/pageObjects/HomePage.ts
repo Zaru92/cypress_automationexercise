@@ -44,6 +44,7 @@ export class HomePage {
 
   addToCart(productId: number) {
     cy.get(`a[data-product-id="${productId}"]`).first().click();
+    cy.contains('Added!').should('be.visible');
     return this;
   }
 
@@ -53,7 +54,7 @@ export class HomePage {
   }
 
   viewCart() {
-    cy.get('[href="/view_cart"]').first().click();
+    cy.contains('View Cart').should('be.visible').click();
     return this;
   }
 
