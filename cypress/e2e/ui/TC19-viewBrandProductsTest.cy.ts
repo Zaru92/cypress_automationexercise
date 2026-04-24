@@ -6,12 +6,12 @@ describe('Smoke | Test Case 18: View Category Products', () => {
     const home = new HomePage();
     const products = new ProductsPage();
 
-    home.visit().assertLoaded().viewCategory('Women', 'Dress');
+    home.visit().assertLoaded().goToProductsPage();
 
     products
-      .assertCategoryPageVisible()
-      .assertProperCategoryVisible('Women', 'Dress')
-      .viewCategory('Men', 'Jeans')
-      .assertProperCategoryVisible('Men', 'Jeans');
+      .viewBrand('Polo')
+      .assertProperBrandVisible('Polo')
+      .viewBrand('Biba')
+      .assertProperBrandVisible('Biba');
   });
 });
