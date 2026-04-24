@@ -83,6 +83,7 @@ export class ProductsPage {
   }
 
   assertProperBrandVisible(brand: string) {
+    cy.url().should('include', `${brand}`);
     cy.contains(`Brand - ${brand} Products`).should('be.visible');
     return this;
   }
