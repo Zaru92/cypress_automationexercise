@@ -37,6 +37,13 @@ export class HomePage {
     return this;
   }
 
+  viewCategory(category: string, subcategory: string) {
+    cy.get('#accordian').should('be.visible');
+    cy.get(`#accordian a[href="#${category}"]`).click();
+    cy.contains(`#${category} a`, subcategory).click();
+    return this;
+  }
+
   viewFirstProduct() {
     cy.get('[href="/product_details/1"]').click();
     return this;
