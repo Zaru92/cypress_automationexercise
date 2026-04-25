@@ -24,6 +24,22 @@ export class CheckoutPage {
     return this;
   }
 
+  assertBillingDetails(user: User) {
+    cy.get('#address_invoice').within(() => {
+      cy.contains(user.firstName);
+      cy.contains(user.lastName);
+      cy.contains(user.company);
+      cy.contains(user.address1);
+      cy.contains(user.address2);
+      cy.contains(user.city);
+      cy.contains(user.state);
+      cy.contains(user.zipcode);
+      cy.contains(user.country);
+      cy.contains(user.mobile);
+    });
+    return this;
+  }
+
   fillForm(data: ContactMessage) {
     cy.get('.form-control').clear().type(data.message);
     return this;
