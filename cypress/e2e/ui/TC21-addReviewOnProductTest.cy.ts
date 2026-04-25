@@ -4,8 +4,8 @@ import { HomePage } from '../../pageObjects/HomePage';
 import { ProductsPage } from '../../pageObjects/ProductsPage';
 import { ProductDetailsPage } from '../../pageObjects/ProductDetailsPage';
 
-describe('Smoke | Test Case 8: Verify All Products and product detail page', () => {
-  it('open page with products', () => {
+describe('Regression | Test Case 21: Add review on product', () => {
+  it('open page with products and add review', () => {
     const data = createRandomContactMessage();
 
     const home = new HomePage();
