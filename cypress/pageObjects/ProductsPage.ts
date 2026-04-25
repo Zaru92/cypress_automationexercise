@@ -21,12 +21,24 @@ export class ProductsPage {
 
   viewBrand(brand: string) {
     cy.get('.brands_products').should('be.visible');
-    cy.get(`.brands_products a[href="/brand_products/${brand}"]`).click();
+    cy.contains('.brands_products a', brand).click();
     return this;
+  }
+
+  getFirstVisibleProductId() {
+    return cy
+      .get('.features_items a.add-to-cart[data-product-id]:visible')
+      .first()
+      .invoke('attr', 'data-product-id')
+      .then((productId) => {
+        expect(productId, 'first visible product id').to.exist;
+        return Number(productId);
+      });
   }
 
   addToCart(productId: number) {
     cy.get(`a[data-product-id="${productId}"]`).first().click();
+    cy.contains('Added!').should('be.visible');
     return this;
   }
 
@@ -36,7 +48,7 @@ export class ProductsPage {
   }
 
   viewCart() {
-    cy.get('[href="/view_cart"]').first().click();
+    cy.contains('View Cart').should('be.visible').click();
     return this;
   }
 
@@ -83,7 +95,9 @@ export class ProductsPage {
   }
 
   assertProperBrandVisible(brand: string) {
-    cy.url().should('include', `${brand}`);
+    cy.location('pathname').should((pathname) => {
+      expect(decodeURIComponent(pathname)).to.eq(`/brand_products/${brand}`);
+    });
     cy.contains(`Brand - ${brand} Products`).should('be.visible');
     return this;
   }
