@@ -23,7 +23,7 @@ export class HomePage {
   }
 
   goToCartPage() {
-    cy.get('[href="/view_cart"]').first().click();
+    cy.contains('View Cart').should('be.visible').click();
     return this;
   }
 
@@ -101,6 +101,23 @@ export class HomePage {
   assertSubscriptionSuccessMessageVisible() {
     cy.get(`#success-subscribe`).should('be.visible');
     cy.contains('You have been successfully subscribed!').should('be.visible');
+    return this;
+  }
+
+  getFirstVisibleRecommendedProductId() {
+    return cy
+      .get('.carousel-inner .add-to-cart')
+      .first()
+      .invoke('attr', 'data-product-id')
+      .then((productId) => {
+        expect(productId, 'first visible product id').to.exist;
+        return Number(productId);
+      });
+  }
+
+  addToCartFirstVisibleRecommendedProduct(productId: number) {
+    cy.get(`a[data-product-id="${productId}"]`).first().click();
+    cy.contains('Added!').should('be.visible');
     return this;
   }
 }
