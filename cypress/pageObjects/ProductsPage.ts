@@ -21,7 +21,7 @@ export class ProductsPage {
 
   viewBrand(brand: string) {
     cy.get('.brands_products').should('be.visible');
-    cy.get(`.brands_products a[href="/brand_products/${brand}"]`).click();
+    cy.contains('.brands_products a', brand).click();
     return this;
   }
 

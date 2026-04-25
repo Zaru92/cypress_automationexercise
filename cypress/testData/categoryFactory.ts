@@ -15,10 +15,7 @@ const categories: CategoryData[] = [
 
 export const getRandomCategoryData = (excludedCategory?: CategoryData): CategoryData => {
   const availableCategories = excludedCategory
-    ? categories.filter(
-        ({ category, subcategory }) =>
-          category !== excludedCategory.category || subcategory !== excludedCategory.subcategory,
-      )
+    ? categories.filter(({ category }) => category !== excludedCategory.category)
     : categories;
 
   return availableCategories[Math.floor(Math.random() * availableCategories.length)];
