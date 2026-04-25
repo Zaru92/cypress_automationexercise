@@ -1,8 +1,8 @@
 import { HomePage } from '../../pageObjects/HomePage';
 import { CartPage } from '../../pageObjects/CartPage';
 
-describe('Smoke | Test Case 12: Add Products in Cart', () => {
-  it('add two products to the cart', () => {
+describe('Smoke | Test Case 22: Add to cart from Recommended items', () => {
+  it('add recommended item to cart', () => {
     const home = new HomePage();
     const cart = new CartPage();
 
