@@ -8,7 +8,7 @@ import { CartPage } from '../../pageObjects/CartPage';
 import { CheckoutPage } from '../../pageObjects/CheckoutPage';
 
 describe('Regression | Test Case 23: Verify address details in checkout page', () => {
-  it('register account before placing order', () => {
+  it('register account before placing order and verify address details', () => {
     const user = createRandomUser();
 
     const home = new HomePage();
