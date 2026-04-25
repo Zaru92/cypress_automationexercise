@@ -23,7 +23,7 @@ export class HomePage {
   }
 
   goToCartPage() {
-    cy.contains('View Cart').should('be.visible').click();
+    cy.get('[href="/view_cart"]').first().click();
     return this;
   }
 
