@@ -1,3 +1,5 @@
+import type { ContactMessage } from '../testData/contactFactory';
+
 export class ProductDetailsPage {
   assertProductDetailsPageVisible() {
     cy.url().should('include', 'product_details');
@@ -8,6 +10,11 @@ export class ProductDetailsPage {
     cy.contains('Availability:').should('be.visible');
     cy.contains('Condition:').should('be.visible');
     cy.contains('Brand:').should('be.visible');
+    return this;
+  }
+
+  assertReviewFormisible() {
+    cy.get('#review-form').should('be.visible');
     return this;
   }
 
@@ -23,6 +30,23 @@ export class ProductDetailsPage {
 
   viewCart() {
     cy.contains('View Cart').click();
+    return this;
+  }
+
+  fillReviewForm(data: ContactMessage) {
+    cy.get('#name').clear().type(data.name);
+    cy.get('#email').clear().type(data.email);
+    cy.get('#review').clear().type(data.message);
+    return this;
+  }
+
+  submit() {
+    cy.get('#button-review').click();
+    return this;
+  }
+
+  assertSuccessMessageVisible() {
+    cy.contains('Thank you for your review').should('be.visible');
     return this;
   }
 }

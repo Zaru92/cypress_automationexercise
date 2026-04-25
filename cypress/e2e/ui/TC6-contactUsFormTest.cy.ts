@@ -3,7 +3,7 @@ import { createRandomContactMessage } from '../../testData/contactFactory';
 import { HomePage } from '../../pageObjects/HomePage';
 import { ContactUsPage } from '../../pageObjects/ContactUsPage';
 
-describe('Regression | "Test Case 6: Contact Us Form"', () => {
+describe('Smoke | "Test Case 6: Contact Us Form"', () => {
   it('fill in and submit contact form', () => {
     const data = createRandomContactMessage();
 
