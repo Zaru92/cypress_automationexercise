@@ -14,7 +14,5 @@ describe('Smoke | Test Case 12: Add Products in Cart', () => {
         home.addToCartFirstVisibleRecommendedProduct(productId).viewCart();
         cart.assertCartPageVisible().assertProductAddedToCartVisible(productId);
       });
-
-    cart.assertCartPageVisible();
   });
 });
