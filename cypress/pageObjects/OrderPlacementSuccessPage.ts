@@ -15,7 +15,9 @@ export class OrderPlacementSuccessPage {
     cy.task('deleteFileIfExists', invoicePath);
 
     cy.get('.check_out').click();
-    cy.readFile(invoicePath, { timeout: 15000 }).should('not.be.empty').and('contain', 'Hi');
+    cy.readFile(invoicePath, { timeout: 15000 })
+      .should('not.be.empty')
+      .and('contain', 'Your total purchase amount');
     return this;
   }
 }
