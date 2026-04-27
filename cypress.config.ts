@@ -1,7 +1,18 @@
 import { defineConfig } from 'cypress';
+import fs from 'fs';
 
 export default defineConfig({
   e2e: {
+    setupNodeEvents(on) {
+      on('task', {
+        deleteFileIfExists(path: string) {
+          if (fs.existsSync(path)) {
+            fs.unlinkSync(path);
+          }
+          return null;
+        },
+      });
+    },
     baseUrl: 'https://automationexercise.com',
     reporter: 'cypress-mochawesome-reporter',
     reporterOptions: {
