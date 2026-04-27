@@ -11,7 +11,11 @@ export class OrderPlacementSuccessPage {
   }
 
   downloadInvoice() {
+    const invoicePath = 'cypress/downloads/invoice.txt';
+    cy.task('deleteFileIfExists', invoicePath);
+
     cy.get('.check_out').click();
+    cy.readFile(invoicePath, { timeout: 15000 }).should('not.be.empty').and('contain', 'Hi');
     return this;
   }
 }

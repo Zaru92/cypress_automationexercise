@@ -11,8 +11,8 @@ import { CheckoutPage } from '../../pageObjects/CheckoutPage';
 import { PaymentPage } from '../../pageObjects/PaymentPage';
 import { OrderPlacementSuccessPage } from '../../pageObjects/OrderPlacementSuccessPage';
 
-describe('Regression | Test Case 14: Place Order: Register while Checkout', () => {
-  it('register account during placing order', () => {
+describe('Regression | Test Case 24: Download Invoice after purchase order', () => {
+  it('register account during placing order and download invoice after purchase', () => {
     const user = createRandomUser();
     const data = createRandomContactMessage();
     const paymentData = createRandomPaymentDetails();
