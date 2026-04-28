@@ -4,6 +4,7 @@ export class CategorySidebarComponent {
     cy.get('#accordian').should('be.visible');
     cy.get(`#accordian a[href="#${category}"]`).click();
     cy.contains(`#${category} a`, subcategory).click();
+
     return this;
   }
 }

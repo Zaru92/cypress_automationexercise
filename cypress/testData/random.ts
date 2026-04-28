@@ -3,6 +3,7 @@ export const randomInt = (min: number, max: number) =>
 
 export const randomString = (length = 6) => {
   const chars = 'abcdefghijklmnopqrstuvwxyz';
+
   return Array.from({ length }, () => chars[randomInt(0, chars.length - 1)]).join('');
 };
 

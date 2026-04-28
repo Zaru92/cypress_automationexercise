@@ -5,12 +5,14 @@ export class OrderConfirmationPage {
     cy.logStep('Assert order placed confirmation is visible');
     cy.url().should('include', 'payment_done');
     cy.contains('Order Placed!').should('be.visible');
+
     return this;
   }
 
   continueAfterPlacement() {
     cy.logStep('Continue after order placement');
     clickQaField('continue-button');
+
     return this;
   }
 
@@ -23,6 +25,7 @@ export class OrderConfirmationPage {
     cy.readFile(invoicePath, { timeout: 15000 })
       .should('not.be.empty')
       .and('contain', 'Your total purchase amount');
+
     return this;
   }
 }

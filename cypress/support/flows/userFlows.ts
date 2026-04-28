@@ -83,6 +83,7 @@ export const logoutCurrentUserViaUi = (user: TestUser) => {
   cy.logStep(`Log out current user: ${user.email}`);
 
   new HomePage().assertLoggedInAs(user.name).logout();
+
   return new LoginSignupPage().assertLoginSignupPageVisible();
 };
 

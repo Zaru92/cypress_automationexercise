@@ -11,6 +11,7 @@ export class SignupPage {
     cy.logStep('Assert account signup form is visible');
     cy.url().should('include', 'signup');
     cy.get('#form').should('be.visible');
+
     return this;
   }
 
@@ -26,6 +27,7 @@ export class SignupPage {
     selectQaField('days', user.dob.day);
     selectQaField('months', user.dob.month);
     selectQaField('years', user.dob.year);
+
     return this;
   }
 
@@ -33,6 +35,7 @@ export class SignupPage {
     cy.logStep('Select newsletter and offers');
     cy.get('#newsletter').check();
     cy.get('#optin').check();
+
     return this;
   }
 
@@ -51,12 +54,14 @@ export class SignupPage {
       mobile_number: user.mobile,
     });
     selectQaField('country', user.country);
+
     return this;
   }
 
   confirmAccountCreation() {
     cy.logStep('Confirm account creation');
     clickQaField('create-account');
+
     return this;
   }
 }

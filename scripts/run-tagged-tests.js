@@ -3,9 +3,12 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 const tag = process.argv[2];
+const rawRunnerArgs = process.argv.slice(3);
 
 if (!tag) {
-  console.error('Usage: node scripts/run-tagged-tests.js <TagName>');
+  console.error(
+    'Usage: node scripts/run-tagged-tests.js <TagName> [--all-browsers] [cypress args]',
+  );
   process.exit(1);
 }
 
@@ -52,9 +55,15 @@ if (matchingSpecPaths.length === 0) {
   process.exit(1);
 }
 
+const runAcrossBrowsers = rawRunnerArgs.includes('--all-browsers');
+const runnerArgs = rawRunnerArgs.filter((arg) => arg !== '--all-browsers');
+const runnerScript = runAcrossBrowsers
+  ? 'scripts/run-cypress-in-browsers.js'
+  : 'scripts/run-cypress-with-report.js';
+
 const result = spawnSync(
   'node',
-  ['scripts/run-cypress-with-report.js', '--spec', matchingSpecPaths.join(',')],
+  [runnerScript, '--spec', matchingSpecPaths.join(','), ...runnerArgs],
   {
     stdio: 'inherit',
     shell: false,

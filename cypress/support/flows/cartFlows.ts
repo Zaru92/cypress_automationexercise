@@ -43,6 +43,7 @@ export const addProductsToCartAndProceedToCheckout = <TPage extends PageWithAddT
   addProductsToCartAndOpenCart(page, productIds);
 
   cy.logStep('Proceed to checkout');
+
   return new CartPage().assertCartPageVisible().proceedToCheckout();
 };
 

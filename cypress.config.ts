@@ -1,6 +1,8 @@
 import { defineConfig } from 'cypress';
 import fs from 'fs';
 
+const reportDir = process.env.CYPRESS_MOCHAWESOME_REPORT_DIR ?? 'cypress/reports/mochawesome';
+
 export default defineConfig({
   e2e: {
     setupNodeEvents(on) {
@@ -16,7 +18,7 @@ export default defineConfig({
     baseUrl: 'https://automationexercise.com',
     reporter: 'cypress-mochawesome-reporter',
     reporterOptions: {
-      reportDir: 'cypress/reports/mochawesome',
+      reportDir,
       overwrite: false,
       html: true,
       json: true,

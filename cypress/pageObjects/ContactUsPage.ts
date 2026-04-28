@@ -6,6 +6,7 @@ export class ContactUsPage {
     cy.logStep('Assert contact us page is visible');
     cy.url().should('include', 'contact_us');
     cy.get('#contact-page').should('be.visible');
+
     return this;
   }
 
@@ -18,6 +19,7 @@ export class ContactUsPage {
       subject: data.subject,
       message: data.message,
     });
+
     return this;
   }
 
@@ -31,18 +33,21 @@ export class ContactUsPage {
   submitContactForm() {
     cy.logStep('Submit contact form');
     clickQaField('submit-button');
+
     return this;
   }
 
   assertSuccessMessageVisible() {
     cy.logStep('Assert contact form success message is visible');
     cy.contains('Success! Your details have been submitted successfully.').should('be.visible');
+
     return this;
   }
 
   goToHomePage() {
     cy.logStep('Navigate to home page from contact us page');
     cy.contains('Home').click();
+
     return this;
   }
 }

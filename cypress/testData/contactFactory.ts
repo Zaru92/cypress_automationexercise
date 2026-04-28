@@ -9,6 +9,7 @@ export type ContactFormData = {
 
 export const createRandomContactFormData = (): ContactFormData => {
   const stamp = `${Date.now()}-${randomInt(1000, 9999)}`;
+
   return {
     name: `QA ${randomString(4)}`,
     email: `qa.contact.${stamp}@example.com`,

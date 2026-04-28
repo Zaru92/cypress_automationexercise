@@ -34,6 +34,7 @@ export const expectOkApiResponseBody = <TBody>(
   response: Cypress.Response<string | TBody>,
 ): TBody => {
   expect(response.status).to.eq(200);
+
   return parseApiResponse<TBody>(response);
 };
 
