@@ -1,4 +1,5 @@
-import { createRandomUser, User } from '../../testData/userFactory';
+import { createRandomUser } from '../../testData/userFactory';
+import type { User } from '../../testData/userFactory';
 import { createRandomContactMessage } from '../../testData/contactFactory';
 import { createRandomPaymentDetails } from '../../testData/paymentFactory';
 

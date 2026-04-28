@@ -1,4 +1,5 @@
-import { createRandomUser, User } from '../../testData/userFactory';
+import { createRandomUser } from '../../testData/userFactory';
+import type { User } from '../../testData/userFactory';
 
 import { HomePage } from '../../pageObjects/HomePage';
 import { AuthPage } from '../../pageObjects/AuthPage';

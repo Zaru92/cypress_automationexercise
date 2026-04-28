@@ -3,4 +3,4 @@ cypress/reports
 cypress/screenshots
 cypress/videos
 mochawesome-report
-cypress/downloads
+cypress/downloads/invoice.txt

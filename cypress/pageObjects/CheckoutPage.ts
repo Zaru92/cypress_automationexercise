@@ -1,4 +1,4 @@
-import { User } from '../testData/userFactory';
+import type { User } from '../testData/userFactory';
 import type { ContactMessage } from '../testData/contactFactory';
 
 export class CheckoutPage {
@@ -41,7 +41,8 @@ export class CheckoutPage {
   }
 
   fillForm(data: ContactMessage) {
-    cy.get('.form-control').clear().type(data.message);
+    cy.get('.form-control').clear();
+    cy.get('.form-control').type(data.message);
     return this;
   }
 
