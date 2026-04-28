@@ -1,3 +1,5 @@
+import { clickQaField } from './components/FormControls';
+
 export class OrderConfirmationPage {
   assertOrderPlaced() {
     cy.url().should('include', 'payment_done');
@@ -6,7 +8,7 @@ export class OrderConfirmationPage {
   }
 
   continueAfterPlacement() {
-    cy.get('[data-qa="continue-button"]').click();
+    clickQaField('continue-button');
     return this;
   }
 

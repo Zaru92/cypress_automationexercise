@@ -12,7 +12,7 @@ export class ProductsPage {
   }
 
   openFirstProductDetails() {
-    cy.get('[href="/product_details/1"]').click();
+    this.productGrid.openProductDetails(1);
     return this;
   }
 

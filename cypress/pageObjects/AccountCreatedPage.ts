@@ -1,3 +1,5 @@
+import { clickQaField } from './components/FormControls';
+
 export class AccountCreatedPage {
   assertAccountCreated() {
     cy.url().should('include', 'account_created');
@@ -6,7 +8,7 @@ export class AccountCreatedPage {
   }
 
   continueAfterCreation() {
-    cy.get("[data-qa='continue-button']").click();
+    clickQaField('continue-button');
     return this;
   }
 }

@@ -1,5 +1,6 @@
 import type { TestUser } from '../../testData/userFactory';
 import { AccountCreatedPage } from '../../pageObjects/AccountCreatedPage';
+import { CartPage } from '../../pageObjects/CartPage';
 import { LoginSignupPage } from '../../pageObjects/LoginSignupPage';
 import { HomePage } from '../../pageObjects/HomePage';
 import { SignupPage } from '../../pageObjects/SignupPage';
@@ -42,6 +43,12 @@ export const registerUserViaUiAndLogout = (user: TestUser) => {
   new LoginSignupPage().assertLoginSignupPageVisible();
 
   return home;
+};
+
+export const registerUserFromCheckoutAndProceedToCheckout = (user: TestUser) => {
+  registerUserFromLoginSignupPage(user).assertLoaded().goToCartPage();
+
+  return new CartPage().assertCartPageVisible().proceedToCheckout();
 };
 
 export const loginUserFromLoginSignupPage = (user: TestUser) => {

@@ -20,10 +20,10 @@ describe('Smoke | TC12: Add products to cart', () => {
 
     cy.get('@firstProductPrice').then((firstProductPrice) => {
       cy.get('@secondProductPrice').then((secondProductPrice) => {
-        cart
-          .assertCartPageVisible()
-          .assertProductAddedToCartVisible(1, String(firstProductPrice), '1')
-          .assertProductAddedToCartVisible(2, String(secondProductPrice), '1');
+        cart.assertCartPageVisible().assertProductsAddedToCartVisible([
+          { productId: 1, expectedPrice: String(firstProductPrice), expectedQuantity: '1' },
+          { productId: 2, expectedPrice: String(secondProductPrice), expectedQuantity: '1' },
+        ]);
       });
     });
   });

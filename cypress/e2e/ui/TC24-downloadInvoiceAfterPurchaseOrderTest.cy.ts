@@ -3,13 +3,12 @@ import { createRandomContactFormData } from '../../testData/contactFactory';
 import { createRandomCardPaymentDetails } from '../../testData/paymentFactory';
 
 import { HomePage } from '../../pageObjects/HomePage';
-import { CartPage } from '../../pageObjects/CartPage';
 
-import { addProductsToCartAndOpenCart } from '../../support/flows/cartFlows';
+import { addProductsToCartAndOpenSignupFromCheckout } from '../../support/flows/cartFlows';
 import { placeOrderAndDownloadInvoice } from '../../support/flows/orderFlows';
 import {
   deleteLoggedInUserViaUi,
-  registerUserFromLoginSignupPage,
+  registerUserFromCheckoutAndProceedToCheckout,
 } from '../../support/flows/userFlows';
 
 describe('Regression | TC24: Invoice download after order', () => {
@@ -19,16 +18,10 @@ describe('Regression | TC24: Invoice download after order', () => {
     const paymentData = createRandomCardPaymentDetails();
 
     const home = new HomePage();
-    const cart = new CartPage();
 
     home.visit().assertLoaded();
-    addProductsToCartAndOpenCart(home, [1, 2]);
-
-    cart.assertCartPageVisible().proceedToCheckout().goToLoginSignupPageFromCheckoutModal();
-
-    registerUserFromLoginSignupPage(user).assertLoaded().goToCartPage();
-
-    cart.assertCartPageVisible().proceedToCheckout();
+    addProductsToCartAndOpenSignupFromCheckout(home, [1, 2]);
+    registerUserFromCheckoutAndProceedToCheckout(user);
 
     placeOrderAndDownloadInvoice(user, data, paymentData);
     deleteLoggedInUserViaUi(user);

@@ -1,9 +1,12 @@
 import { CategorySidebarComponent } from './components/CategorySidebarComponent';
+import { clickQaField } from './components/FormControls';
+import { HeaderComponent } from './components/HeaderComponent';
 import { ProductGridComponent } from './components/ProductGridComponent';
 import { SubscriptionComponent } from './components/SubscriptionComponent';
 
 export class HomePage {
   private readonly categorySidebar = new CategorySidebarComponent();
+  private readonly header = new HeaderComponent();
   private readonly productGrid = new ProductGridComponent();
   private readonly subscriptionForm = new SubscriptionComponent();
 
@@ -19,27 +22,27 @@ export class HomePage {
   }
 
   goToProductsPage() {
-    cy.get('[href="/products"]').click();
+    this.header.goToProductsPage();
     return this;
   }
 
   goToSignupLoginPage() {
-    cy.get('[href="/login"]').click();
+    this.header.goToSignupLoginPage();
     return this;
   }
 
   goToCartPage() {
-    cy.get('[href="/view_cart"]').first().click();
+    this.header.goToCartPage();
     return this;
   }
 
   goToTestCasesPage() {
-    cy.contains('a', 'Test Cases').click();
+    this.header.goToTestCasesPage();
     return this;
   }
 
   goToContactUsPage() {
-    cy.get('[href="/contact_us"]').click();
+    this.header.goToContactUsPage();
     return this;
   }
 
@@ -49,7 +52,7 @@ export class HomePage {
   }
 
   openFirstProductDetails() {
-    cy.get('[href="/product_details/1"]').click();
+    this.productGrid.openProductDetails(1);
     return this;
   }
 
@@ -73,28 +76,28 @@ export class HomePage {
   }
 
   assertLoggedInAs(name: string) {
-    cy.contains(`Logged in as ${name}`).should('be.visible');
+    this.header.assertLoggedInAs(name);
     return this;
   }
 
   deleteAccountAndAssertDeleted() {
-    cy.get('[href="/delete_account"]').click();
+    this.header.deleteAccount();
     cy.contains('Account Deleted!').should('be.visible');
     return this;
   }
 
   continueAfterAccountDeletion() {
-    cy.get("[data-qa='continue-button']").click();
+    clickQaField('continue-button');
     return this;
   }
 
   assertDeletedUserIsNotLoggedIn(name: string) {
-    cy.contains(`Logged in as ${name}`).should('not.exist');
+    this.header.assertLoggedOut(name);
     return this;
   }
 
   logout() {
-    cy.get('[href="/logout"]').click();
+    this.header.logout();
     return this;
   }
 

@@ -1,5 +1,6 @@
 import type { TestUser } from '../../testData/userFactory';
 import { parseApiResponse } from './apiResponse';
+import type { SearchProductBody } from './catalogApi';
 
 export type ApiMessageResponseBody = {
   responseCode: number;
@@ -45,6 +46,38 @@ export const expectApiResponseMessage = <TBody extends ApiMessageResponseBody>(
 
   expect(body.responseCode).to.eq(responseCode);
   expect(body.message).to.eq(message);
+
+  return body;
+};
+
+export const expectArrayResponseProperty = <TProperty extends string>(
+  response: Cypress.Response<string | Record<TProperty, unknown[]>>,
+  propertyName: TProperty,
+) => {
+  const body = expectOkApiResponseBody<Record<TProperty, unknown[]>>(response);
+
+  expect(body).to.have.property(propertyName);
+  expect(body[propertyName]).to.be.an('array');
+
+  return body;
+};
+
+export const expectSearchProductsResponse = (
+  response: Cypress.Response<string | SearchProductBody>,
+) => {
+  const body = expectOkApiResponseBody<SearchProductBody>(response);
+
+  expect(body.responseCode).to.eq(200);
+  expect(body).to.have.property('products');
+  expect(body.products).to.be.an('array').and.have.length.greaterThan(0);
+
+  body.products.forEach((product) => {
+    expect(product).to.include.keys(['id', 'name', 'price', 'brand', 'category']);
+    expect(product.name).to.be.a('string').and.have.length.greaterThan(0);
+    expect(product.price).to.be.a('string').and.have.length.greaterThan(0);
+    expect(product.brand).to.be.a('string').and.have.length.greaterThan(0);
+    expect(product.category).to.be.an('object');
+  });
 
   return body;
 };

@@ -1,3 +1,5 @@
+import { clickQaField, fillQaField } from './components/FormControls';
+
 export class LoginSignupPage {
   assertLoginSignupPageVisible() {
     cy.url().should('include', 'login');
@@ -6,36 +8,32 @@ export class LoginSignupPage {
   }
 
   enterLoginEmail(email: string) {
-    cy.get("[data-qa='login-email']").clear();
-    cy.get("[data-qa='login-email']").type(email);
+    fillQaField('login-email', email);
     return this;
   }
 
   enterLoginPassword(password: string) {
-    cy.get("[data-qa='login-password']").clear();
-    cy.get("[data-qa='login-password']").type(password);
+    fillQaField('login-password', password);
     return this;
   }
 
   enterSignupName(name: string) {
-    cy.get("[data-qa='signup-name']").clear();
-    cy.get("[data-qa='signup-name']").type(name);
+    fillQaField('signup-name', name);
     return this;
   }
 
   enterSignupEmail(email: string) {
-    cy.get("[data-qa='signup-email']").clear();
-    cy.get("[data-qa='signup-email']").type(email);
+    fillQaField('signup-email', email);
     return this;
   }
 
   submitLogin() {
-    cy.get("[data-qa='login-button']").click();
+    clickQaField('login-button');
     return this;
   }
 
   submitSignup() {
-    cy.get("[data-qa='signup-button']").click();
+    clickQaField('signup-button');
     return this;
   }
 

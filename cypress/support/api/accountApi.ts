@@ -20,6 +20,8 @@ type AccountApiRequestBody = {
   mobile_number: string;
 };
 
+type VerifyLoginApiRequestBody = Partial<Pick<TestUser, 'email' | 'password'>>;
+
 const buildAccountApiRequestBody = (
   identityUser: TestUser,
   detailsUser: TestUser,
@@ -62,16 +64,19 @@ export const deleteAccountViaApi = (user: Pick<TestUser, 'email' | 'password'>) 
     },
   });
 
-export const verifyLoginViaApi = (email: string, password: string) =>
+export const requestVerifyLoginViaApi = (
+  body?: VerifyLoginApiRequestBody,
+  method: 'POST' | 'DELETE' = 'POST',
+) =>
   cy.request({
-    method: 'POST',
+    method,
     url: '/api/verifyLogin',
     form: true,
-    body: {
-      email,
-      password,
-    },
+    ...(body === undefined ? {} : { body }),
   });
+
+export const verifyLoginViaApi = (email: string, password: string) =>
+  requestVerifyLoginViaApi({ email, password });
 
 export const updateAccountViaApi = (identityUser: TestUser, detailsUser: TestUser) =>
   cy.request({

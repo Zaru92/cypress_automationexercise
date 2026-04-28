@@ -1,4 +1,5 @@
 import type { ContactFormData } from '../testData/contactFactory';
+import { clickQaField, fillQaFields } from './components/FormControls';
 
 export class ContactUsPage {
   assertContactUsPageVisible() {
@@ -8,14 +9,12 @@ export class ContactUsPage {
   }
 
   fillContactForm(data: ContactFormData) {
-    cy.get("[data-qa='name']").clear();
-    cy.get("[data-qa='name']").type(data.name);
-    cy.get("[data-qa='email']").clear();
-    cy.get("[data-qa='email']").type(data.email);
-    cy.get("[data-qa='subject']").clear();
-    cy.get("[data-qa='subject']").type(data.subject);
-    cy.get("[data-qa='message']").clear();
-    cy.get("[data-qa='message']").type(data.message);
+    fillQaFields({
+      name: data.name,
+      email: data.email,
+      subject: data.subject,
+      message: data.message,
+    });
     return this;
   }
 
@@ -26,7 +25,7 @@ export class ContactUsPage {
   }
 
   submitContactForm() {
-    cy.get("[data-qa='submit-button']").click();
+    clickQaField('submit-button');
     return this;
   }
 

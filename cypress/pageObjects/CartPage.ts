@@ -1,6 +1,14 @@
+import { HeaderComponent } from './components/HeaderComponent';
 import { SubscriptionComponent } from './components/SubscriptionComponent';
 
+type ExpectedCartProduct = {
+  productId: number;
+  expectedPrice?: string;
+  expectedQuantity?: string;
+};
+
 export class CartPage {
+  private readonly header = new HeaderComponent();
   private readonly subscriptionForm = new SubscriptionComponent();
 
   assertCartPageVisible() {
@@ -30,7 +38,7 @@ export class CartPage {
   }
 
   goToSignupLoginPage() {
-    cy.get('[href="/login"]').first().click();
+    this.header.goToSignupLoginPage();
     return this;
   }
 
@@ -73,6 +81,14 @@ export class CartPage {
             });
         }
       });
+
+    return this;
+  }
+
+  assertProductsAddedToCartVisible(products: ExpectedCartProduct[]) {
+    products.forEach(({ productId, expectedPrice, expectedQuantity }) => {
+      this.assertProductAddedToCartVisible(productId, expectedPrice, expectedQuantity);
+    });
 
     return this;
   }

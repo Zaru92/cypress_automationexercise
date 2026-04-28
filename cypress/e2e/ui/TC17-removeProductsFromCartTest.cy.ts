@@ -14,7 +14,9 @@ describe('Regression | TC17: Remove product from cart', () => {
     cy.get('@productPrice').then((productPrice) => {
       cart
         .assertCartPageVisible()
-        .assertProductAddedToCartVisible(productId, String(productPrice), '1')
+        .assertProductsAddedToCartVisible([
+          { productId, expectedPrice: String(productPrice), expectedQuantity: '1' },
+        ])
         .removeProduct(productId)
         .assertCartIsEmpty();
     });

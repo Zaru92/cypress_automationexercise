@@ -1,4 +1,9 @@
 export class ProductGridComponent {
+  openProductDetails(productId: number) {
+    cy.get(`[href="/product_details/${productId}"]`).click();
+    return this;
+  }
+
   addToCart(productId: number) {
     cy.get(`a[data-product-id="${productId}"]`).first().click();
     cy.contains('Added!').should('be.visible');

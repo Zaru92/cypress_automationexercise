@@ -3,9 +3,7 @@ import type { TestUser } from '../../testData/userFactory';
 import { createRandomContactFormData } from '../../testData/contactFactory';
 import { createRandomCardPaymentDetails } from '../../testData/paymentFactory';
 
-import { CartPage } from '../../pageObjects/CartPage';
-
-import { addProductsToCartAndOpenCart } from '../../support/flows/cartFlows';
+import { addProductsToCartAndProceedToCheckout } from '../../support/flows/cartFlows';
 import { placeOrderAndContinue } from '../../support/flows/orderFlows';
 import {
   deleteLoggedInUserViaUi,
@@ -26,14 +24,10 @@ describe('Regression | TC16: Login before checkout and place order', () => {
     const data = createRandomContactFormData();
     const paymentData = createRandomCardPaymentDetails();
 
-    const cart = new CartPage();
-
     const home = loginUserViaUi(user);
 
     home.assertLoaded();
-    addProductsToCartAndOpenCart(home, [1, 2]);
-
-    cart.assertCartPageVisible().proceedToCheckout();
+    addProductsToCartAndProceedToCheckout(home, [1, 2]);
 
     placeOrderAndContinue(user, data, paymentData);
     deleteLoggedInUserViaUi(user);
