@@ -53,6 +53,16 @@ export class HomePage {
     return this;
   }
 
+  getProductPrice(productId: number) {
+    return cy
+      .get(`a[data-product-id="${productId}"]`)
+      .first()
+      .closest('.product-image-wrapper')
+      .find('.productinfo h2')
+      .invoke('text')
+      .then((text) => text.trim());
+  }
+
   continueShopping() {
     cy.get('.close-modal').click();
     return this;
