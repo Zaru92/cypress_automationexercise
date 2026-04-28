@@ -1,4 +1,4 @@
-import { User } from '../testData/userFactory';
+import type { User } from '../testData/userFactory';
 
 export class SignupPage {
   assertSignupFormVisible() {

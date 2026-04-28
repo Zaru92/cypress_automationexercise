@@ -1,5 +1,3 @@
-import { User } from '../testData/userFactory';
-
 export class HomePage {
   visit() {
     cy.visit('/');
@@ -93,7 +91,8 @@ export class HomePage {
 
   submitSubscription(email: string) {
     cy.contains('Subscription').should('be.visible');
-    cy.get('#susbscribe_email').click().clear().type(email);
+    cy.get('#susbscribe_email').clear();
+    cy.get('#susbscribe_email').type(email);
     cy.get('#subscribe').click();
     return this;
   }
@@ -110,7 +109,7 @@ export class HomePage {
       .first()
       .invoke('attr', 'data-product-id')
       .then((productId) => {
-        expect(productId, 'first visible product id').to.exist;
+        expect(productId, 'first visible product id').to.be.a('string');
         return Number(productId);
       });
   }
@@ -158,7 +157,7 @@ export class HomePage {
     cy.contains<HTMLElement>('h1, h2, h3, p, span, a, button, label', text).should(($element) => {
       const element = $element.get(0);
 
-      expect(element, `${label} element`).to.exist;
+      expect(element, `${label} element`).to.not.equal(undefined);
 
       if (!element) {
         throw new Error(`${label} element was not found`);

@@ -19,7 +19,8 @@ export class ProductDetailsPage {
   }
 
   setQuantiy(quantity: number) {
-    cy.get('#quantity').clear().type(String(quantity));
+    cy.get('#quantity').clear();
+    cy.get('#quantity').type(String(quantity));
     return this;
   }
 
@@ -34,9 +35,12 @@ export class ProductDetailsPage {
   }
 
   fillReviewForm(data: ContactMessage) {
-    cy.get('#name').clear().type(data.name);
-    cy.get('#email').clear().type(data.email);
-    cy.get('#review').clear().type(data.message);
+    cy.get('#name').clear();
+    cy.get('#name').type(data.name);
+    cy.get('#email').clear();
+    cy.get('#email').type(data.email);
+    cy.get('#review').clear();
+    cy.get('#review').type(data.message);
     return this;
   }
 

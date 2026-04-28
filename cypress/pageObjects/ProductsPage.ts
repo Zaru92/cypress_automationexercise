@@ -1,5 +1,3 @@
-import type { getSearchQuery } from '../testData/productSearchFactory';
-
 export class ProductsPage {
   assertProductsPageVisible() {
     cy.url().should('include', 'products');
@@ -31,7 +29,7 @@ export class ProductsPage {
       .first()
       .invoke('attr', 'data-product-id')
       .then((productId) => {
-        expect(productId, 'first visible product id').to.exist;
+        expect(productId, 'first visible product id').to.be.a('string');
         return Number(productId);
       });
   }
@@ -63,7 +61,8 @@ export class ProductsPage {
   }
 
   searchProduct(productName: string) {
-    cy.get('#search_product').click().clear().type(productName);
+    cy.get('#search_product').clear();
+    cy.get('#search_product').type(productName);
     cy.get('#submit_search').click();
     return this;
   }

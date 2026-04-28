@@ -4,7 +4,7 @@ export {};
 
 declare global {
   namespace Cypress {
-    interface Chainable<Subject = any> {
+    interface Chainable {
       getByQa(value: string): Chainable<JQuery<HTMLElement>>;
       ensureAppDomain(): Chainable<void>;
     }

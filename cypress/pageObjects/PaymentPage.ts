@@ -9,11 +9,16 @@ export class PaymentPage {
   }
 
   fillForm(data: PaymentDetails) {
-    cy.get('[data-qa="name-on-card"]').clear().type(data.nameOnCard);
-    cy.get('[data-qa="card-number"]').clear().type(data.cardNumber);
-    cy.get('[data-qa="cvc"]').clear().type(data.cvc);
-    cy.get('[data-qa="expiry-month"]').clear().type(data.expirationMonth);
-    cy.get('[data-qa="expiry-year"]').clear().type(data.expirationYear);
+    cy.get('[data-qa="name-on-card"]').clear();
+    cy.get('[data-qa="name-on-card"]').type(data.nameOnCard);
+    cy.get('[data-qa="card-number"]').clear();
+    cy.get('[data-qa="card-number"]').type(data.cardNumber);
+    cy.get('[data-qa="cvc"]').clear();
+    cy.get('[data-qa="cvc"]').type(data.cvc);
+    cy.get('[data-qa="expiry-month"]').clear();
+    cy.get('[data-qa="expiry-month"]').type(data.expirationMonth);
+    cy.get('[data-qa="expiry-year"]').clear();
+    cy.get('[data-qa="expiry-year"]').type(data.expirationYear);
 
     return this;
   }

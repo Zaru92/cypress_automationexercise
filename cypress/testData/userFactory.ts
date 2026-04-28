@@ -32,8 +32,6 @@ export type User = {
   mobile: string;
 };
 
-const pad2 = (n: number) => n.toString().padStart(2, '0');
-
 const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 const randomString = (len = 6) => {

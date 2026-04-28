@@ -10,7 +10,7 @@ export class CartPage {
     return this;
   }
 
-  removeProduct(productId: Number) {
+  removeProduct(productId: number) {
     cy.get(`#product-${productId}`).find('.cart_quantity_delete').click();
     return this;
   }
@@ -22,7 +22,8 @@ export class CartPage {
 
   submitSubscription(email: string) {
     cy.contains('Subscription').should('be.visible');
-    cy.get('#susbscribe_email').click().clear().type(email);
+    cy.get('#susbscribe_email').clear();
+    cy.get('#susbscribe_email').type(email);
     cy.get('#subscribe').click();
     return this;
   }
@@ -76,7 +77,7 @@ export class CartPage {
     return this;
   }
 
-  assertProductQuantity(quantity: Number) {
+  assertProductQuantity(quantity: number) {
     cy.get('.cart_quantity')
       .invoke('text')
       .then((text) => {
