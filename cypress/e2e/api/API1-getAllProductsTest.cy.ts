@@ -1,8 +1,8 @@
-describe('API | Products', () => {
+describe('API | API 1: Get All Products List', () => {
   it('returns products list', () => {
-    cy.request('GET', 'https://automationexercise.com/api/productsList').then((response) => {
+    cy.request('GET', '/api/productsList').then((response) => {
       expect(response.status).to.eq(200);
-      // API zwraca body jako string JSON w wielu przypadkach — bezpiecznie parsujemy:
+
       const body = typeof response.body === 'string' ? JSON.parse(response.body) : response.body;
 
       expect(body).to.have.property('products');
