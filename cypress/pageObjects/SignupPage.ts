@@ -1,4 +1,4 @@
-import type { User } from '../testData/userFactory';
+import type { TestUser } from '../testData/userFactory';
 
 export class SignupPage {
   assertSignupFormVisible() {
@@ -7,7 +7,7 @@ export class SignupPage {
     return this;
   }
 
-  fillAccountInformation(user: User) {
+  fillAccountInformation(user: TestUser) {
     if (user.title === 'Mr') cy.get('#id_gender1').check();
     else cy.get('#id_gender2').check();
 
@@ -26,7 +26,7 @@ export class SignupPage {
     return this;
   }
 
-  fillAddressDetails(user: User) {
+  fillAddressDetails(user: TestUser) {
     cy.get("[data-qa='first_name']").type(user.firstName);
     cy.get("[data-qa='last_name']").type(user.lastName);
     cy.get("[data-qa='company']").type(user.company);

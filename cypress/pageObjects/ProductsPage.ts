@@ -1,9 +1,9 @@
-import { CategoryMenuComponent } from './components/CategoryMenuComponent';
-import { ProductListComponent } from './components/ProductListComponent';
+import { CategorySidebarComponent } from './components/CategorySidebarComponent';
+import { ProductGridComponent } from './components/ProductGridComponent';
 
 export class ProductsPage {
-  private readonly categoryMenu = new CategoryMenuComponent();
-  private readonly productList = new ProductListComponent();
+  private readonly categorySidebar = new CategorySidebarComponent();
+  private readonly productGrid = new ProductGridComponent();
 
   assertProductsPageVisible() {
     cy.url().should('include', 'products');
@@ -11,45 +11,45 @@ export class ProductsPage {
     return this;
   }
 
-  viewFirstProduct() {
+  openFirstProductDetails() {
     cy.get('[href="/product_details/1"]').click();
     return this;
   }
 
-  viewCategory(category: string, subcategory: string) {
-    this.categoryMenu.viewCategory(category, subcategory);
+  openCategoryProducts(category: string, subcategory: string) {
+    this.categorySidebar.openCategoryProducts(category, subcategory);
     return this;
   }
 
-  viewBrand(brand: string) {
+  openBrandProducts(brand: string) {
     cy.get('.brands_products').should('be.visible');
     cy.contains('.brands_products a', brand).click();
     return this;
   }
 
   getFirstVisibleProductId() {
-    return this.productList.getFirstVisibleProductId(
+    return this.productGrid.getFirstVisibleProductId(
       '.features_items a.add-to-cart[data-product-id]:visible',
     );
   }
 
   addToCart(productId: number) {
-    this.productList.addToCart(productId);
+    this.productGrid.addToCart(productId);
     return this;
   }
 
   continueShopping() {
-    this.productList.continueShopping();
+    this.productGrid.continueShopping();
     return this;
   }
 
-  viewCart() {
-    this.productList.viewCart();
+  openCartFromModal() {
+    this.productGrid.openCartFromModal();
     return this;
   }
 
   getProductPrice(productId: number) {
-    return this.productList.getProductPrice(productId);
+    return this.productGrid.getProductPrice(productId);
   }
 
   searchProduct(productName: string) {
@@ -59,18 +59,23 @@ export class ProductsPage {
     return this;
   }
 
-  assertSearchedProductVisible(query: string) {
-    const q = query.trim().toLowerCase();
+  assertSearchResultsContainProduct(query: string) {
+    const normalizedQuery = query.trim().toLowerCase();
 
     cy.get('.features_items .productinfo p')
       .filter(':visible')
       .then(($names) => {
-        const names = $names.toArray().map((el) => (el.textContent ?? '').trim().toLowerCase());
+        const productNames = $names
+          .toArray()
+          .map((element) => (element.textContent ?? '').trim().toLowerCase());
 
-        const matches = names.filter((t) => t.includes(q));
-        expect(matches.length, `at least 1 product name should include "${q}"`).to.be.greaterThan(
-          0,
+        const matchingProductNames = productNames.filter((productName) =>
+          productName.includes(normalizedQuery),
         );
+        expect(
+          matchingProductNames.length,
+          `at least 1 product name should include "${normalizedQuery}"`,
+        ).to.be.greaterThan(0);
       });
     return this;
   }
@@ -80,12 +85,12 @@ export class ProductsPage {
     return this;
   }
 
-  assertProperCategoryVisible(category: string, subcategory: string) {
+  assertCategoryProductsHeadingVisible(category: string, subcategory: string) {
     cy.contains(`${category} - ${subcategory} Products`).should('be.visible');
     return this;
   }
 
-  assertProperBrandVisible(brand: string) {
+  assertBrandProductsPageVisible(brand: string) {
     cy.location('pathname').should((pathname) => {
       expect(decodeURIComponent(pathname)).to.eq(`/brand_products/${brand}`);
     });

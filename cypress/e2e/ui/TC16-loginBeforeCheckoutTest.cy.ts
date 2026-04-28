@@ -1,41 +1,41 @@
-import { createRandomUser } from '../../testData/userFactory';
-import type { User } from '../../testData/userFactory';
-import { createRandomContactMessage } from '../../testData/contactFactory';
-import { createRandomPaymentDetails } from '../../testData/paymentFactory';
+import { createRandomTestUser } from '../../testData/userFactory';
+import type { TestUser } from '../../testData/userFactory';
+import { createRandomContactFormData } from '../../testData/contactFactory';
+import { createRandomCardPaymentDetails } from '../../testData/paymentFactory';
 
 import { CartPage } from '../../pageObjects/CartPage';
 
-import { addProductsAndViewCart } from '../../support/flows/cartFlows';
+import { addProductsToCartAndOpenCart } from '../../support/flows/cartFlows';
 import { placeOrderAndContinue } from '../../support/flows/orderFlows';
 import {
-  deleteLoggedUserViaUi,
-  loginViaUi,
+  deleteLoggedInUserViaUi,
+  loginUserViaUi,
   registerUserViaUiAndLogout,
 } from '../../support/flows/userFlows';
 
 describe('Regression | Test Case 16: Place Order: Login before Checkout', () => {
-  let user: User;
+  let user: TestUser;
 
   before(() => {
-    user = createRandomUser();
+    user = createRandomTestUser();
 
     registerUserViaUiAndLogout(user);
   });
 
   it('logs in with correct credentials before placing order and deletes the account', () => {
-    const data = createRandomContactMessage();
-    const paymentData = createRandomPaymentDetails();
+    const data = createRandomContactFormData();
+    const paymentData = createRandomCardPaymentDetails();
 
     const cart = new CartPage();
 
-    const home = loginViaUi(user);
+    const home = loginUserViaUi(user);
 
     home.assertLoaded();
-    addProductsAndViewCart(home, [1, 2]);
+    addProductsToCartAndOpenCart(home, [1, 2]);
 
     cart.assertCartPageVisible().proceedToCheckout();
 
     placeOrderAndContinue(user, data, paymentData);
-    deleteLoggedUserViaUi(user);
+    deleteLoggedInUserViaUi(user);
   });
 });

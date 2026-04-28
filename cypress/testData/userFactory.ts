@@ -14,7 +14,7 @@ export type MonthName =
   | 'November'
   | 'December';
 
-export type User = {
+export type TestUser = {
   name: string;
   email: string;
   password: string;
@@ -51,7 +51,7 @@ const MONTHS: MonthName[] = [
 
 const randomMonthName = (): MonthName => randomChoice(MONTHS);
 
-export const createRandomUser = (): User => {
+export const createRandomTestUser = (): TestUser => {
   const stamp = `${Date.now()}-${randomInt(1000, 9999)}`;
 
   const firstName = `Michal${randomString(3)}`;

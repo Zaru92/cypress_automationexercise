@@ -1,23 +1,23 @@
-import { createRandomUser } from '../../testData/userFactory';
-import type { User } from '../../testData/userFactory';
+import { createRandomTestUser } from '../../testData/userFactory';
+import type { TestUser } from '../../testData/userFactory';
 
 import {
-  deleteLoggedUserViaUi,
-  loginViaUi,
+  deleteLoggedInUserViaUi,
+  loginUserViaUi,
   registerUserViaUiAndLogout,
 } from '../../support/flows/userFlows';
 
 describe('Smoke | "Test Case 2: Login User with correct email and password"', () => {
-  let user: User;
+  let user: TestUser;
 
   before(() => {
-    user = createRandomUser();
+    user = createRandomTestUser();
 
     registerUserViaUiAndLogout(user);
   });
 
   it('logs in with correct credentials and deletes the account', () => {
-    loginViaUi(user);
-    deleteLoggedUserViaUi(user);
+    loginUserViaUi(user);
+    deleteLoggedInUserViaUi(user);
   });
 });

@@ -10,7 +10,7 @@ describe('Smoke | Test Case 8: Verify All Products and product detail page', () 
 
     home.visit().assertLoaded().goToProductsPage();
 
-    products.assertProductsPageVisible().viewFirstProduct();
+    products.assertProductsPageVisible().openFirstProductDetails();
 
     details.assertProductDetailsPageVisible();
   });

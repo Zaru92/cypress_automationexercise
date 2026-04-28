@@ -1,4 +1,4 @@
-export class AccountCreationSuccessPage {
+export class AccountCreatedPage {
   assertAccountCreated() {
     cy.url().should('include', 'account_created');
     cy.contains('Account Created!').should('be.visible');

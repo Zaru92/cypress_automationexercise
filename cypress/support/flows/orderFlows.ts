@@ -1,42 +1,42 @@
-import type { ContactMessage } from '../../testData/contactFactory';
-import type { PaymentDetails } from '../../testData/paymentFactory';
-import type { User } from '../../testData/userFactory';
+import type { ContactFormData } from '../../testData/contactFactory';
+import type { CardPaymentDetails } from '../../testData/paymentFactory';
+import type { TestUser } from '../../testData/userFactory';
 import { CheckoutPage } from '../../pageObjects/CheckoutPage';
 import { HomePage } from '../../pageObjects/HomePage';
-import { OrderPlacementSuccessPage } from '../../pageObjects/OrderPlacementSuccessPage';
+import { OrderConfirmationPage } from '../../pageObjects/OrderConfirmationPage';
 import { PaymentPage } from '../../pageObjects/PaymentPage';
 
-export const completeCheckout = (
-  user: User,
-  message: ContactMessage,
-  paymentDetails: PaymentDetails,
+export const completeCheckoutAndPay = (
+  user: TestUser,
+  message: ContactFormData,
+  paymentDetails: CardPaymentDetails,
 ) => {
   new CheckoutPage()
     .assertCheckoutPageVisible()
-    .assertAddressDetails(user)
-    .fillForm(message)
+    .assertDeliveryAddressDetails(user)
+    .enterOrderComment(message)
     .placeOrder();
-  new PaymentPage().assertPaymentPageVisible().fillForm(paymentDetails).submit();
+  new PaymentPage().assertPaymentPageVisible().fillPaymentForm(paymentDetails).submitPayment();
 
-  return new OrderPlacementSuccessPage().assertOrderPlaced();
+  return new OrderConfirmationPage().assertOrderPlaced();
 };
 
 export const placeOrderAndContinue = (
-  user: User,
-  message: ContactMessage,
-  paymentDetails: PaymentDetails,
+  user: TestUser,
+  message: ContactFormData,
+  paymentDetails: CardPaymentDetails,
 ) => {
-  completeCheckout(user, message, paymentDetails).continueAfterPlacement();
+  completeCheckoutAndPay(user, message, paymentDetails).continueAfterPlacement();
 
   return new HomePage().assertLoaded();
 };
 
 export const placeOrderAndDownloadInvoice = (
-  user: User,
-  message: ContactMessage,
-  paymentDetails: PaymentDetails,
+  user: TestUser,
+  message: ContactFormData,
+  paymentDetails: CardPaymentDetails,
 ) => {
-  completeCheckout(user, message, paymentDetails).downloadInvoice().continueAfterPlacement();
+  completeCheckoutAndPay(user, message, paymentDetails).downloadInvoice().continueAfterPlacement();
 
   return new HomePage().assertLoaded();
 };

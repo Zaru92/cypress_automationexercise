@@ -1,33 +1,36 @@
-import { createRandomUser } from '../../testData/userFactory';
-import { createRandomContactMessage } from '../../testData/contactFactory';
-import { createRandomPaymentDetails } from '../../testData/paymentFactory';
+import { createRandomTestUser } from '../../testData/userFactory';
+import { createRandomContactFormData } from '../../testData/contactFactory';
+import { createRandomCardPaymentDetails } from '../../testData/paymentFactory';
 
 import { HomePage } from '../../pageObjects/HomePage';
 import { CartPage } from '../../pageObjects/CartPage';
 
-import { addProductsAndViewCart } from '../../support/flows/cartFlows';
+import { addProductsToCartAndOpenCart } from '../../support/flows/cartFlows';
 import { placeOrderAndDownloadInvoice } from '../../support/flows/orderFlows';
-import { deleteLoggedUserViaUi, registerFromAuthPage } from '../../support/flows/userFlows';
+import {
+  deleteLoggedInUserViaUi,
+  registerUserFromLoginSignupPage,
+} from '../../support/flows/userFlows';
 
 describe('Regression | Test Case 24: Download Invoice after purchase order', () => {
   it('register account during placing order and download invoice after purchase', () => {
-    const user = createRandomUser();
-    const data = createRandomContactMessage();
-    const paymentData = createRandomPaymentDetails();
+    const user = createRandomTestUser();
+    const data = createRandomContactFormData();
+    const paymentData = createRandomCardPaymentDetails();
 
     const home = new HomePage();
     const cart = new CartPage();
 
     home.visit().assertLoaded();
-    addProductsAndViewCart(home, [1, 2]);
+    addProductsToCartAndOpenCart(home, [1, 2]);
 
-    cart.assertCartPageVisible().proceedToCheckout().goToAuthPage();
+    cart.assertCartPageVisible().proceedToCheckout().goToLoginSignupPageFromCheckoutModal();
 
-    registerFromAuthPage(user).assertLoaded().goToCartPage();
+    registerUserFromLoginSignupPage(user).assertLoaded().goToCartPage();
 
     cart.assertCartPageVisible().proceedToCheckout();
 
     placeOrderAndDownloadInvoice(user, data, paymentData);
-    deleteLoggedUserViaUi(user);
+    deleteLoggedInUserViaUi(user);
   });
 });

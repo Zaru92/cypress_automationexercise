@@ -1,34 +1,38 @@
-import { createRandomUser } from '../../testData/userFactory';
-import type { User } from '../../testData/userFactory';
+import { createRandomTestUser } from '../../testData/userFactory';
+import type { TestUser } from '../../testData/userFactory';
 
-import { createAccount, deleteAccount, getUserByEmail } from '../../support/api/accountApi';
 import {
-  type ApiUserDetailsBody,
-  expectApiBody,
-  expectApiUserMatches,
+  createAccountViaApi,
+  deleteAccountViaApi,
+  getUserDetailsByEmail,
+} from '../../support/api/accountApi';
+import {
+  type GetUserDetailsResponseBody,
+  expectOkApiResponseBody,
+  expectApiUserDetailsToMatch,
   expectSuccessfulCreateAccount,
   expectSuccessfulDeleteAccount,
 } from '../../support/api/assertions';
 
 describe('API | API 14: GET user account detail by email', () => {
-  let user: User;
+  let user: TestUser;
 
   before(() => {
-    user = createRandomUser();
+    user = createRandomTestUser();
 
-    createAccount(user).then(expectSuccessfulCreateAccount);
+    createAccountViaApi(user).then(expectSuccessfulCreateAccount);
   });
 
   after(() => {
-    deleteAccount(user).then(expectSuccessfulDeleteAccount);
+    deleteAccountViaApi(user).then(expectSuccessfulDeleteAccount);
   });
 
   it('get user account details by email', () => {
-    getUserByEmail(user.email).then((response) => {
-      const body = expectApiBody<ApiUserDetailsBody>(response);
+    getUserDetailsByEmail(user.email).then((response) => {
+      const body = expectOkApiResponseBody<GetUserDetailsResponseBody>(response);
 
       expect(body.responseCode).to.eq(200);
-      expectApiUserMatches(body.user, user);
+      expectApiUserDetailsToMatch(body.user, user);
     });
   });
 });

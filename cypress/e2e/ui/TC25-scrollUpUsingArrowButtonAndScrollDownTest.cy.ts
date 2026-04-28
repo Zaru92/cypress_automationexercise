@@ -9,7 +9,7 @@ describe('Regression | Test Case 25: Verify Scroll Up using Arrow button and Scr
       .assertLoaded()
       .scrollToBottom()
       .assertSubscriptionVisible()
-      .clickScrollUpArrow()
+      .scrollToTopUsingArrow()
       .assertPageScrolledToTop()
       .assertHeroTextVisible();
   });

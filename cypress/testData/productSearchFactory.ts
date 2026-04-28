@@ -1,6 +1,6 @@
 import { randomChoice } from './random';
 
-export const getSearchQuery = (): string => {
+export const getRandomProductSearchQuery = (): string => {
   const queries = ['Dress', 'Top', 'Tshirt', 'Jeans', 'Saree'];
   return randomChoice(queries);
 };

@@ -1,4 +1,4 @@
-import type { PaymentDetails } from '../testData/paymentFactory';
+import type { CardPaymentDetails } from '../testData/paymentFactory';
 
 export class PaymentPage {
   assertPaymentPageVisible() {
@@ -8,7 +8,7 @@ export class PaymentPage {
     return this;
   }
 
-  fillForm(data: PaymentDetails) {
+  fillPaymentForm(data: CardPaymentDetails) {
     cy.get('[data-qa="name-on-card"]').clear();
     cy.get('[data-qa="name-on-card"]').type(data.nameOnCard);
     cy.get('[data-qa="card-number"]').clear();
@@ -23,7 +23,7 @@ export class PaymentPage {
     return this;
   }
 
-  submit() {
+  submitPayment() {
     cy.get('[data-qa="pay-button"]').click();
 
     return this;

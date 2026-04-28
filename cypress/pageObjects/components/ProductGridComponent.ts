@@ -1,4 +1,4 @@
-export class ProductListComponent {
+export class ProductGridComponent {
   addToCart(productId: number) {
     cy.get(`a[data-product-id="${productId}"]`).first().click();
     cy.contains('Added!').should('be.visible');
@@ -10,7 +10,7 @@ export class ProductListComponent {
     return this;
   }
 
-  viewCart() {
+  openCartFromModal() {
     cy.contains('View Cart').should('be.visible').click();
     return this;
   }

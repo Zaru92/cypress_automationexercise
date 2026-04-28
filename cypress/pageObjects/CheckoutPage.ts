@@ -1,9 +1,9 @@
-import type { User } from '../testData/userFactory';
-import type { ContactMessage } from '../testData/contactFactory';
-import { AddressBlockComponent } from './components/AddressBlockComponent';
+import type { TestUser } from '../testData/userFactory';
+import type { ContactFormData } from '../testData/contactFactory';
+import { AddressDetailsBlock } from './components/AddressDetailsBlock';
 
 export class CheckoutPage {
-  private readonly addressBlock = new AddressBlockComponent();
+  private readonly addressDetailsBlock = new AddressDetailsBlock();
 
   assertCheckoutPageVisible() {
     cy.url().should('include', 'checkout');
@@ -11,17 +11,17 @@ export class CheckoutPage {
     return this;
   }
 
-  assertAddressDetails(user: User) {
-    this.addressBlock.assertUserAddressVisible('#address_delivery', user);
+  assertDeliveryAddressDetails(user: TestUser) {
+    this.addressDetailsBlock.assertUserAddressVisible('#address_delivery', user);
     return this;
   }
 
-  assertBillingDetails(user: User) {
-    this.addressBlock.assertUserAddressVisible('#address_invoice', user);
+  assertBillingAddressDetails(user: TestUser) {
+    this.addressDetailsBlock.assertUserAddressVisible('#address_invoice', user);
     return this;
   }
 
-  fillForm(data: ContactMessage) {
+  enterOrderComment(data: ContactFormData) {
     cy.get('.form-control').clear();
     cy.get('.form-control').type(data.message);
     return this;

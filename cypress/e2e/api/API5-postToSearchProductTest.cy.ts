@@ -1,6 +1,6 @@
-import { getSearchQuery } from '../../testData/productSearchFactory';
+import { getRandomProductSearchQuery } from '../../testData/productSearchFactory';
 
-import { expectApiBody } from '../../support/api/assertions';
+import { expectOkApiResponseBody } from '../../support/api/assertions';
 
 type SearchProduct = {
   id: number;
@@ -17,7 +17,7 @@ type SearchProductBody = {
 
 describe('API | API 5: POST To Search Product', () => {
   it('returns searched products list', () => {
-    const searchProduct = getSearchQuery();
+    const searchProduct = getRandomProductSearchQuery();
 
     cy.request({
       method: 'POST',
@@ -27,7 +27,7 @@ describe('API | API 5: POST To Search Product', () => {
         search_product: searchProduct,
       },
     }).then((response) => {
-      const body = expectApiBody<SearchProductBody>(response);
+      const body = expectOkApiResponseBody<SearchProductBody>(response);
 
       expect(body.responseCode).to.eq(200);
       expect(body).to.have.property('products');

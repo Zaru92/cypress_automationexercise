@@ -1,29 +1,29 @@
-import { createRandomUser } from '../../testData/userFactory';
-import type { User } from '../../testData/userFactory';
+import { createRandomTestUser } from '../../testData/userFactory';
+import type { TestUser } from '../../testData/userFactory';
 
 import {
-  deleteLoggedUserViaUi,
-  loginViaUi,
-  logoutLoggedUserViaUi,
+  deleteLoggedInUserViaUi,
+  loginUserViaUi,
+  logoutCurrentUserViaUi,
   registerUserViaUiAndLogout,
 } from '../../support/flows/userFlows';
 
 describe('Regression | "Test Case 4: Logout User"', () => {
-  let user: User;
+  let user: TestUser;
 
   before(() => {
-    user = createRandomUser();
+    user = createRandomTestUser();
 
     registerUserViaUiAndLogout(user);
   });
 
   after(() => {
-    loginViaUi(user);
-    deleteLoggedUserViaUi(user);
+    loginUserViaUi(user);
+    deleteLoggedInUserViaUi(user);
   });
 
   it('logout current user', () => {
-    loginViaUi(user);
-    logoutLoggedUserViaUi(user);
+    loginUserViaUi(user);
+    logoutCurrentUserViaUi(user);
   });
 });

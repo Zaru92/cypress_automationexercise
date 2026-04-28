@@ -1,4 +1,4 @@
-import { expectApiMessage } from '../../support/api/assertions';
+import { expectApiResponseMessage } from '../../support/api/assertions';
 
 describe('API | API 10: POST To Verify Login with invalid details', () => {
   it('verifies login with invalid user credentials', () => {
@@ -11,7 +11,7 @@ describe('API | API 10: POST To Verify Login with invalid details', () => {
         password: 'Password',
       },
     }).then((response) => {
-      expectApiMessage(response, 404, 'User not found!');
+      expectApiResponseMessage(response, 404, 'User not found!');
     });
   });
 });

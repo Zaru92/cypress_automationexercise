@@ -1,4 +1,4 @@
-import { expectApiMessage } from '../../support/api/assertions';
+import { expectApiResponseMessage } from '../../support/api/assertions';
 
 describe('API | API 9: DELETE To Verify Login', () => {
   it('returns method not supported for verify login DELETE request', () => {
@@ -11,7 +11,7 @@ describe('API | API 9: DELETE To Verify Login', () => {
         password: 'Password',
       },
     }).then((response) => {
-      expectApiMessage(response, 405, 'This request method is not supported.');
+      expectApiResponseMessage(response, 405, 'This request method is not supported.');
     });
   });
 });

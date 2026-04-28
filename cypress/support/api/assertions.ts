@@ -1,15 +1,15 @@
-import type { User } from '../../testData/userFactory';
-import { parseApiResponse } from '../apiResponse';
+import type { TestUser } from '../../testData/userFactory';
+import { parseApiResponse } from './apiResponse';
 
-export type ApiMessageBody = {
+export type ApiMessageResponseBody = {
   responseCode: number;
   message: string;
 };
 
-export type ApiUser = {
+export type ApiUserDetails = {
   name: string;
   email: string;
-  title: User['title'];
+  title: TestUser['title'];
   birth_day: string;
   birth_month: string;
   birth_year: string;
@@ -24,22 +24,24 @@ export type ApiUser = {
   zipcode: string;
 };
 
-export type ApiUserDetailsBody = {
+export type GetUserDetailsResponseBody = {
   responseCode: number;
-  user: Partial<ApiUser>;
+  user: Partial<ApiUserDetails>;
 };
 
-export const expectApiBody = <TBody>(response: Cypress.Response<string | TBody>): TBody => {
+export const expectOkApiResponseBody = <TBody>(
+  response: Cypress.Response<string | TBody>,
+): TBody => {
   expect(response.status).to.eq(200);
   return parseApiResponse<TBody>(response);
 };
 
-export const expectApiMessage = <TBody extends ApiMessageBody>(
+export const expectApiResponseMessage = <TBody extends ApiMessageResponseBody>(
   response: Cypress.Response<string | TBody>,
   responseCode: number,
   message: string,
 ): TBody => {
-  const body = expectApiBody<TBody>(response);
+  const body = expectOkApiResponseBody<TBody>(response);
 
   expect(body.responseCode).to.eq(responseCode);
   expect(body.message).to.eq(message);
@@ -48,16 +50,16 @@ export const expectApiMessage = <TBody extends ApiMessageBody>(
 };
 
 export const expectSuccessfulCreateAccount = (
-  response: Cypress.Response<string | ApiMessageBody>,
-) => expectApiMessage(response, 201, 'User created!');
+  response: Cypress.Response<string | ApiMessageResponseBody>,
+) => expectApiResponseMessage(response, 201, 'User created!');
 
 export const expectSuccessfulDeleteAccount = (
-  response: Cypress.Response<string | ApiMessageBody>,
-) => expectApiMessage(response, 200, 'Account deleted!');
+  response: Cypress.Response<string | ApiMessageResponseBody>,
+) => expectApiResponseMessage(response, 200, 'Account deleted!');
 
-export const expectApiUserMatches = (
-  actualUser: Partial<ApiUser>,
-  identityUser: User,
+export const expectApiUserDetailsToMatch = (
+  actualUser: Partial<ApiUserDetails>,
+  identityUser: TestUser,
   detailsUser = identityUser,
 ) => {
   expect(actualUser).to.include({

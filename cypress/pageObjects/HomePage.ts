@@ -1,11 +1,11 @@
-import { CategoryMenuComponent } from './components/CategoryMenuComponent';
-import { ProductListComponent } from './components/ProductListComponent';
+import { CategorySidebarComponent } from './components/CategorySidebarComponent';
+import { ProductGridComponent } from './components/ProductGridComponent';
 import { SubscriptionComponent } from './components/SubscriptionComponent';
 
 export class HomePage {
-  private readonly categoryMenu = new CategoryMenuComponent();
-  private readonly productList = new ProductListComponent();
-  private readonly subscription = new SubscriptionComponent();
+  private readonly categorySidebar = new CategorySidebarComponent();
+  private readonly productGrid = new ProductGridComponent();
+  private readonly subscriptionForm = new SubscriptionComponent();
 
   visit() {
     cy.visit('/');
@@ -43,32 +43,32 @@ export class HomePage {
     return this;
   }
 
-  viewCategory(category: string, subcategory: string) {
-    this.categoryMenu.viewCategory(category, subcategory);
+  openCategoryProducts(category: string, subcategory: string) {
+    this.categorySidebar.openCategoryProducts(category, subcategory);
     return this;
   }
 
-  viewFirstProduct() {
+  openFirstProductDetails() {
     cy.get('[href="/product_details/1"]').click();
     return this;
   }
 
   addToCart(productId: number) {
-    this.productList.addToCart(productId);
+    this.productGrid.addToCart(productId);
     return this;
   }
 
   getProductPrice(productId: number) {
-    return this.productList.getProductPrice(productId);
+    return this.productGrid.getProductPrice(productId);
   }
 
   continueShopping() {
-    this.productList.continueShopping();
+    this.productGrid.continueShopping();
     return this;
   }
 
-  viewCart() {
-    this.productList.viewCart();
+  openCartFromModal() {
+    this.productGrid.openCartFromModal();
     return this;
   }
 
@@ -77,18 +77,18 @@ export class HomePage {
     return this;
   }
 
-  deleteAccount() {
+  deleteAccountAndAssertDeleted() {
     cy.get('[href="/delete_account"]').click();
     cy.contains('Account Deleted!').should('be.visible');
     return this;
   }
 
-  continueAfterDeleted() {
+  continueAfterAccountDeletion() {
     cy.get("[data-qa='continue-button']").click();
     return this;
   }
 
-  assertAccountDeleted(name: string) {
+  assertDeletedUserIsNotLoggedIn(name: string) {
     cy.contains(`Logged in as ${name}`).should('not.exist');
     return this;
   }
@@ -99,21 +99,21 @@ export class HomePage {
   }
 
   submitSubscription(email: string) {
-    this.subscription.submit(email);
+    this.subscriptionForm.subscribeWithEmail(email);
     return this;
   }
 
   assertSubscriptionSuccessMessageVisible() {
-    this.subscription.assertSuccessMessageVisible();
+    this.subscriptionForm.assertSuccessMessageVisible();
     return this;
   }
 
   getFirstVisibleRecommendedProductId() {
-    return this.productList.getFirstVisibleProductId('.carousel-inner .add-to-cart');
+    return this.productGrid.getFirstVisibleProductId('.carousel-inner .add-to-cart');
   }
 
-  addToCartFirstVisibleRecommendedProduct(productId: number) {
-    this.productList.addToCart(productId);
+  addRecommendedProductToCart(productId: number) {
+    this.productGrid.addToCart(productId);
     return this;
   }
 
@@ -127,7 +127,7 @@ export class HomePage {
     return this;
   }
 
-  clickScrollUpArrow() {
+  scrollToTopUsingArrow() {
     cy.get('#scrollUp').should('be.visible').click();
     return this;
   }

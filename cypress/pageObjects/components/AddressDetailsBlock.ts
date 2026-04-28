@@ -1,7 +1,7 @@
-import type { User } from '../../testData/userFactory';
+import type { TestUser } from '../../testData/userFactory';
 
-export class AddressBlockComponent {
-  assertUserAddressVisible(selector: string, user: User) {
+export class AddressDetailsBlock {
+  assertUserAddressVisible(selector: string, user: TestUser) {
     cy.get(selector).within(() => {
       [
         user.firstName,

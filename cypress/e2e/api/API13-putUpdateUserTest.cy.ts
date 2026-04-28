@@ -1,46 +1,46 @@
-import { createRandomUser } from '../../testData/userFactory';
-import type { User } from '../../testData/userFactory';
+import { createRandomTestUser } from '../../testData/userFactory';
+import type { TestUser } from '../../testData/userFactory';
 
 import {
-  createAccount,
-  deleteAccount,
-  getUserByEmail,
-  updateAccount,
+  createAccountViaApi,
+  deleteAccountViaApi,
+  getUserDetailsByEmail,
+  updateAccountViaApi,
 } from '../../support/api/accountApi';
 import {
-  type ApiUserDetailsBody,
-  expectApiBody,
-  expectApiMessage,
-  expectApiUserMatches,
+  type GetUserDetailsResponseBody,
+  expectOkApiResponseBody,
+  expectApiResponseMessage,
+  expectApiUserDetailsToMatch,
   expectSuccessfulCreateAccount,
   expectSuccessfulDeleteAccount,
 } from '../../support/api/assertions';
 
 describe('API | API 13: PUT METHOD To Update User Account', () => {
-  let user: User;
-  let newUser: User;
+  let user: TestUser;
+  let newUser: TestUser;
 
   before(() => {
-    user = createRandomUser();
+    user = createRandomTestUser();
 
-    createAccount(user).then(expectSuccessfulCreateAccount);
+    createAccountViaApi(user).then(expectSuccessfulCreateAccount);
   });
 
   after(() => {
-    deleteAccount(user).then(expectSuccessfulDeleteAccount);
+    deleteAccountViaApi(user).then(expectSuccessfulDeleteAccount);
   });
 
   it('update user account', () => {
-    newUser = createRandomUser();
+    newUser = createRandomTestUser();
 
-    updateAccount(user, newUser).then((response) => {
-      expectApiMessage(response, 200, 'User updated!');
+    updateAccountViaApi(user, newUser).then((response) => {
+      expectApiResponseMessage(response, 200, 'User updated!');
 
-      getUserByEmail(user.email).then((response) => {
-        const body = expectApiBody<ApiUserDetailsBody>(response);
+      getUserDetailsByEmail(user.email).then((response) => {
+        const body = expectOkApiResponseBody<GetUserDetailsResponseBody>(response);
 
         expect(body.responseCode).to.eq(200);
-        expectApiUserMatches(body.user, user, newUser);
+        expectApiUserDetailsToMatch(body.user, user, newUser);
       });
     });
   });

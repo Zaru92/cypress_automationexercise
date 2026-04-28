@@ -1,4 +1,4 @@
-import type { ContactMessage } from '../testData/contactFactory';
+import type { ContactFormData } from '../testData/contactFactory';
 
 export class ContactUsPage {
   assertContactUsPageVisible() {
@@ -7,7 +7,7 @@ export class ContactUsPage {
     return this;
   }
 
-  fillForm(data: ContactMessage) {
+  fillContactForm(data: ContactFormData) {
     cy.get("[data-qa='name']").clear();
     cy.get("[data-qa='name']").type(data.name);
     cy.get("[data-qa='email']").clear();
@@ -25,7 +25,7 @@ export class ContactUsPage {
     return this;
   }
 
-  submit() {
+  submitContactForm() {
     cy.get("[data-qa='submit-button']").click();
     return this;
   }
@@ -35,7 +35,7 @@ export class ContactUsPage {
     return this;
   }
 
-  clickHome() {
+  goToHomePage() {
     cy.contains('Home').click();
     return this;
   }

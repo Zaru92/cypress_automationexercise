@@ -1,4 +1,4 @@
-import { expectApiMessage } from '../../support/api/assertions';
+import { expectApiResponseMessage } from '../../support/api/assertions';
 
 describe('API | API 8: POST To Verify Login without email parameter', () => {
   it('verifies login with valid user credentials', () => {
@@ -10,7 +10,7 @@ describe('API | API 8: POST To Verify Login without email parameter', () => {
         password: 'Password',
       },
     }).then((response) => {
-      expectApiMessage(
+      expectApiResponseMessage(
         response,
         400,
         'Bad request, email or password parameter is missing in POST request.',

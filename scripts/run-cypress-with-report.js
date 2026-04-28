@@ -5,7 +5,7 @@ const { spawnSync } = require('child_process');
 const projectRoot = process.cwd();
 const reportJsonDir = path.join(projectRoot, 'cypress', 'reports', 'mochawesome', '.jsons');
 
-function runCommand(command, args) {
+function runCommandAndReturnExitCode(command, args) {
   const result = spawnSync(command, args, {
     stdio: 'inherit',
     shell: false,
@@ -14,13 +14,13 @@ function runCommand(command, args) {
   return result.status ?? 1;
 }
 
-const cleanExitCode = runCommand('npm', ['run', 'report:clean']);
+const cleanExitCode = runCommandAndReturnExitCode('npm', ['run', 'report:clean']);
 if (cleanExitCode !== 0) {
   process.exit(cleanExitCode);
 }
 
 const cypressArgs = process.argv.slice(2);
-const testExitCode = runCommand('npx', ['cypress', 'run', ...cypressArgs]);
+const testExitCode = runCommandAndReturnExitCode('npx', ['cypress', 'run', ...cypressArgs]);
 
 const hasJsonReports =
   fs.existsSync(reportJsonDir) &&
@@ -31,7 +31,7 @@ if (!hasJsonReports) {
   process.exit(testExitCode);
 }
 
-const reportBuildExitCode = runCommand('npm', ['run', 'report:build']);
+const reportBuildExitCode = runCommandAndReturnExitCode('npm', ['run', 'report:build']);
 if (reportBuildExitCode !== 0) {
   process.exit(reportBuildExitCode);
 }

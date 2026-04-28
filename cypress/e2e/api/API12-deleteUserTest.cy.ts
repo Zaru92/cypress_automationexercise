@@ -1,22 +1,22 @@
-import { createRandomUser } from '../../testData/userFactory';
-import type { User } from '../../testData/userFactory';
+import { createRandomTestUser } from '../../testData/userFactory';
+import type { TestUser } from '../../testData/userFactory';
 
-import { createAccount, deleteAccount } from '../../support/api/accountApi';
+import { createAccountViaApi, deleteAccountViaApi } from '../../support/api/accountApi';
 import {
   expectSuccessfulCreateAccount,
   expectSuccessfulDeleteAccount,
 } from '../../support/api/assertions';
 
 describe('API | API 12: DELETE METHOD To Delete User Account', () => {
-  let user: User;
+  let user: TestUser;
 
   before(() => {
-    user = createRandomUser();
+    user = createRandomTestUser();
 
-    createAccount(user).then(expectSuccessfulCreateAccount);
+    createAccountViaApi(user).then(expectSuccessfulCreateAccount);
   });
 
   it('delete user account', () => {
-    deleteAccount(user).then(expectSuccessfulDeleteAccount);
+    deleteAccountViaApi(user).then(expectSuccessfulDeleteAccount);
   });
 });

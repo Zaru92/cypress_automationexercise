@@ -1,5 +1,5 @@
 export class SubscriptionComponent {
-  submit(email: string) {
+  subscribeWithEmail(email: string) {
     cy.contains('Subscription').should('be.visible');
     cy.get('#susbscribe_email').clear();
     cy.get('#susbscribe_email').type(email);

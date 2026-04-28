@@ -1,10 +1,10 @@
-type AddToCartPage<TPage> = {
+type PageWithAddToCartModal<TPage> = {
   addToCart(productId: number): TPage;
   continueShopping(): TPage;
-  viewCart(): TPage;
+  openCartFromModal(): TPage;
 };
 
-export const addProductsAndViewCart = <TPage extends AddToCartPage<TPage>>(
+export const addProductsToCartAndOpenCart = <TPage extends PageWithAddToCartModal<TPage>>(
   page: TPage,
   productIds: number[],
 ) => {
@@ -16,7 +16,7 @@ export const addProductsAndViewCart = <TPage extends AddToCartPage<TPage>>(
     }
   });
 
-  page.viewCart();
+  page.openCartFromModal();
 
   return page;
 };

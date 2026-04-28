@@ -1,7 +1,7 @@
 import { SubscriptionComponent } from './components/SubscriptionComponent';
 
 export class CartPage {
-  private readonly subscription = new SubscriptionComponent();
+  private readonly subscriptionForm = new SubscriptionComponent();
 
   assertCartPageVisible() {
     cy.url().should('include', 'view_cart');
@@ -19,13 +19,13 @@ export class CartPage {
     return this;
   }
 
-  goToAuthPage() {
+  goToLoginSignupPageFromCheckoutModal() {
     cy.get('#checkoutModal a').click();
     return this;
   }
 
   submitSubscription(email: string) {
-    this.subscription.submit(email);
+    this.subscriptionForm.subscribeWithEmail(email);
     return this;
   }
 
@@ -40,7 +40,7 @@ export class CartPage {
   }
 
   assertSubscriptionSuccessMessageVisible() {
-    this.subscription.assertSuccessMessageVisible();
+    this.subscriptionForm.assertSuccessMessageVisible();
     return this;
   }
 

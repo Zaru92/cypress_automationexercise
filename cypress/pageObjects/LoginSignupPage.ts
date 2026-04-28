@@ -1,5 +1,5 @@
-export class AuthPage {
-  assertLoginOrSignupPageVisible() {
+export class LoginSignupPage {
+  assertLoginSignupPageVisible() {
     cy.url().should('include', 'login');
     cy.get('#form').should('be.visible');
     return this;
@@ -11,7 +11,7 @@ export class AuthPage {
     return this;
   }
 
-  enterPassword(password: string) {
+  enterLoginPassword(password: string) {
     cy.get("[data-qa='login-password']").clear();
     cy.get("[data-qa='login-password']").type(password);
     return this;
@@ -29,12 +29,12 @@ export class AuthPage {
     return this;
   }
 
-  clickLoginButton() {
+  submitLogin() {
     cy.get("[data-qa='login-button']").click();
     return this;
   }
 
-  clickSignupButton() {
+  submitSignup() {
     cy.get("[data-qa='signup-button']").click();
     return this;
   }
@@ -44,7 +44,7 @@ export class AuthPage {
     return this;
   }
 
-  assertInvalidSignUpErrorMessageVisible() {
+  assertExistingEmailSignupErrorVisible() {
     cy.contains('Email Address already exist!').should('be.visible');
     return this;
   }

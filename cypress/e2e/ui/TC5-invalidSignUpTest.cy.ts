@@ -1,5 +1,5 @@
 import { HomePage } from '../../pageObjects/HomePage';
-import { AuthPage } from '../../pageObjects/AuthPage';
+import { LoginSignupPage } from '../../pageObjects/LoginSignupPage';
 
 describe('Regression | "Test Case 5: Register User with existing email"', () => {
   it('registers a new user with existing email and verify error message is displayed', () => {
@@ -7,15 +7,15 @@ describe('Regression | "Test Case 5: Register User with existing email"', () => 
     const userEmail = 'test@test.test';
 
     const home = new HomePage();
-    const auth = new AuthPage();
+    const auth = new LoginSignupPage();
 
     home.visit().assertLoaded().goToSignupLoginPage();
 
     auth
-      .assertLoginOrSignupPageVisible()
+      .assertLoginSignupPageVisible()
       .enterSignupName(userName)
       .enterSignupEmail(userEmail)
-      .clickSignupButton()
-      .assertInvalidSignUpErrorMessageVisible();
+      .submitSignup()
+      .assertExistingEmailSignupErrorVisible();
   });
 });

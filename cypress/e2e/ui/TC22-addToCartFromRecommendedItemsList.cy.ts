@@ -11,7 +11,7 @@ describe('Smoke | Test Case 22: Add to cart from Recommended items', () => {
       .assertLoaded()
       .getFirstVisibleRecommendedProductId()
       .then((productId) => {
-        home.addToCartFirstVisibleRecommendedProduct(productId).viewCart();
+        home.addRecommendedProductToCart(productId).openCartFromModal();
         cart.assertCartPageVisible().assertProductAddedToCartVisible(productId);
       });
   });

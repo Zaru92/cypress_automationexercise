@@ -1,4 +1,4 @@
-export class OrderPlacementSuccessPage {
+export class OrderConfirmationPage {
   assertOrderPlaced() {
     cy.url().should('include', 'payment_done');
     cy.contains('Order Placed!').should('be.visible');

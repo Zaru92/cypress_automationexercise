@@ -9,7 +9,7 @@ describe('Regression | Test Case 17: Remove Products From Cart', () => {
 
     home.visit().assertLoaded();
     home.getProductPrice(productId).as('productPrice');
-    home.addToCart(productId).viewCart();
+    home.addToCart(productId).openCartFromModal();
 
     cy.get('@productPrice').then((productPrice) => {
       cart

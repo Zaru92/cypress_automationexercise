@@ -1,13 +1,13 @@
 import { randomInt, randomString } from './random';
 
-export type ContactMessage = {
+export type ContactFormData = {
   name: string;
   email: string;
   subject: string;
   message: string;
 };
 
-export const createRandomContactMessage = (): ContactMessage => {
+export const createRandomContactFormData = (): ContactFormData => {
   const stamp = `${Date.now()}-${randomInt(1000, 9999)}`;
   return {
     name: `QA ${randomString(4)}`,

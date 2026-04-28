@@ -1,10 +1,10 @@
-import type { User } from '../../testData/userFactory';
+import type { TestUser } from '../../testData/userFactory';
 
-type AccountRequestBody = {
+type AccountApiRequestBody = {
   name: string;
   email: string;
   password: string;
-  title: User['title'];
+  title: TestUser['title'];
   birth_date: string;
   birth_month: string;
   birth_year: string;
@@ -20,7 +20,10 @@ type AccountRequestBody = {
   mobile_number: string;
 };
 
-const buildAccountBody = (identityUser: User, detailsUser: User): AccountRequestBody => ({
+const buildAccountApiRequestBody = (
+  identityUser: TestUser,
+  detailsUser: TestUser,
+): AccountApiRequestBody => ({
   name: identityUser.name,
   email: identityUser.email,
   password: identityUser.password,
@@ -40,15 +43,15 @@ const buildAccountBody = (identityUser: User, detailsUser: User): AccountRequest
   mobile_number: detailsUser.mobile,
 });
 
-export const createAccount = (user: User) =>
+export const createAccountViaApi = (user: TestUser) =>
   cy.request({
     method: 'POST',
     url: '/api/createAccount',
     form: true,
-    body: buildAccountBody(user, user),
+    body: buildAccountApiRequestBody(user, user),
   });
 
-export const deleteAccount = (user: Pick<User, 'email' | 'password'>) =>
+export const deleteAccountViaApi = (user: Pick<TestUser, 'email' | 'password'>) =>
   cy.request({
     method: 'DELETE',
     url: '/api/deleteAccount',
@@ -59,7 +62,7 @@ export const deleteAccount = (user: Pick<User, 'email' | 'password'>) =>
     },
   });
 
-export const verifyLogin = (email: string, password: string) =>
+export const verifyLoginViaApi = (email: string, password: string) =>
   cy.request({
     method: 'POST',
     url: '/api/verifyLogin',
@@ -70,15 +73,15 @@ export const verifyLogin = (email: string, password: string) =>
     },
   });
 
-export const updateAccount = (identityUser: User, detailsUser: User) =>
+export const updateAccountViaApi = (identityUser: TestUser, detailsUser: TestUser) =>
   cy.request({
     method: 'PUT',
     url: '/api/updateAccount',
     form: true,
-    body: buildAccountBody(identityUser, detailsUser),
+    body: buildAccountApiRequestBody(identityUser, detailsUser),
   });
 
-export const getUserByEmail = (email: string) =>
+export const getUserDetailsByEmail = (email: string) =>
   cy.request({
     method: 'GET',
     url: '/api/getUserDetailByEmail',

@@ -1,4 +1,4 @@
-import type { ContactMessage } from '../testData/contactFactory';
+import type { ContactFormData } from '../testData/contactFactory';
 
 export class ProductDetailsPage {
   assertProductDetailsPageVisible() {
@@ -13,12 +13,12 @@ export class ProductDetailsPage {
     return this;
   }
 
-  assertReviewFormisible() {
+  assertReviewFormVisible() {
     cy.get('#review-form').should('be.visible');
     return this;
   }
 
-  setQuantiy(quantity: number) {
+  setQuantity(quantity: number) {
     cy.get('#quantity').clear();
     cy.get('#quantity').type(String(quantity));
     return this;
@@ -29,12 +29,12 @@ export class ProductDetailsPage {
     return this;
   }
 
-  viewCart() {
+  openCartFromModal() {
     cy.contains('View Cart').click();
     return this;
   }
 
-  fillReviewForm(data: ContactMessage) {
+  fillReviewForm(data: ContactFormData) {
     cy.get('#name').clear();
     cy.get('#name').type(data.name);
     cy.get('#email').clear();
@@ -44,7 +44,7 @@ export class ProductDetailsPage {
     return this;
   }
 
-  submit() {
+  submitReview() {
     cy.get('#button-review').click();
     return this;
   }

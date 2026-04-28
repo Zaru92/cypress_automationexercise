@@ -1,29 +1,33 @@
-import { createRandomUser } from '../../testData/userFactory';
-import type { User } from '../../testData/userFactory';
+import { createRandomTestUser } from '../../testData/userFactory';
+import type { TestUser } from '../../testData/userFactory';
 
-import { createAccount, deleteAccount, verifyLogin } from '../../support/api/accountApi';
 import {
-  expectApiMessage,
+  createAccountViaApi,
+  deleteAccountViaApi,
+  verifyLoginViaApi,
+} from '../../support/api/accountApi';
+import {
+  expectApiResponseMessage,
   expectSuccessfulCreateAccount,
   expectSuccessfulDeleteAccount,
 } from '../../support/api/assertions';
 
 describe('API | API 7: POST To Verify Login with valid details', () => {
-  let user: User;
+  let user: TestUser;
 
   before(() => {
-    user = createRandomUser();
+    user = createRandomTestUser();
 
-    createAccount(user).then(expectSuccessfulCreateAccount);
+    createAccountViaApi(user).then(expectSuccessfulCreateAccount);
   });
 
   after(() => {
-    deleteAccount(user).then(expectSuccessfulDeleteAccount);
+    deleteAccountViaApi(user).then(expectSuccessfulDeleteAccount);
   });
 
   it('verifies login with valid user credentials', () => {
-    verifyLogin(user.email, user.password).then((response) => {
-      expectApiMessage(response, 200, 'User exists!');
+    verifyLoginViaApi(user.email, user.password).then((response) => {
+      expectApiResponseMessage(response, 200, 'User exists!');
     });
   });
 });

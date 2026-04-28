@@ -13,9 +13,9 @@ describe('Regression | Test Case 19: View & Cart Brand Products', () => {
     home.visit().assertLoaded().goToProductsPage();
 
     products
-      .viewBrand(firstBrand.brand)
-      .assertProperBrandVisible(firstBrand.brand)
-      .viewBrand(secondBrand.brand)
-      .assertProperBrandVisible(secondBrand.brand);
+      .openBrandProducts(firstBrand.brand)
+      .assertBrandProductsPageVisible(firstBrand.brand)
+      .openBrandProducts(secondBrand.brand)
+      .assertBrandProductsPageVisible(secondBrand.brand);
   });
 });

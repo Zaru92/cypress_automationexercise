@@ -10,9 +10,9 @@ describe('Regression | Test Case 13: Verify Product quantity in Cart', () => {
     const details = new ProductDetailsPage();
     const cart = new CartPage();
 
-    home.visit().assertLoaded().viewFirstProduct();
+    home.visit().assertLoaded().openFirstProductDetails();
 
-    details.assertProductDetailsPageVisible().setQuantiy(quantity).addToCart().viewCart();
+    details.assertProductDetailsPageVisible().setQuantity(quantity).addToCart().openCartFromModal();
 
     cart.assertProductQuantity(quantity);
   });

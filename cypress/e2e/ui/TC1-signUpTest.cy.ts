@@ -1,12 +1,12 @@
-import { createRandomUser } from '../../testData/userFactory';
+import { createRandomTestUser } from '../../testData/userFactory';
 
-import { deleteLoggedUserViaUi, registerUserViaUi } from '../../support/flows/userFlows';
+import { deleteLoggedInUserViaUi, registerUserViaUi } from '../../support/flows/userFlows';
 
 describe('Smoke | "Test Case 1: Register User"', () => {
   it('registers a new user and deletes the account', () => {
-    const user = createRandomUser();
+    const user = createRandomTestUser();
 
     registerUserViaUi(user);
-    deleteLoggedUserViaUi(user);
+    deleteLoggedInUserViaUi(user);
   });
 });

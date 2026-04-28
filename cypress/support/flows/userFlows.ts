@@ -1,19 +1,19 @@
-import type { User } from '../../testData/userFactory';
-import { AccountCreationSuccessPage } from '../../pageObjects/AccountCreationSuccessPage';
-import { AuthPage } from '../../pageObjects/AuthPage';
+import type { TestUser } from '../../testData/userFactory';
+import { AccountCreatedPage } from '../../pageObjects/AccountCreatedPage';
+import { LoginSignupPage } from '../../pageObjects/LoginSignupPage';
 import { HomePage } from '../../pageObjects/HomePage';
 import { SignupPage } from '../../pageObjects/SignupPage';
 
-export const registerFromAuthPage = (user: User) => {
-  const auth = new AuthPage();
+export const registerUserFromLoginSignupPage = (user: TestUser) => {
+  const loginSignup = new LoginSignupPage();
   const signup = new SignupPage();
-  const confirmation = new AccountCreationSuccessPage();
+  const accountCreated = new AccountCreatedPage();
 
-  auth
-    .assertLoginOrSignupPageVisible()
+  loginSignup
+    .assertLoginSignupPageVisible()
     .enterSignupName(user.name)
     .enterSignupEmail(user.email)
-    .clickSignupButton();
+    .submitSignup();
 
   signup
     .assertSignupFormVisible()
@@ -22,52 +22,52 @@ export const registerFromAuthPage = (user: User) => {
     .fillAddressDetails(user)
     .confirmAccountCreation();
 
-  confirmation.assertAccountCreated().continueAfterCreation();
+  accountCreated.assertAccountCreated().continueAfterCreation();
 
   cy.ensureAppDomain();
 
   return new HomePage().assertLoggedInAs(user.name);
 };
 
-export const registerUserViaUi = (user: User) => {
+export const registerUserViaUi = (user: TestUser) => {
   new HomePage().visit().assertLoaded().goToSignupLoginPage();
 
-  return registerFromAuthPage(user);
+  return registerUserFromLoginSignupPage(user);
 };
 
-export const registerUserViaUiAndLogout = (user: User) => {
+export const registerUserViaUiAndLogout = (user: TestUser) => {
   const home = registerUserViaUi(user);
 
   home.logout();
-  new AuthPage().assertLoginOrSignupPageVisible();
+  new LoginSignupPage().assertLoginSignupPageVisible();
 
   return home;
 };
 
-export const loginFromAuthPage = (user: User) => {
-  new AuthPage()
-    .assertLoginOrSignupPageVisible()
+export const loginUserFromLoginSignupPage = (user: TestUser) => {
+  new LoginSignupPage()
+    .assertLoginSignupPageVisible()
     .enterLoginEmail(user.email)
-    .enterPassword(user.password)
-    .clickLoginButton();
+    .enterLoginPassword(user.password)
+    .submitLogin();
 
   return new HomePage().assertLoggedInAs(user.name);
 };
 
-export const loginViaUi = (user: User) => {
+export const loginUserViaUi = (user: TestUser) => {
   new HomePage().visit().assertLoaded().goToSignupLoginPage();
 
-  return loginFromAuthPage(user);
+  return loginUserFromLoginSignupPage(user);
 };
 
-export const logoutLoggedUserViaUi = (user: User) => {
+export const logoutCurrentUserViaUi = (user: TestUser) => {
   new HomePage().assertLoggedInAs(user.name).logout();
-  return new AuthPage().assertLoginOrSignupPageVisible();
+  return new LoginSignupPage().assertLoginSignupPageVisible();
 };
 
-export const deleteLoggedUserViaUi = (user: User) =>
+export const deleteLoggedInUserViaUi = (user: TestUser) =>
   new HomePage()
     .assertLoggedInAs(user.name)
-    .deleteAccount()
-    .continueAfterDeleted()
-    .assertAccountDeleted(user.name);
+    .deleteAccountAndAssertDeleted()
+    .continueAfterAccountDeletion()
+    .assertDeletedUserIsNotLoggedIn(user.name);
