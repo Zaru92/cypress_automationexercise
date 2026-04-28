@@ -1,7 +1,7 @@
 import { expectApiResponseMessage } from '../../support/api/assertions';
 
-describe('API | API 8: POST To Verify Login without email parameter', () => {
-  it('verifies login with valid user credentials', () => {
+describe('API | API 8: POST /api/verifyLogin without email', () => {
+  it('returns 400 when email is missing from the POST request', () => {
     cy.request({
       method: 'POST',
       url: '/api/verifyLogin',

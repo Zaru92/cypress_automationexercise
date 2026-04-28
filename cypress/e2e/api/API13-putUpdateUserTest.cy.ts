@@ -16,7 +16,7 @@ import {
   expectSuccessfulDeleteAccount,
 } from '../../support/api/assertions';
 
-describe('API | API 13: PUT METHOD To Update User Account', () => {
+describe('API | API 13: PUT /api/updateAccount', () => {
   let user: TestUser;
   let newUser: TestUser;
 
@@ -30,7 +30,7 @@ describe('API | API 13: PUT METHOD To Update User Account', () => {
     deleteAccountViaApi(user).then(expectSuccessfulDeleteAccount);
   });
 
-  it('update user account', () => {
+  it('updates an existing account and verifies the changed user details by email', () => {
     newUser = createRandomTestUser();
 
     updateAccountViaApi(user, newUser).then((response) => {

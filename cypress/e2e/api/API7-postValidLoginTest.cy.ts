@@ -12,7 +12,7 @@ import {
   expectSuccessfulDeleteAccount,
 } from '../../support/api/assertions';
 
-describe('API | API 7: POST To Verify Login with valid details', () => {
+describe('API | API 7: POST /api/verifyLogin with valid credentials', () => {
   let user: TestUser;
 
   before(() => {
@@ -25,7 +25,7 @@ describe('API | API 7: POST To Verify Login with valid details', () => {
     deleteAccountViaApi(user).then(expectSuccessfulDeleteAccount);
   });
 
-  it('verifies login with valid user credentials', () => {
+  it('returns 200 and User exists for valid existing user credentials', () => {
     verifyLoginViaApi(user.email, user.password).then((response) => {
       expectApiResponseMessage(response, 200, 'User exists!');
     });

@@ -12,8 +12,8 @@ import {
   registerUserFromLoginSignupPage,
 } from '../../support/flows/userFlows';
 
-describe('Regression | Test Case 24: Download Invoice after purchase order', () => {
-  it('register account during placing order and download invoice after purchase', () => {
+describe('Regression | TC24: Invoice download after order', () => {
+  it('adds products, registers during checkout, places an order, downloads the invoice, and deletes the account', () => {
     const user = createRandomTestUser();
     const data = createRandomContactFormData();
     const paymentData = createRandomCardPaymentDetails();

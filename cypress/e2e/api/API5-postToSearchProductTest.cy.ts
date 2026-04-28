@@ -15,8 +15,8 @@ type SearchProductBody = {
   products: SearchProduct[];
 };
 
-describe('API | API 5: POST To Search Product', () => {
-  it('returns searched products list', () => {
+describe('API | API 5: POST /api/searchProduct with search_product', () => {
+  it('returns 200 with non-empty product results for a valid search query', () => {
     const searchProduct = getRandomProductSearchQuery();
 
     cy.request({

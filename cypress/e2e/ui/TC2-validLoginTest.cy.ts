@@ -7,7 +7,7 @@ import {
   registerUserViaUiAndLogout,
 } from '../../support/flows/userFlows';
 
-describe('Smoke | "Test Case 2: Login User with correct email and password"', () => {
+describe('Smoke | TC2: Login with valid credentials', () => {
   let user: TestUser;
 
   before(() => {
@@ -16,7 +16,7 @@ describe('Smoke | "Test Case 2: Login User with correct email and password"', ()
     registerUserViaUiAndLogout(user);
   });
 
-  it('logs in with correct credentials and deletes the account', () => {
+  it('logs in with an existing user and deletes the account', () => {
     loginUserViaUi(user);
     deleteLoggedInUserViaUi(user);
   });

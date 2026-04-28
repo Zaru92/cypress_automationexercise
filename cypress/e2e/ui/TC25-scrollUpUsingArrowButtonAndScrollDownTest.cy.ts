@@ -1,7 +1,7 @@
 import { HomePage } from '../../pageObjects/HomePage';
 
-describe('Regression | Test Case 25: Verify Scroll Up using Arrow button and Scroll Down functionality', () => {
-  it('scroll down home page and scroll up using arrow button', () => {
+describe('Regression | TC25: Scroll down and up with arrow button', () => {
+  it('scrolls to the subscription section, uses the arrow button to scroll up, and verifies the hero is visible', () => {
     const home = new HomePage();
 
     home

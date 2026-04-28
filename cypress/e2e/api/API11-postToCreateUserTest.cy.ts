@@ -7,14 +7,14 @@ import {
   expectSuccessfulDeleteAccount,
 } from '../../support/api/assertions';
 
-describe('API | API 11: POST To Create/Register User Account', () => {
+describe('API | API 11: POST /api/createAccount', () => {
   let user: TestUser;
 
   after(() => {
     deleteAccountViaApi(user).then(expectSuccessfulDeleteAccount);
   });
 
-  it('create user account', () => {
+  it('creates a new user account and returns 201 User created', () => {
     user = createRandomTestUser();
 
     createAccountViaApi(user).then(expectSuccessfulCreateAccount);

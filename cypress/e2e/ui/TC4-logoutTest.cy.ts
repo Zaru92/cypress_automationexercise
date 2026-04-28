@@ -8,7 +8,7 @@ import {
   registerUserViaUiAndLogout,
 } from '../../support/flows/userFlows';
 
-describe('Regression | "Test Case 4: Logout User"', () => {
+describe('Regression | TC4: Logout user', () => {
   let user: TestUser;
 
   before(() => {
@@ -22,7 +22,7 @@ describe('Regression | "Test Case 4: Logout User"', () => {
     deleteLoggedInUserViaUi(user);
   });
 
-  it('logout current user', () => {
+  it('logs in an existing user, logs out, and verifies the login page is shown', () => {
     loginUserViaUi(user);
     logoutCurrentUserViaUi(user);
   });

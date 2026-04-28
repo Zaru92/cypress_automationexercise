@@ -6,8 +6,8 @@ import { CheckoutPage } from '../../pageObjects/CheckoutPage';
 import { addProductsToCartAndOpenCart } from '../../support/flows/cartFlows';
 import { deleteLoggedInUserViaUi, registerUserViaUi } from '../../support/flows/userFlows';
 
-describe('Regression | Test Case 23: Verify address details in checkout page', () => {
-  it('register account before placing order and verify address details', () => {
+describe('Regression | TC23: Checkout address details', () => {
+  it('registers a user, starts checkout, and verifies delivery and billing addresses', () => {
     const user = createRandomTestUser();
 
     const cart = new CartPage();

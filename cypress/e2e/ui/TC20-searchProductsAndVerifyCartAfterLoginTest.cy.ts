@@ -13,7 +13,7 @@ import {
   registerUserViaUiAndLogout,
 } from '../../support/flows/userFlows';
 
-describe('Regression | Test Case 20: Search Products and Verify Cart After Login', () => {
+describe('Regression | TC20: Search result cart persistence after login', () => {
   let user: TestUser;
 
   before(() => {
@@ -26,7 +26,7 @@ describe('Regression | Test Case 20: Search Products and Verify Cart After Login
     deleteLoggedInUserViaUi(user);
   });
 
-  it('search product, add to cart and verify that product is still in the cart after login', () => {
+  it('searches for a product, adds the first result to the cart, logs in, and verifies the cart persists', () => {
     const home = new HomePage();
     const products = new ProductsPage();
     const cart = new CartPage();

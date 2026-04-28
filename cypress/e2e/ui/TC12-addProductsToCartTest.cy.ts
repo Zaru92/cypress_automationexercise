@@ -4,8 +4,8 @@ import { CartPage } from '../../pageObjects/CartPage';
 
 import { addProductsToCartAndOpenCart } from '../../support/flows/cartFlows';
 
-describe('Smoke | Test Case 12: Add Products in Cart', () => {
-  it('add two products to the cart', () => {
+describe('Smoke | TC12: Add products to cart', () => {
+  it('adds two products from the products page and verifies their prices and quantities in the cart', () => {
     const home = new HomePage();
     const products = new ProductsPage();
     const cart = new CartPage();

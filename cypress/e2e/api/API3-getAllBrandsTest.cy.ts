@@ -4,8 +4,8 @@ type BrandsListBody = {
   brands: unknown[];
 };
 
-describe('API | API 3: Get All Brands List', () => {
-  it('returns brands list', () => {
+describe('API | API 3: GET /api/brandsList', () => {
+  it('returns 200 with a brands array', () => {
     cy.request('GET', '/api/brandsList').then((response) => {
       const body = expectOkApiResponseBody<BrandsListBody>(response);
 

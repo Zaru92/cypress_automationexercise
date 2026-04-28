@@ -14,7 +14,7 @@ import {
   expectSuccessfulDeleteAccount,
 } from '../../support/api/assertions';
 
-describe('API | API 14: GET user account detail by email', () => {
+describe('API | API 14: GET /api/getUserDetailByEmail', () => {
   let user: TestUser;
 
   before(() => {
@@ -27,7 +27,7 @@ describe('API | API 14: GET user account detail by email', () => {
     deleteAccountViaApi(user).then(expectSuccessfulDeleteAccount);
   });
 
-  it('get user account details by email', () => {
+  it('returns user details matching the requested account email', () => {
     getUserDetailsByEmail(user.email).then((response) => {
       const body = expectOkApiResponseBody<GetUserDetailsResponseBody>(response);
 

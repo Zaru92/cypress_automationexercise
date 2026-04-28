@@ -1,8 +1,8 @@
 import { HomePage } from '../../pageObjects/HomePage';
 import { LoginSignupPage } from '../../pageObjects/LoginSignupPage';
 
-describe('Regression | "Test Case 3: Login User with incorrect email and password"', () => {
-  it('logs in with incorrect credentials', () => {
+describe('Regression | TC3: Login with invalid credentials', () => {
+  it('shows an invalid-login error for an unknown email and password', () => {
     const invalidEmail = 'test@test.test';
     const invalidPassword = 'invalidPassword';
 

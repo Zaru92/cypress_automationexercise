@@ -3,8 +3,8 @@ import { createRandomTestUser } from '../../testData/userFactory';
 import { HomePage } from '../../pageObjects/HomePage';
 import { CartPage } from '../../pageObjects/CartPage';
 
-describe('Regression | Test Case 11: Verify Subscription in Cart page', () => {
-  it('submit scubsctiption in Cart page and verify success message', () => {
+describe('Regression | TC11: Cart page subscription', () => {
+  it('submits a cart page subscription and verifies the success message', () => {
     const user = createRandomTestUser();
 
     const home = new HomePage();

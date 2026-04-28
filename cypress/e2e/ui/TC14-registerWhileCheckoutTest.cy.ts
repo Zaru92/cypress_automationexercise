@@ -12,8 +12,8 @@ import {
   registerUserFromLoginSignupPage,
 } from '../../support/flows/userFlows';
 
-describe('Regression | Test Case 14: Place Order: Register while Checkout', () => {
-  it('register account during placing order', () => {
+describe('Regression | TC14: Register during checkout and place order', () => {
+  it('adds products, registers from the checkout modal, places an order, and deletes the account', () => {
     const user = createRandomTestUser();
     const data = createRandomContactFormData();
     const paymentData = createRandomCardPaymentDetails();

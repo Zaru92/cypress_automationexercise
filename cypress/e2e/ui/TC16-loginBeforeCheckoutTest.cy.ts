@@ -13,7 +13,7 @@ import {
   registerUserViaUiAndLogout,
 } from '../../support/flows/userFlows';
 
-describe('Regression | Test Case 16: Place Order: Login before Checkout', () => {
+describe('Regression | TC16: Login before checkout and place order', () => {
   let user: TestUser;
 
   before(() => {
@@ -22,7 +22,7 @@ describe('Regression | Test Case 16: Place Order: Login before Checkout', () => 
     registerUserViaUiAndLogout(user);
   });
 
-  it('logs in with correct credentials before placing order and deletes the account', () => {
+  it('logs in, adds products, places an order, and deletes the account', () => {
     const data = createRandomContactFormData();
     const paymentData = createRandomCardPaymentDetails();
 

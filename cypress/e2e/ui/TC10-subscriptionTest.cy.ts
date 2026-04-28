@@ -2,8 +2,8 @@ import { createRandomTestUser } from '../../testData/userFactory';
 
 import { HomePage } from '../../pageObjects/HomePage';
 
-describe('Regression | Test Case 10: Verify Subscription in home page', () => {
-  it('submit scubsctiption and verify success message', () => {
+describe('Regression | TC10: Home page subscription', () => {
+  it('submits a home page subscription and verifies the success message', () => {
     const home = new HomePage();
     const user = createRandomTestUser();
 

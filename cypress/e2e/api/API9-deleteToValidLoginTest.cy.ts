@@ -1,7 +1,7 @@
 import { expectApiResponseMessage } from '../../support/api/assertions';
 
-describe('API | API 9: DELETE To Verify Login', () => {
-  it('returns method not supported for verify login DELETE request', () => {
+describe('API | API 9: DELETE /api/verifyLogin', () => {
+  it('returns 405 method not supported for verify login DELETE requests', () => {
     cy.request({
       method: 'DELETE',
       url: '/api/verifyLogin',

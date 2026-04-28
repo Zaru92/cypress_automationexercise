@@ -7,7 +7,7 @@ import {
   expectSuccessfulDeleteAccount,
 } from '../../support/api/assertions';
 
-describe('API | API 12: DELETE METHOD To Delete User Account', () => {
+describe('API | API 12: DELETE /api/deleteAccount', () => {
   let user: TestUser;
 
   before(() => {
@@ -16,7 +16,7 @@ describe('API | API 12: DELETE METHOD To Delete User Account', () => {
     createAccountViaApi(user).then(expectSuccessfulCreateAccount);
   });
 
-  it('delete user account', () => {
+  it('deletes an existing user account and returns 200 Account deleted', () => {
     deleteAccountViaApi(user).then(expectSuccessfulDeleteAccount);
   });
 });

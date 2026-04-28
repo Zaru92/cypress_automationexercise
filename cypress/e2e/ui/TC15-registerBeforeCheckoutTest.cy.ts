@@ -8,8 +8,8 @@ import { addProductsToCartAndOpenCart } from '../../support/flows/cartFlows';
 import { placeOrderAndContinue } from '../../support/flows/orderFlows';
 import { deleteLoggedInUserViaUi, registerUserViaUi } from '../../support/flows/userFlows';
 
-describe('Regression | Test Case 15: Place Order: Register before Checkout', () => {
-  it('register account before placing order', () => {
+describe('Regression | TC15: Register before checkout and place order', () => {
+  it('registers a user, adds products, places an order, and deletes the account', () => {
     const user = createRandomTestUser();
     const data = createRandomContactFormData();
     const paymentData = createRandomCardPaymentDetails();

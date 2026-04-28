@@ -1,8 +1,8 @@
 import { HomePage } from '../../pageObjects/HomePage';
 import { LoginSignupPage } from '../../pageObjects/LoginSignupPage';
 
-describe('Regression | "Test Case 5: Register User with existing email"', () => {
-  it('registers a new user with existing email and verify error message is displayed', () => {
+describe('Regression | TC5: Signup with an existing email', () => {
+  it('shows an existing-email error when signing up with a reused address', () => {
     const userName = 'test';
     const userEmail = 'test@test.test';
 

@@ -3,8 +3,8 @@ import { getRandomCategorySelection } from '../../testData/categoryFactory';
 import { HomePage } from '../../pageObjects/HomePage';
 import { ProductsPage } from '../../pageObjects/ProductsPage';
 
-describe('Smoke | Test Case 18: View Category Products', () => {
-  it('open category page', () => {
+describe('Smoke | TC18: Category product navigation', () => {
+  it('opens two category product pages and verifies their headings', () => {
     const home = new HomePage();
     const products = new ProductsPage();
     const firstCategory = getRandomCategorySelection();
