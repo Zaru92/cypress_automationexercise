@@ -1,4 +1,8 @@
+import { SubscriptionComponent } from './components/SubscriptionComponent';
+
 export class CartPage {
+  private readonly subscription = new SubscriptionComponent();
+
   assertCartPageVisible() {
     cy.url().should('include', 'view_cart');
     cy.contains('Shopping Cart').should('be.visible');
@@ -21,10 +25,7 @@ export class CartPage {
   }
 
   submitSubscription(email: string) {
-    cy.contains('Subscription').should('be.visible');
-    cy.get('#susbscribe_email').clear();
-    cy.get('#susbscribe_email').type(email);
-    cy.get('#subscribe').click();
+    this.subscription.submit(email);
     return this;
   }
 
@@ -39,8 +40,7 @@ export class CartPage {
   }
 
   assertSubscriptionSuccessMessageVisible() {
-    cy.get(`#success-subscribe`).should('be.visible');
-    cy.contains('You have been successfully subscribed!').should('be.visible');
+    this.subscription.assertSuccessMessageVisible();
     return this;
   }
 

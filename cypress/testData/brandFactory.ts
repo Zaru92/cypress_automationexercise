@@ -1,3 +1,5 @@
+import { randomChoice } from './random';
+
 type BrandData = {
   brand: string;
 };
@@ -18,5 +20,5 @@ export const getRandomBrand = (excludedBrand?: BrandData): BrandData => {
     ? brands.filter(({ brand }) => brand !== excludedBrand.brand)
     : brands;
 
-  return availableBrands[Math.floor(Math.random() * availableBrands.length)];
+  return randomChoice(availableBrands);
 };

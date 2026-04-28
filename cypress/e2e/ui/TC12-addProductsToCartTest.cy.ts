@@ -2,6 +2,8 @@ import { HomePage } from '../../pageObjects/HomePage';
 import { ProductsPage } from '../../pageObjects/ProductsPage';
 import { CartPage } from '../../pageObjects/CartPage';
 
+import { addProductsAndViewCart } from '../../support/flows/cartFlows';
+
 describe('Smoke | Test Case 12: Add Products in Cart', () => {
   it('add two products to the cart', () => {
     const home = new HomePage();
@@ -13,7 +15,8 @@ describe('Smoke | Test Case 12: Add Products in Cart', () => {
     products.getProductPrice(1).as('firstProductPrice');
     products.getProductPrice(2).as('secondProductPrice');
 
-    products.assertProductsPageVisible().addToCart(1).continueShopping().addToCart(2).viewCart();
+    products.assertProductsPageVisible();
+    addProductsAndViewCart(products, [1, 2]);
 
     cy.get('@firstProductPrice').then((firstProductPrice) => {
       cy.get('@secondProductPrice').then((secondProductPrice) => {

@@ -1,7 +1,10 @@
 import type { User } from '../testData/userFactory';
 import type { ContactMessage } from '../testData/contactFactory';
+import { AddressBlockComponent } from './components/AddressBlockComponent';
 
 export class CheckoutPage {
+  private readonly addressBlock = new AddressBlockComponent();
+
   assertCheckoutPageVisible() {
     cy.url().should('include', 'checkout');
     cy.get('#cart_items').should('be.visible');
@@ -9,34 +12,12 @@ export class CheckoutPage {
   }
 
   assertAddressDetails(user: User) {
-    cy.get('#address_delivery').within(() => {
-      cy.contains(user.firstName);
-      cy.contains(user.lastName);
-      cy.contains(user.company);
-      cy.contains(user.address1);
-      cy.contains(user.address2);
-      cy.contains(user.city);
-      cy.contains(user.state);
-      cy.contains(user.zipcode);
-      cy.contains(user.country);
-      cy.contains(user.mobile);
-    });
+    this.addressBlock.assertUserAddressVisible('#address_delivery', user);
     return this;
   }
 
   assertBillingDetails(user: User) {
-    cy.get('#address_invoice').within(() => {
-      cy.contains(user.firstName);
-      cy.contains(user.lastName);
-      cy.contains(user.company);
-      cy.contains(user.address1);
-      cy.contains(user.address2);
-      cy.contains(user.city);
-      cy.contains(user.state);
-      cy.contains(user.zipcode);
-      cy.contains(user.country);
-      cy.contains(user.mobile);
-    });
+    this.addressBlock.assertUserAddressVisible('#address_invoice', user);
     return this;
   }
 

@@ -1,4 +1,12 @@
+import { CategoryMenuComponent } from './components/CategoryMenuComponent';
+import { ProductListComponent } from './components/ProductListComponent';
+import { SubscriptionComponent } from './components/SubscriptionComponent';
+
 export class HomePage {
+  private readonly categoryMenu = new CategoryMenuComponent();
+  private readonly productList = new ProductListComponent();
+  private readonly subscription = new SubscriptionComponent();
+
   visit() {
     cy.visit('/');
     return this;
@@ -36,9 +44,7 @@ export class HomePage {
   }
 
   viewCategory(category: string, subcategory: string) {
-    cy.get('#accordian').should('be.visible');
-    cy.get(`#accordian a[href="#${category}"]`).click();
-    cy.contains(`#${category} a`, subcategory).click();
+    this.categoryMenu.viewCategory(category, subcategory);
     return this;
   }
 
@@ -48,28 +54,21 @@ export class HomePage {
   }
 
   addToCart(productId: number) {
-    cy.get(`a[data-product-id="${productId}"]`).first().click();
-    cy.contains('Added!').should('be.visible');
+    this.productList.addToCart(productId);
     return this;
   }
 
   getProductPrice(productId: number) {
-    return cy
-      .get(`a[data-product-id="${productId}"]`)
-      .first()
-      .closest('.product-image-wrapper')
-      .find('.productinfo h2')
-      .invoke('text')
-      .then((text) => text.trim());
+    return this.productList.getProductPrice(productId);
   }
 
   continueShopping() {
-    cy.get('.close-modal').click();
+    this.productList.continueShopping();
     return this;
   }
 
   viewCart() {
-    cy.contains('View Cart').should('be.visible').click();
+    this.productList.viewCart();
     return this;
   }
 
@@ -100,33 +99,21 @@ export class HomePage {
   }
 
   submitSubscription(email: string) {
-    cy.contains('Subscription').should('be.visible');
-    cy.get('#susbscribe_email').clear();
-    cy.get('#susbscribe_email').type(email);
-    cy.get('#subscribe').click();
+    this.subscription.submit(email);
     return this;
   }
 
   assertSubscriptionSuccessMessageVisible() {
-    cy.get(`#success-subscribe`).should('be.visible');
-    cy.contains('You have been successfully subscribed!').should('be.visible');
+    this.subscription.assertSuccessMessageVisible();
     return this;
   }
 
   getFirstVisibleRecommendedProductId() {
-    return cy
-      .get('.carousel-inner .add-to-cart')
-      .first()
-      .invoke('attr', 'data-product-id')
-      .then((productId) => {
-        expect(productId, 'first visible product id').to.be.a('string');
-        return Number(productId);
-      });
+    return this.productList.getFirstVisibleProductId('.carousel-inner .add-to-cart');
   }
 
   addToCartFirstVisibleRecommendedProduct(productId: number) {
-    cy.get(`a[data-product-id="${productId}"]`).first().click();
-    cy.contains('Added!').should('be.visible');
+    this.productList.addToCart(productId);
     return this;
   }
 

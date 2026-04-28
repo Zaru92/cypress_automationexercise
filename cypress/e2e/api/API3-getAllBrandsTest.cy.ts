@@ -1,11 +1,13 @@
-import { parseApiResponse } from '../../support/apiResponse';
+import { expectApiBody } from '../../support/api/assertions';
+
+type BrandsListBody = {
+  brands: unknown[];
+};
 
 describe('API | API 3: Get All Brands List', () => {
   it('returns brands list', () => {
     cy.request('GET', '/api/brandsList').then((response) => {
-      expect(response.status).to.eq(200);
-
-      const body = parseApiResponse(response);
+      const body = expectApiBody<BrandsListBody>(response);
 
       expect(body).to.have.property('brands');
       expect(body.brands).to.be.an('array');

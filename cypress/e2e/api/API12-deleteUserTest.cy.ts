@@ -1,6 +1,11 @@
 import { createRandomUser } from '../../testData/userFactory';
 import type { User } from '../../testData/userFactory';
-import { parseApiResponse } from '../../support/apiResponse';
+
+import { createAccount, deleteAccount } from '../../support/api/accountApi';
+import {
+  expectSuccessfulCreateAccount,
+  expectSuccessfulDeleteAccount,
+} from '../../support/api/assertions';
 
 describe('API | API 12: DELETE METHOD To Delete User Account', () => {
   let user: User;
@@ -8,55 +13,10 @@ describe('API | API 12: DELETE METHOD To Delete User Account', () => {
   before(() => {
     user = createRandomUser();
 
-    cy.request({
-      method: 'POST',
-      url: '/api/createAccount',
-      form: true,
-      body: {
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        title: user.title,
-        birth_date: user.dob.day,
-        birth_month: user.dob.month,
-        birth_year: user.dob.year,
-        firstname: user.firstName,
-        lastname: user.lastName,
-        company: user.company,
-        address1: user.address1,
-        address2: user.address2,
-        country: user.country,
-        zipcode: user.zipcode,
-        state: user.state,
-        city: user.city,
-        mobile_number: user.mobile,
-      },
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-
-      const body = parseApiResponse(response);
-
-      expect(body.responseCode).to.eq(201);
-      expect(body.message).to.eq('User created!');
-    });
+    createAccount(user).then(expectSuccessfulCreateAccount);
   });
 
   it('delete user account', () => {
-    cy.request({
-      method: 'DELETE',
-      url: '/api/deleteAccount',
-      form: true,
-      body: {
-        email: user.email,
-        password: user.password,
-      },
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-
-      const body = parseApiResponse(response);
-
-      expect(body.responseCode).to.eq(200);
-      expect(body.message).to.eq('Account deleted!');
-    });
+    deleteAccount(user).then(expectSuccessfulDeleteAccount);
   });
 });

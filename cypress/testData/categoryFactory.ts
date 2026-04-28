@@ -1,3 +1,5 @@
+import { randomChoice } from './random';
+
 type CategoryData = {
   category: string;
   subcategory: string;
@@ -18,5 +20,5 @@ export const getRandomCategoryData = (excludedCategory?: CategoryData): Category
     ? categories.filter(({ category }) => category !== excludedCategory.category)
     : categories;
 
-  return availableCategories[Math.floor(Math.random() * availableCategories.length)];
+  return randomChoice(availableCategories);
 };

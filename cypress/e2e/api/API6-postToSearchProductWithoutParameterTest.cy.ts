@@ -1,4 +1,4 @@
-import { parseApiResponse } from '../../support/apiResponse';
+import { expectApiMessage } from '../../support/api/assertions';
 
 describe('API | API 6: POST To Search Product without search_product parameter', () => {
   it('returns error for empty parameter', () => {
@@ -7,12 +7,9 @@ describe('API | API 6: POST To Search Product without search_product parameter',
       url: '/api/searchProduct',
       form: true,
     }).then((response) => {
-      expect(response.status).to.eq(200);
-
-      const body = parseApiResponse(response);
-
-      expect(body.responseCode).to.eq(400);
-      expect(body.message).to.eq(
+      expectApiMessage(
+        response,
+        400,
         'Bad request, search_product parameter is missing in POST request.',
       );
     });

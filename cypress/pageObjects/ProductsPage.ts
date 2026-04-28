@@ -1,4 +1,10 @@
+import { CategoryMenuComponent } from './components/CategoryMenuComponent';
+import { ProductListComponent } from './components/ProductListComponent';
+
 export class ProductsPage {
+  private readonly categoryMenu = new CategoryMenuComponent();
+  private readonly productList = new ProductListComponent();
+
   assertProductsPageVisible() {
     cy.url().should('include', 'products');
     cy.contains('All Products').should('be.visible');
@@ -11,9 +17,7 @@ export class ProductsPage {
   }
 
   viewCategory(category: string, subcategory: string) {
-    cy.get('#accordian').should('be.visible');
-    cy.get(`#accordian a[href="#${category}"]`).click();
-    cy.contains(`#${category} a`, subcategory).click();
+    this.categoryMenu.viewCategory(category, subcategory);
     return this;
   }
 
@@ -24,40 +28,28 @@ export class ProductsPage {
   }
 
   getFirstVisibleProductId() {
-    return cy
-      .get('.features_items a.add-to-cart[data-product-id]:visible')
-      .first()
-      .invoke('attr', 'data-product-id')
-      .then((productId) => {
-        expect(productId, 'first visible product id').to.be.a('string');
-        return Number(productId);
-      });
+    return this.productList.getFirstVisibleProductId(
+      '.features_items a.add-to-cart[data-product-id]:visible',
+    );
   }
 
   addToCart(productId: number) {
-    cy.get(`a[data-product-id="${productId}"]`).first().click();
-    cy.contains('Added!').should('be.visible');
+    this.productList.addToCart(productId);
     return this;
   }
 
   continueShopping() {
-    cy.get('.close-modal').click();
+    this.productList.continueShopping();
     return this;
   }
 
   viewCart() {
-    cy.contains('View Cart').should('be.visible').click();
+    this.productList.viewCart();
     return this;
   }
 
   getProductPrice(productId: number) {
-    return cy
-      .get(`a[data-product-id="${productId}"]`)
-      .first()
-      .closest('.product-image-wrapper')
-      .find('.productinfo h2')
-      .invoke('text')
-      .then((text) => text.trim());
+    return this.productList.getProductPrice(productId);
   }
 
   searchProduct(productName: string) {

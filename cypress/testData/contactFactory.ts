@@ -1,15 +1,10 @@
+import { randomInt, randomString } from './random';
+
 export type ContactMessage = {
   name: string;
   email: string;
   subject: string;
   message: string;
-};
-
-const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
-
-const randomString = (len = 6) => {
-  const chars = 'abcdefghijklmnopqrstuvwxyz';
-  return Array.from({ length: len }, () => chars[randomInt(0, chars.length - 1)]).join('');
 };
 
 export const createRandomContactMessage = (): ContactMessage => {

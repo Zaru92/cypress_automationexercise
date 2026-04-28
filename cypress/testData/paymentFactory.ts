@@ -1,3 +1,5 @@
+import { randomDigits, randomInt } from './random';
+
 export type PaymentDetails = {
   nameOnCard: string;
   cardNumber: string;
@@ -6,12 +8,7 @@ export type PaymentDetails = {
   expirationYear: string;
 };
 
-const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
-
 const pad2 = (value: number) => value.toString().padStart(2, '0');
-
-const randomDigits = (length: number) =>
-  Array.from({ length }, () => randomInt(0, 9).toString()).join('');
 
 export const createRandomPaymentDetails = (): PaymentDetails => {
   const stamp = `${Date.now()}`.slice(-6);

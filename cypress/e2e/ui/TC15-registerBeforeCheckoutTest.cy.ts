@@ -2,14 +2,11 @@ import { createRandomUser } from '../../testData/userFactory';
 import { createRandomContactMessage } from '../../testData/contactFactory';
 import { createRandomPaymentDetails } from '../../testData/paymentFactory';
 
-import { HomePage } from '../../pageObjects/HomePage';
-import { AuthPage } from '../../pageObjects/AuthPage';
-import { SignupPage } from '../../pageObjects/SignupPage';
-import { AccountCreationSuccessPage } from '../../pageObjects/AccountCreationSuccessPage';
 import { CartPage } from '../../pageObjects/CartPage';
-import { CheckoutPage } from '../../pageObjects/CheckoutPage';
-import { PaymentPage } from '../../pageObjects/PaymentPage';
-import { OrderPlacementSuccessPage } from '../../pageObjects/OrderPlacementSuccessPage';
+
+import { addProductsAndViewCart } from '../../support/flows/cartFlows';
+import { placeOrderAndContinue } from '../../support/flows/orderFlows';
+import { deleteLoggedUserViaUi, registerUserViaUi } from '../../support/flows/userFlows';
 
 describe('Regression | Test Case 15: Place Order: Register before Checkout', () => {
   it('register account before placing order', () => {
@@ -17,48 +14,16 @@ describe('Regression | Test Case 15: Place Order: Register before Checkout', () 
     const data = createRandomContactMessage();
     const paymentData = createRandomPaymentDetails();
 
-    const home = new HomePage();
-    const auth = new AuthPage();
-    const signup = new SignupPage();
-    const confirmation = new AccountCreationSuccessPage();
     const cart = new CartPage();
-    const checkout = new CheckoutPage();
-    const payment = new PaymentPage();
-    const orderConfirmation = new OrderPlacementSuccessPage();
 
-    home.visit().assertLoaded().goToSignupLoginPage();
+    const home = registerUserViaUi(user);
 
-    auth
-      .assertLoginOrSignupPageVisible()
-      .enterSignupName(user.name)
-      .enterSignupEmail(user.email)
-      .clickSignupButton();
-
-    signup
-      .assertSignupFormVisible()
-      .fillAccountInformation(user)
-      .selectNewsletterAndOffers()
-      .fillAddressDetails(user)
-      .confirmAccountCreation();
-
-    confirmation.assertAccountCreated().continueAfterCreation();
-
-    home
-      .assertLoaded()
-      .assertLoggedInAs(user.name)
-      .addToCart(1)
-      .continueShopping()
-      .addToCart(2)
-      .viewCart();
+    home.assertLoaded();
+    addProductsAndViewCart(home, [1, 2]);
 
     cart.assertCartPageVisible().proceedToCheckout();
 
-    checkout.assertCheckoutPageVisible().assertAddressDetails(user).fillForm(data).placeOrder();
-
-    payment.assertPaymentPageVisible().fillForm(paymentData).submit();
-
-    orderConfirmation.assertOrderPlaced().continueAfterPlacement();
-
-    home.assertLoaded().deleteAccount().continueAfterDeleted().assertAccountDeleted(user.name);
+    placeOrderAndContinue(user, data, paymentData);
+    deleteLoggedUserViaUi(user);
   });
 });
