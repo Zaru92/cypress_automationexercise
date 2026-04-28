@@ -45,16 +45,21 @@ const buildAccountApiRequestBody = (
   mobile_number: detailsUser.mobile,
 });
 
-export const createAccountViaApi = (user: TestUser) =>
-  cy.request({
+export const createAccountViaApi = (user: TestUser) => {
+  cy.logStep(`API request: POST /api/createAccount for ${user.email}`);
+
+  return cy.request({
     method: 'POST',
     url: '/api/createAccount',
     form: true,
     body: buildAccountApiRequestBody(user, user),
   });
+};
 
-export const deleteAccountViaApi = (user: Pick<TestUser, 'email' | 'password'>) =>
-  cy.request({
+export const deleteAccountViaApi = (user: Pick<TestUser, 'email' | 'password'>) => {
+  cy.logStep(`API request: DELETE /api/deleteAccount for ${user.email}`);
+
+  return cy.request({
     method: 'DELETE',
     url: '/api/deleteAccount',
     form: true,
@@ -63,34 +68,46 @@ export const deleteAccountViaApi = (user: Pick<TestUser, 'email' | 'password'>) 
       password: user.password,
     },
   });
+};
 
 export const requestVerifyLoginViaApi = (
   body?: VerifyLoginApiRequestBody,
   method: 'POST' | 'DELETE' = 'POST',
-) =>
-  cy.request({
+) => {
+  const email = body?.email === undefined ? 'without email' : `for ${body.email}`;
+
+  cy.logStep(`API request: ${method} /api/verifyLogin ${email}`);
+
+  return cy.request({
     method,
     url: '/api/verifyLogin',
     form: true,
     ...(body === undefined ? {} : { body }),
   });
+};
 
 export const verifyLoginViaApi = (email: string, password: string) =>
   requestVerifyLoginViaApi({ email, password });
 
-export const updateAccountViaApi = (identityUser: TestUser, detailsUser: TestUser) =>
-  cy.request({
+export const updateAccountViaApi = (identityUser: TestUser, detailsUser: TestUser) => {
+  cy.logStep(`API request: PUT /api/updateAccount for ${identityUser.email}`);
+
+  return cy.request({
     method: 'PUT',
     url: '/api/updateAccount',
     form: true,
     body: buildAccountApiRequestBody(identityUser, detailsUser),
   });
+};
 
-export const getUserDetailsByEmail = (email: string) =>
-  cy.request({
+export const getUserDetailsByEmail = (email: string) => {
+  cy.logStep(`API request: GET /api/getUserDetailByEmail for ${email}`);
+
+  return cy.request({
     method: 'GET',
     url: '/api/getUserDetailByEmail',
     qs: {
       email,
     },
   });
+};

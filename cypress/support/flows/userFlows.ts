@@ -6,6 +6,8 @@ import { HomePage } from '../../pageObjects/HomePage';
 import { SignupPage } from '../../pageObjects/SignupPage';
 
 export const registerUserFromLoginSignupPage = (user: TestUser) => {
+  cy.logStep(`Register user from signup form: ${user.email}`);
+
   const loginSignup = new LoginSignupPage();
   const signup = new SignupPage();
   const accountCreated = new AccountCreatedPage();
@@ -31,12 +33,16 @@ export const registerUserFromLoginSignupPage = (user: TestUser) => {
 };
 
 export const registerUserViaUi = (user: TestUser) => {
+  cy.logStep(`Open signup flow for user: ${user.email}`);
+
   new HomePage().visit().assertLoaded().goToSignupLoginPage();
 
   return registerUserFromLoginSignupPage(user);
 };
 
 export const registerUserViaUiAndLogout = (user: TestUser) => {
+  cy.logStep(`Register user and log out: ${user.email}`);
+
   const home = registerUserViaUi(user);
 
   home.logout();
@@ -46,12 +52,16 @@ export const registerUserViaUiAndLogout = (user: TestUser) => {
 };
 
 export const registerUserFromCheckoutAndProceedToCheckout = (user: TestUser) => {
+  cy.logStep(`Register user from checkout and continue checkout: ${user.email}`);
+
   registerUserFromLoginSignupPage(user).assertLoaded().goToCartPage();
 
   return new CartPage().assertCartPageVisible().proceedToCheckout();
 };
 
 export const loginUserFromLoginSignupPage = (user: TestUser) => {
+  cy.logStep(`Log in from login form: ${user.email}`);
+
   new LoginSignupPage()
     .assertLoginSignupPageVisible()
     .enterLoginEmail(user.email)
@@ -62,19 +72,26 @@ export const loginUserFromLoginSignupPage = (user: TestUser) => {
 };
 
 export const loginUserViaUi = (user: TestUser) => {
+  cy.logStep(`Open login flow for user: ${user.email}`);
+
   new HomePage().visit().assertLoaded().goToSignupLoginPage();
 
   return loginUserFromLoginSignupPage(user);
 };
 
 export const logoutCurrentUserViaUi = (user: TestUser) => {
+  cy.logStep(`Log out current user: ${user.email}`);
+
   new HomePage().assertLoggedInAs(user.name).logout();
   return new LoginSignupPage().assertLoginSignupPageVisible();
 };
 
-export const deleteLoggedInUserViaUi = (user: TestUser) =>
-  new HomePage()
+export const deleteLoggedInUserViaUi = (user: TestUser) => {
+  cy.logStep(`Delete logged-in user account: ${user.email}`);
+
+  return new HomePage()
     .assertLoggedInAs(user.name)
     .deleteAccountAndAssertDeleted()
     .continueAfterAccountDeletion()
     .assertDeletedUserIsNotLoggedIn(user.name);
+};

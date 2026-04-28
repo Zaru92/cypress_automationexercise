@@ -11,6 +11,8 @@ export const completeCheckoutAndPay = (
   message: ContactFormData,
   paymentDetails: CardPaymentDetails,
 ) => {
+  cy.logStep(`Complete checkout and payment for user: ${user.email}`);
+
   new CheckoutPage()
     .assertCheckoutPageVisible()
     .assertDeliveryAddressDetails(user)
@@ -26,6 +28,8 @@ export const placeOrderAndContinue = (
   message: ContactFormData,
   paymentDetails: CardPaymentDetails,
 ) => {
+  cy.logStep('Place order and continue to home page');
+
   completeCheckoutAndPay(user, message, paymentDetails).continueAfterPlacement();
 
   return new HomePage().assertLoaded();
@@ -36,6 +40,8 @@ export const placeOrderAndDownloadInvoice = (
   message: ContactFormData,
   paymentDetails: CardPaymentDetails,
 ) => {
+  cy.logStep('Place order and download invoice');
+
   completeCheckoutAndPay(user, message, paymentDetails).downloadInvoice().continueAfterPlacement();
 
   return new HomePage().assertLoaded();

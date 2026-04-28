@@ -12,42 +12,50 @@ export class CartPage {
   private readonly subscriptionForm = new SubscriptionComponent();
 
   assertCartPageVisible() {
+    cy.logStep('Assert cart page is visible');
     cy.url().should('include', 'view_cart');
     cy.contains('Shopping Cart').should('be.visible');
     return this;
   }
 
   proceedToCheckout() {
+    cy.logStep('Proceed to checkout from cart');
     cy.get('.check_out').click();
     return this;
   }
 
   removeProduct(productId: number) {
+    cy.logStep(`Remove product ${productId} from cart`);
     cy.get(`#product-${productId}`).find('.cart_quantity_delete').click();
     return this;
   }
 
   goToLoginSignupPageFromCheckoutModal() {
+    cy.logStep('Go to signup/login page from checkout modal');
     cy.get('#checkoutModal a').click();
     return this;
   }
 
   submitSubscription(email: string) {
+    cy.logStep(`Submit subscription from cart page: ${email}`);
     this.subscriptionForm.subscribeWithEmail(email);
     return this;
   }
 
   goToSignupLoginPage() {
+    cy.logStep('Navigate to signup/login page from cart');
     this.header.goToSignupLoginPage();
     return this;
   }
 
   goToHomePage() {
+    cy.logStep('Navigate to home page from cart');
     cy.get('.logo').click();
     return this;
   }
 
   assertSubscriptionSuccessMessageVisible() {
+    cy.logStep('Assert cart subscription success message is visible');
     this.subscriptionForm.assertSuccessMessageVisible();
     return this;
   }
@@ -57,6 +65,7 @@ export class CartPage {
     expectedPrice?: string,
     expectedQuantity?: string,
   ) {
+    cy.logStep(`Assert product ${productId} is visible in cart`);
     cy.get(`#product-${productId}`)
       .should('be.visible')
       .within(() => {
@@ -86,6 +95,10 @@ export class CartPage {
   }
 
   assertProductsAddedToCartVisible(products: ExpectedCartProduct[]) {
+    cy.logStep(
+      `Assert products are visible in cart: ${products.map(({ productId }) => productId).join(', ')}`,
+    );
+
     products.forEach(({ productId, expectedPrice, expectedQuantity }) => {
       this.assertProductAddedToCartVisible(productId, expectedPrice, expectedQuantity);
     });
@@ -94,6 +107,7 @@ export class CartPage {
   }
 
   assertProductQuantity(quantity: number) {
+    cy.logStep(`Assert cart product quantity equals ${quantity}`);
     cy.get('.cart_quantity')
       .invoke('text')
       .then((text) => {
@@ -103,6 +117,7 @@ export class CartPage {
   }
 
   assertCartIsEmpty() {
+    cy.logStep('Assert cart is empty');
     cy.contains('Cart is empty! Click here to buy products.').should('be.visible');
     return this;
   }

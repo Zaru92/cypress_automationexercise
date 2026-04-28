@@ -21,16 +21,29 @@ export type SearchProductBody = {
   products: SearchProduct[];
 };
 
-export const requestProductsListViaApi = (method: CatalogApiMethod = 'GET') =>
-  cy.request(method, '/api/productsList');
+export const requestProductsListViaApi = (method: CatalogApiMethod = 'GET') => {
+  cy.logStep(`API request: ${method} /api/productsList`);
 
-export const requestBrandsListViaApi = (method: CatalogApiMethod = 'GET') =>
-  cy.request(method, '/api/brandsList');
+  return cy.request(method, '/api/productsList');
+};
 
-export const searchProductsViaApi = (searchProduct?: string) =>
-  cy.request({
+export const requestBrandsListViaApi = (method: CatalogApiMethod = 'GET') => {
+  cy.logStep(`API request: ${method} /api/brandsList`);
+
+  return cy.request(method, '/api/brandsList');
+};
+
+export const searchProductsViaApi = (searchProduct?: string) => {
+  cy.logStep(
+    `API request: POST /api/searchProduct${
+      searchProduct === undefined ? ' without search_product' : ` for "${searchProduct}"`
+    }`,
+  );
+
+  return cy.request({
     method: 'POST',
     url: '/api/searchProduct',
     form: true,
     ...(searchProduct === undefined ? {} : { body: { search_product: searchProduct } }),
   });
+};

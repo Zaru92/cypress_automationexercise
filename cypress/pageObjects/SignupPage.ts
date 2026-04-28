@@ -8,12 +8,15 @@ import {
 
 export class SignupPage {
   assertSignupFormVisible() {
+    cy.logStep('Assert account signup form is visible');
     cy.url().should('include', 'signup');
     cy.get('#form').should('be.visible');
     return this;
   }
 
   fillAccountInformation(user: TestUser) {
+    cy.logStep(`Fill account information for ${user.email}`);
+
     if (user.title === 'Mr') cy.get('#id_gender1').check();
     else cy.get('#id_gender2').check();
 
@@ -27,12 +30,15 @@ export class SignupPage {
   }
 
   selectNewsletterAndOffers() {
+    cy.logStep('Select newsletter and offers');
     cy.get('#newsletter').check();
     cy.get('#optin').check();
     return this;
   }
 
   fillAddressDetails(user: TestUser) {
+    cy.logStep(`Fill address details for ${user.email}`);
+
     fillQaFields({
       first_name: user.firstName,
       last_name: user.lastName,
@@ -49,6 +55,7 @@ export class SignupPage {
   }
 
   confirmAccountCreation() {
+    cy.logStep('Confirm account creation');
     clickQaField('create-account');
     return this;
   }
