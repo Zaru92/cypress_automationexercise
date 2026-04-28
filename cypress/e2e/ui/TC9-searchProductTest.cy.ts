@@ -1,6 +1,7 @@
+import { getSearchQuery } from '../../testData/productSearchFactory';
+
 import { HomePage } from '../../pageObjects/HomePage';
 import { ProductsPage } from '../../pageObjects/ProductsPage';
-import { getSearchQuery } from '../../testData/productSearchFactory';
 
 describe('Regression | Test Case 9: Search Product', () => {
   it('search product and verify results', () => {

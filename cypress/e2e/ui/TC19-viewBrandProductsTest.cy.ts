@@ -1,6 +1,7 @@
+import { getRandomBrand } from '../../testData/brandFactory';
+
 import { HomePage } from '../../pageObjects/HomePage';
 import { ProductsPage } from '../../pageObjects/ProductsPage';
-import { getRandomBrand } from '../../testData/brandFactory';
 
 describe('Regression | Test Case 19: View & Cart Brand Products', () => {
   it('open brand page', () => {
