@@ -13,13 +13,10 @@ export class SignupPage {
 
     cy.get("[data-qa='name']").should('have.value', user.name);
     cy.get("[data-qa='email']").should('have.value', user.email);
-
     cy.get("[data-qa='password']").type(user.password);
-
     cy.get("[data-qa='days']").select(user.dob.day);
     cy.get("[data-qa='months']").select(user.dob.month);
     cy.get("[data-qa='years']").select(user.dob.year);
-
     return this;
   }
 

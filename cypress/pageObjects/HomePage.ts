@@ -120,4 +120,56 @@ export class HomePage {
     cy.contains('Added!').should('be.visible');
     return this;
   }
+
+  scrollToBottom() {
+    cy.scrollTo('bottom');
+    return this;
+  }
+
+  assertSubscriptionVisible() {
+    this.assertTextIsInViewport(/subscription/i, 'subscription');
+    return this;
+  }
+
+  clickScrollUpArrow() {
+    cy.get('#scrollUp').should('be.visible').click();
+    return this;
+  }
+
+  scrollToTop() {
+    cy.scrollTo('top');
+    return this;
+  }
+
+  assertPageScrolledToTop() {
+    cy.window().its('scrollY').should('be.lessThan', 100);
+    return this;
+  }
+
+  assertHeroTextVisible() {
+    this.assertTextIsInViewport(
+      'Full-Fledged practice website for Automation Engineers',
+      'hero text',
+    );
+    return this;
+  }
+
+  private assertTextIsInViewport(text: string | RegExp, label: string) {
+    cy.contains<HTMLElement>('h1, h2, h3, p, span, a, button, label', text).should(($element) => {
+      const element = $element.get(0);
+
+      expect(element, `${label} element`).to.exist;
+
+      if (!element) {
+        throw new Error(`${label} element was not found`);
+      }
+
+      const rect = element.getBoundingClientRect();
+
+      expect(rect.top, `${label} top edge`).to.be.lessThan(Cypress.config('viewportHeight'));
+      expect(rect.bottom, `${label} bottom edge`).to.be.greaterThan(0);
+      expect(rect.left, `${label} left edge`).to.be.lessThan(Cypress.config('viewportWidth'));
+      expect(rect.right, `${label} right edge`).to.be.greaterThan(0);
+    });
+  }
 }

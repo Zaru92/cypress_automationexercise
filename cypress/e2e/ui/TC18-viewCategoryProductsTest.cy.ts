@@ -1,6 +1,7 @@
+import { getRandomCategoryData } from '../../testData/categoryFactory';
+
 import { HomePage } from '../../pageObjects/HomePage';
 import { ProductsPage } from '../../pageObjects/ProductsPage';
-import { getRandomCategoryData } from '../../testData/categoryFactory';
 
 describe('Smoke | Test Case 18: View Category Products', () => {
   it('open category page', () => {

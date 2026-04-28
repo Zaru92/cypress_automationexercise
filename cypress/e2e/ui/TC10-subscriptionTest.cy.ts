@@ -1,5 +1,6 @@
-import { HomePage } from '../../pageObjects/HomePage';
 import { createRandomUser } from '../../testData/userFactory';
+
+import { HomePage } from '../../pageObjects/HomePage';
 
 describe('Regression | Test Case 10: Verify Subscription in home page', () => {
   it('submit scubsctiption and verify success message', () => {

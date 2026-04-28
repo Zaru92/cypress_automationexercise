@@ -1,4 +1,5 @@
 import { createRandomUser, User } from '../../testData/userFactory';
+import { getSearchQuery } from '../../testData/productSearchFactory';
 
 import { HomePage } from '../../pageObjects/HomePage';
 import { AuthPage } from '../../pageObjects/AuthPage';
@@ -6,7 +7,6 @@ import { SignupPage } from '../../pageObjects/SignupPage';
 import { AccountCreationSuccessPage } from '../../pageObjects/AccountCreationSuccessPage';
 import { ProductsPage } from '../../pageObjects/ProductsPage';
 import { CartPage } from '../../pageObjects/CartPage';
-import { getSearchQuery } from '../../testData/productSearchFactory';
 
 describe('Regression | Test Case 20: Search Products and Verify Cart After Login', () => {
   let user: User;
