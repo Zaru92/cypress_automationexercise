@@ -1,165 +1,211 @@
+import { CategorySidebarComponent } from './components/CategorySidebarComponent';
+import { clickQaField } from './components/FormControls';
+import { HeaderComponent } from './components/HeaderComponent';
+import { ProductGridComponent } from './components/ProductGridComponent';
+import { SubscriptionComponent } from './components/SubscriptionComponent';
+
 export class HomePage {
+  private readonly categorySidebar = new CategorySidebarComponent();
+  private readonly header = new HeaderComponent();
+  private readonly productGrid = new ProductGridComponent();
+  private readonly subscriptionForm = new SubscriptionComponent();
+
   visit() {
+    cy.logStep('Visit home page');
     cy.visit('/');
+
     return this;
   }
 
   assertLoaded() {
+    cy.logStep('Assert home page is loaded');
     cy.get('body').should('be.visible');
     cy.get('#slider-carousel').should('be.visible');
+
     return this;
   }
 
   goToProductsPage() {
-    cy.get('[href="/products"]').click();
+    cy.logStep('Navigate to products page');
+    this.header.goToProductsPage();
+
     return this;
   }
 
   goToSignupLoginPage() {
-    cy.get('[href="/login"]').click();
+    cy.logStep('Navigate to signup/login page');
+    this.header.goToSignupLoginPage();
+
     return this;
   }
 
   goToCartPage() {
-    cy.get('[href="/view_cart"]').first().click();
+    cy.logStep('Navigate to cart page');
+    this.header.goToCartPage();
+
     return this;
   }
 
   goToTestCasesPage() {
-    cy.contains('a', 'Test Cases').click();
+    cy.logStep('Navigate to test cases page');
+    this.header.goToTestCasesPage();
+
     return this;
   }
 
   goToContactUsPage() {
-    cy.get('[href="/contact_us"]').click();
+    cy.logStep('Navigate to contact us page');
+    this.header.goToContactUsPage();
+
     return this;
   }
 
-  viewCategory(category: string, subcategory: string) {
-    cy.get('#accordian').should('be.visible');
-    cy.get(`#accordian a[href="#${category}"]`).click();
-    cy.contains(`#${category} a`, subcategory).click();
+  openCategoryProducts(category: string, subcategory: string) {
+    cy.logStep(`Open category products: ${category} > ${subcategory}`);
+    this.categorySidebar.openCategoryProducts(category, subcategory);
+
     return this;
   }
 
-  viewFirstProduct() {
-    cy.get('[href="/product_details/1"]').click();
+  openFirstProductDetails() {
+    cy.logStep('Open first product details');
+    this.productGrid.openProductDetails(1);
+
     return this;
   }
 
   addToCart(productId: number) {
-    cy.get(`a[data-product-id="${productId}"]`).first().click();
-    cy.contains('Added!').should('be.visible');
+    cy.logStep(`Add product ${productId} to cart from home page`);
+    this.productGrid.addToCart(productId);
+
     return this;
   }
 
   getProductPrice(productId: number) {
-    return cy
-      .get(`a[data-product-id="${productId}"]`)
-      .first()
-      .closest('.product-image-wrapper')
-      .find('.productinfo h2')
-      .invoke('text')
-      .then((text) => text.trim());
+    cy.logStep(`Get product ${productId} price from home page`);
+
+    return this.productGrid.getProductPrice(productId);
   }
 
   continueShopping() {
-    cy.get('.close-modal').click();
+    cy.logStep('Continue shopping from product modal');
+    this.productGrid.continueShopping();
+
     return this;
   }
 
-  viewCart() {
-    cy.contains('View Cart').should('be.visible').click();
+  openCartFromModal() {
+    cy.logStep('Open cart from product modal');
+    this.productGrid.openCartFromModal();
+
     return this;
   }
 
   assertLoggedInAs(name: string) {
-    cy.contains(`Logged in as ${name}`).should('be.visible');
+    cy.logStep(`Assert user is logged in as ${name}`);
+    this.header.assertLoggedInAs(name);
+
     return this;
   }
 
-  deleteAccount() {
-    cy.get('[href="/delete_account"]').click();
+  deleteAccountAndAssertDeleted() {
+    cy.logStep('Delete account and assert deletion message');
+    this.header.deleteAccount();
     cy.contains('Account Deleted!').should('be.visible');
+
     return this;
   }
 
-  continueAfterDeleted() {
-    cy.get("[data-qa='continue-button']").click();
+  continueAfterAccountDeletion() {
+    cy.logStep('Continue after account deletion');
+    clickQaField('continue-button');
+
     return this;
   }
 
-  assertAccountDeleted(name: string) {
-    cy.contains(`Logged in as ${name}`).should('not.exist');
+  assertDeletedUserIsNotLoggedIn(name: string) {
+    cy.logStep(`Assert deleted user is not logged in: ${name}`);
+    this.header.assertLoggedOut(name);
+
     return this;
   }
 
   logout() {
-    cy.get('[href="/logout"]').click();
+    cy.logStep('Log out from home page');
+    this.header.logout();
+
     return this;
   }
 
   submitSubscription(email: string) {
-    cy.contains('Subscription').should('be.visible');
-    cy.get('#susbscribe_email').clear();
-    cy.get('#susbscribe_email').type(email);
-    cy.get('#subscribe').click();
+    cy.logStep(`Submit subscription from home page: ${email}`);
+    this.subscriptionForm.subscribeWithEmail(email);
+
     return this;
   }
 
   assertSubscriptionSuccessMessageVisible() {
-    cy.get(`#success-subscribe`).should('be.visible');
-    cy.contains('You have been successfully subscribed!').should('be.visible');
+    cy.logStep('Assert subscription success message is visible');
+    this.subscriptionForm.assertSuccessMessageVisible();
+
     return this;
   }
 
   getFirstVisibleRecommendedProductId() {
-    return cy
-      .get('.carousel-inner .add-to-cart')
-      .first()
-      .invoke('attr', 'data-product-id')
-      .then((productId) => {
-        expect(productId, 'first visible product id').to.be.a('string');
-        return Number(productId);
-      });
+    cy.logStep('Get first visible recommended product id');
+
+    return this.productGrid.getFirstVisibleProductId('.carousel-inner .add-to-cart');
   }
 
-  addToCartFirstVisibleRecommendedProduct(productId: number) {
-    cy.get(`a[data-product-id="${productId}"]`).first().click();
-    cy.contains('Added!').should('be.visible');
+  addRecommendedProductToCart(productId: number) {
+    cy.logStep(`Add recommended product ${productId} to cart`);
+    this.productGrid.addToCart(productId);
+
     return this;
   }
 
   scrollToBottom() {
+    cy.logStep('Scroll to page bottom');
     cy.scrollTo('bottom');
+
     return this;
   }
 
   assertSubscriptionVisible() {
+    cy.logStep('Assert subscription section is visible');
     this.assertTextIsInViewport(/subscription/i, 'subscription');
+
     return this;
   }
 
-  clickScrollUpArrow() {
+  scrollToTopUsingArrow() {
+    cy.logStep('Scroll to top using arrow button');
     cy.get('#scrollUp').should('be.visible').click();
+
     return this;
   }
 
   scrollToTop() {
+    cy.logStep('Scroll to page top');
     cy.scrollTo('top');
+
     return this;
   }
 
   assertPageScrolledToTop() {
+    cy.logStep('Assert page is scrolled to top');
     cy.window().its('scrollY').should('be.lessThan', 100);
+
     return this;
   }
 
   assertHeroTextVisible() {
+    cy.logStep('Assert hero text is visible');
     this.assertTextIsInViewport(
       'Full-Fledged practice website for Automation Engineers',
       'hero text',
     );
+
     return this;
   }
 

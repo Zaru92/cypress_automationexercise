@@ -1,103 +1,128 @@
+import { CategorySidebarComponent } from './components/CategorySidebarComponent';
+import { ProductGridComponent } from './components/ProductGridComponent';
+
 export class ProductsPage {
+  private readonly categorySidebar = new CategorySidebarComponent();
+  private readonly productGrid = new ProductGridComponent();
+
   assertProductsPageVisible() {
+    cy.logStep('Assert products page is visible');
     cy.url().should('include', 'products');
     cy.contains('All Products').should('be.visible');
+
     return this;
   }
 
-  viewFirstProduct() {
-    cy.get('[href="/product_details/1"]').click();
+  openFirstProductDetails() {
+    cy.logStep('Open first product details from products page');
+    this.productGrid.openProductDetails(1);
+
     return this;
   }
 
-  viewCategory(category: string, subcategory: string) {
-    cy.get('#accordian').should('be.visible');
-    cy.get(`#accordian a[href="#${category}"]`).click();
-    cy.contains(`#${category} a`, subcategory).click();
+  openCategoryProducts(category: string, subcategory: string) {
+    cy.logStep(`Open category products from products page: ${category} > ${subcategory}`);
+    this.categorySidebar.openCategoryProducts(category, subcategory);
+
     return this;
   }
 
-  viewBrand(brand: string) {
+  openBrandProducts(brand: string) {
+    cy.logStep(`Open brand products: ${brand}`);
     cy.get('.brands_products').should('be.visible');
     cy.contains('.brands_products a', brand).click();
+
     return this;
   }
 
   getFirstVisibleProductId() {
-    return cy
-      .get('.features_items a.add-to-cart[data-product-id]:visible')
-      .first()
-      .invoke('attr', 'data-product-id')
-      .then((productId) => {
-        expect(productId, 'first visible product id').to.be.a('string');
-        return Number(productId);
-      });
+    cy.logStep('Get first visible product id from products page');
+
+    return this.productGrid.getFirstVisibleProductId(
+      '.features_items a.add-to-cart[data-product-id]:visible',
+    );
   }
 
   addToCart(productId: number) {
-    cy.get(`a[data-product-id="${productId}"]`).first().click();
-    cy.contains('Added!').should('be.visible');
+    cy.logStep(`Add product ${productId} to cart from products page`);
+    this.productGrid.addToCart(productId);
+
     return this;
   }
 
   continueShopping() {
-    cy.get('.close-modal').click();
+    cy.logStep('Continue shopping from products page modal');
+    this.productGrid.continueShopping();
+
     return this;
   }
 
-  viewCart() {
-    cy.contains('View Cart').should('be.visible').click();
+  openCartFromModal() {
+    cy.logStep('Open cart from products page modal');
+    this.productGrid.openCartFromModal();
+
     return this;
   }
 
   getProductPrice(productId: number) {
-    return cy
-      .get(`a[data-product-id="${productId}"]`)
-      .first()
-      .closest('.product-image-wrapper')
-      .find('.productinfo h2')
-      .invoke('text')
-      .then((text) => text.trim());
+    cy.logStep(`Get product ${productId} price from products page`);
+
+    return this.productGrid.getProductPrice(productId);
   }
 
   searchProduct(productName: string) {
+    cy.logStep(`Search product: ${productName}`);
     cy.get('#search_product').clear();
     cy.get('#search_product').type(productName);
     cy.get('#submit_search').click();
+
     return this;
   }
 
-  assertSearchedProductVisible(query: string) {
-    const q = query.trim().toLowerCase();
+  assertSearchResultsContainProduct(query: string) {
+    cy.logStep(`Assert search results contain product query: ${query}`);
+    const normalizedQuery = query.trim().toLowerCase();
 
     cy.get('.features_items .productinfo p')
       .filter(':visible')
       .then(($names) => {
-        const names = $names.toArray().map((el) => (el.textContent ?? '').trim().toLowerCase());
+        const productNames = $names
+          .toArray()
+          .map((element) => (element.textContent ?? '').trim().toLowerCase());
 
-        const matches = names.filter((t) => t.includes(q));
-        expect(matches.length, `at least 1 product name should include "${q}"`).to.be.greaterThan(
-          0,
+        const matchingProductNames = productNames.filter((productName) =>
+          productName.includes(normalizedQuery),
         );
+        expect(
+          matchingProductNames.length,
+          `at least 1 product name should include "${normalizedQuery}"`,
+        ).to.be.greaterThan(0);
       });
+
     return this;
   }
 
   assertCategoryPageVisible() {
+    cy.logStep('Assert category page is visible');
     cy.url().should('include', 'category_products');
+
     return this;
   }
 
-  assertProperCategoryVisible(category: string, subcategory: string) {
+  assertCategoryProductsHeadingVisible(category: string, subcategory: string) {
+    cy.logStep(`Assert category heading is visible: ${category} > ${subcategory}`);
     cy.contains(`${category} - ${subcategory} Products`).should('be.visible');
+
     return this;
   }
 
-  assertProperBrandVisible(brand: string) {
+  assertBrandProductsPageVisible(brand: string) {
+    cy.logStep(`Assert brand products page is visible: ${brand}`);
     cy.location('pathname').should((pathname) => {
       expect(decodeURIComponent(pathname)).to.eq(`/brand_products/${brand}`);
     });
     cy.contains(`Brand - ${brand} Products`).should('be.visible');
+
     return this;
   }
 }

@@ -1,95 +1,38 @@
-import { createRandomUser } from '../../testData/userFactory';
-import type { User } from '../../testData/userFactory';
-import { parseApiResponse } from '../../support/apiResponse';
+import { createRandomTestUser } from '../../testData/userFactory';
+import type { TestUser } from '../../testData/userFactory';
 
-describe('API | API 14: GET user account detail by email', () => {
-  let user: User;
+import {
+  createAccountViaApi,
+  deleteAccountViaApi,
+  getUserDetailsByEmail,
+} from '../../support/api/accountApi';
+import {
+  type GetUserDetailsResponseBody,
+  expectOkApiResponseBody,
+  expectApiUserDetailsToMatch,
+  expectSuccessfulCreateAccount,
+  expectSuccessfulDeleteAccount,
+} from '../../support/api/assertions';
+
+describe('API | API 14: GET /api/getUserDetailByEmail', () => {
+  let user: TestUser;
 
   before(() => {
-    user = createRandomUser();
+    user = createRandomTestUser();
 
-    cy.request({
-      method: 'POST',
-      url: '/api/createAccount',
-      form: true,
-      body: {
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        title: user.title,
-        birth_date: user.dob.day,
-        birth_month: user.dob.month,
-        birth_year: user.dob.year,
-        firstname: user.firstName,
-        lastname: user.lastName,
-        company: user.company,
-        address1: user.address1,
-        address2: user.address2,
-        country: user.country,
-        zipcode: user.zipcode,
-        state: user.state,
-        city: user.city,
-        mobile_number: user.mobile,
-      },
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-
-      const body = parseApiResponse(response);
-
-      expect(body.responseCode).to.eq(201);
-      expect(body.message).to.eq('User created!');
-    });
+    createAccountViaApi(user).then(expectSuccessfulCreateAccount);
   });
 
   after(() => {
-    cy.request({
-      method: 'DELETE',
-      url: '/api/deleteAccount',
-      form: true,
-      body: {
-        email: user.email,
-        password: user.password,
-      },
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-
-      const body = parseApiResponse(response);
-
-      expect(body.responseCode).to.eq(200);
-      expect(body.message).to.eq('Account deleted!');
-    });
+    deleteAccountViaApi(user).then(expectSuccessfulDeleteAccount);
   });
 
-  it('get user account details by email', () => {
-    cy.request({
-      method: 'GET',
-      url: '/api/getUserDetailByEmail',
-      qs: {
-        email: user.email,
-      },
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-
-      const body = parseApiResponse(response);
+  it('returns user details matching the requested account email', () => {
+    getUserDetailsByEmail(user.email).then((response) => {
+      const body = expectOkApiResponseBody<GetUserDetailsResponseBody>(response);
 
       expect(body.responseCode).to.eq(200);
-      expect(body.user).to.include({
-        name: user.name,
-        email: user.email,
-        title: user.title,
-        birth_day: user.dob.day,
-        birth_month: user.dob.month,
-        birth_year: user.dob.year,
-        first_name: user.firstName,
-        last_name: user.lastName,
-        company: user.company,
-        address1: user.address1,
-        address2: user.address2,
-        country: user.country,
-        state: user.state,
-        city: user.city,
-        zipcode: user.zipcode,
-      });
+      expectApiUserDetailsToMatch(body.user, user);
     });
   });
 });

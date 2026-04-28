@@ -1,21 +1,12 @@
-import { parseApiResponse } from '../../support/apiResponse';
+import { requestVerifyLoginViaApi } from '../../support/api/accountApi';
+import { expectApiResponseMessage } from '../../support/api/assertions';
 
-describe('API | API 8: POST To Verify Login without email parameter', () => {
-  it('verifies login with valid user credentials', () => {
-    cy.request({
-      method: 'POST',
-      url: '/api/verifyLogin',
-      form: true,
-      body: {
-        password: 'Password',
-      },
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-
-      const body = parseApiResponse(response);
-
-      expect(body.responseCode).to.eq(400);
-      expect(body.message).to.eq(
+describe('API | API 8: POST /api/verifyLogin without email', () => {
+  it('returns 400 when email is missing from the POST request', () => {
+    requestVerifyLoginViaApi({ password: 'Password' }).then((response) => {
+      expectApiResponseMessage(
+        response,
+        400,
         'Bad request, email or password parameter is missing in POST request.',
       );
     });

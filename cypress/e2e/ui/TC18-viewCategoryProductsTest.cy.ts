@@ -1,21 +1,24 @@
-import { getRandomCategoryData } from '../../testData/categoryFactory';
+import { getRandomCategorySelection } from '../../testData/categoryFactory';
 
 import { HomePage } from '../../pageObjects/HomePage';
 import { ProductsPage } from '../../pageObjects/ProductsPage';
 
-describe('Smoke | Test Case 18: View Category Products', () => {
-  it('open category page', () => {
+describe('Smoke | TC18: Category product navigation', () => {
+  it('opens two category product pages and verifies their headings', () => {
     const home = new HomePage();
     const products = new ProductsPage();
-    const firstCategory = getRandomCategoryData();
-    const secondCategory = getRandomCategoryData(firstCategory);
+    const firstCategory = getRandomCategorySelection();
+    const secondCategory = getRandomCategorySelection(firstCategory);
 
-    home.visit().assertLoaded().viewCategory(firstCategory.category, firstCategory.subcategory);
+    home
+      .visit()
+      .assertLoaded()
+      .openCategoryProducts(firstCategory.category, firstCategory.subcategory);
 
     products
       .assertCategoryPageVisible()
-      .assertProperCategoryVisible(firstCategory.category, firstCategory.subcategory)
-      .viewCategory(secondCategory.category, secondCategory.subcategory)
-      .assertProperCategoryVisible(secondCategory.category, secondCategory.subcategory);
+      .assertCategoryProductsHeadingVisible(firstCategory.category, firstCategory.subcategory)
+      .openCategoryProducts(secondCategory.category, secondCategory.subcategory)
+      .assertCategoryProductsHeadingVisible(secondCategory.category, secondCategory.subcategory);
   });
 });

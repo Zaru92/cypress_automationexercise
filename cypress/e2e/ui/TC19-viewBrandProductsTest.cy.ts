@@ -3,8 +3,8 @@ import { getRandomBrand } from '../../testData/brandFactory';
 import { HomePage } from '../../pageObjects/HomePage';
 import { ProductsPage } from '../../pageObjects/ProductsPage';
 
-describe('Regression | Test Case 19: View & Cart Brand Products', () => {
-  it('open brand page', () => {
+describe('Regression | TC19: Brand product navigation', () => {
+  it('opens two brand product pages and verifies their headings and URLs', () => {
     const home = new HomePage();
     const products = new ProductsPage();
     const firstBrand = getRandomBrand();
@@ -13,9 +13,9 @@ describe('Regression | Test Case 19: View & Cart Brand Products', () => {
     home.visit().assertLoaded().goToProductsPage();
 
     products
-      .viewBrand(firstBrand.brand)
-      .assertProperBrandVisible(firstBrand.brand)
-      .viewBrand(secondBrand.brand)
-      .assertProperBrandVisible(secondBrand.brand);
+      .openBrandProducts(firstBrand.brand)
+      .assertBrandProductsPageVisible(firstBrand.brand)
+      .openBrandProducts(secondBrand.brand)
+      .assertBrandProductsPageVisible(secondBrand.brand);
   });
 });

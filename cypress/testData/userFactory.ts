@@ -1,3 +1,5 @@
+import { randomChoice, randomInt, randomString } from './random';
+
 export type MonthName =
   | 'January'
   | 'February'
@@ -12,7 +14,7 @@ export type MonthName =
   | 'November'
   | 'December';
 
-export type User = {
+export type TestUser = {
   name: string;
   email: string;
   password: string;
@@ -32,13 +34,6 @@ export type User = {
   mobile: string;
 };
 
-const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
-
-const randomString = (len = 6) => {
-  const chars = 'abcdefghijklmnopqrstuvwxyz';
-  return Array.from({ length: len }, () => chars[randomInt(0, chars.length - 1)]).join('');
-};
-
 const MONTHS: MonthName[] = [
   'January',
   'February',
@@ -54,9 +49,9 @@ const MONTHS: MonthName[] = [
   'December',
 ];
 
-const randomMonthName = (): MonthName => MONTHS[randomInt(0, MONTHS.length - 1)];
+const randomMonthName = (): MonthName => randomChoice(MONTHS);
 
-export const createRandomUser = (): User => {
+export const createRandomTestUser = (): TestUser => {
   const stamp = `${Date.now()}-${randomInt(1000, 9999)}`;
 
   const firstName = `Michal${randomString(3)}`;

@@ -1,4 +1,6 @@
-export type PaymentDetails = {
+import { randomDigits, randomInt } from './random';
+
+export type CardPaymentDetails = {
   nameOnCard: string;
   cardNumber: string;
   cvc: string;
@@ -6,21 +8,16 @@ export type PaymentDetails = {
   expirationYear: string;
 };
 
-const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+const padToTwoDigits = (value: number) => value.toString().padStart(2, '0');
 
-const pad2 = (value: number) => value.toString().padStart(2, '0');
-
-const randomDigits = (length: number) =>
-  Array.from({ length }, () => randomInt(0, 9).toString()).join('');
-
-export const createRandomPaymentDetails = (): PaymentDetails => {
+export const createRandomCardPaymentDetails = (): CardPaymentDetails => {
   const stamp = `${Date.now()}`.slice(-6);
 
   return {
     nameOnCard: `QA Test ${stamp}`,
     cardNumber: randomDigits(16),
     cvc: randomDigits(3),
-    expirationMonth: pad2(randomInt(1, 12)),
+    expirationMonth: padToTwoDigits(randomInt(1, 12)),
     expirationYear: `${randomInt(new Date().getFullYear() + 1, new Date().getFullYear() + 6)}`,
   };
 };

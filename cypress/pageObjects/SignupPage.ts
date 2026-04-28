@@ -1,47 +1,67 @@
-import type { User } from '../testData/userFactory';
+import type { TestUser } from '../testData/userFactory';
+import {
+  assertQaFieldValue,
+  clickQaField,
+  fillQaFields,
+  selectQaField,
+} from './components/FormControls';
 
 export class SignupPage {
   assertSignupFormVisible() {
+    cy.logStep('Assert account signup form is visible');
     cy.url().should('include', 'signup');
     cy.get('#form').should('be.visible');
+
     return this;
   }
 
-  fillAccountInformation(user: User) {
+  fillAccountInformation(user: TestUser) {
+    cy.logStep(`Fill account information for ${user.email}`);
+
     if (user.title === 'Mr') cy.get('#id_gender1').check();
     else cy.get('#id_gender2').check();
 
-    cy.get("[data-qa='name']").should('have.value', user.name);
-    cy.get("[data-qa='email']").should('have.value', user.email);
-    cy.get("[data-qa='password']").type(user.password);
-    cy.get("[data-qa='days']").select(user.dob.day);
-    cy.get("[data-qa='months']").select(user.dob.month);
-    cy.get("[data-qa='years']").select(user.dob.year);
+    assertQaFieldValue('name', user.name);
+    assertQaFieldValue('email', user.email);
+    fillQaFields({ password: user.password });
+    selectQaField('days', user.dob.day);
+    selectQaField('months', user.dob.month);
+    selectQaField('years', user.dob.year);
+
     return this;
   }
 
   selectNewsletterAndOffers() {
+    cy.logStep('Select newsletter and offers');
     cy.get('#newsletter').check();
     cy.get('#optin').check();
+
     return this;
   }
 
-  fillAddressDetails(user: User) {
-    cy.get("[data-qa='first_name']").type(user.firstName);
-    cy.get("[data-qa='last_name']").type(user.lastName);
-    cy.get("[data-qa='company']").type(user.company);
-    cy.get("[data-qa='address']").type(user.address1);
-    cy.get("[data-qa='address2']").type(user.address2);
-    cy.get("[data-qa='country']").select(user.country);
-    cy.get("[data-qa='state']").type(user.state);
-    cy.get("[data-qa='city']").type(user.city);
-    cy.get("[data-qa='zipcode']").type(user.zipcode);
-    cy.get("[data-qa='mobile_number']").type(user.mobile);
+  fillAddressDetails(user: TestUser) {
+    cy.logStep(`Fill address details for ${user.email}`);
+
+    fillQaFields({
+      first_name: user.firstName,
+      last_name: user.lastName,
+      company: user.company,
+      address: user.address1,
+      address2: user.address2,
+      state: user.state,
+      city: user.city,
+      zipcode: user.zipcode,
+      mobile_number: user.mobile,
+    });
+    selectQaField('country', user.country);
+
     return this;
   }
 
   confirmAccountCreation() {
-    cy.get("[data-qa='create-account']").click();
+    cy.logStep('Confirm account creation');
+    clickQaField('create-account');
+
     return this;
   }
 }

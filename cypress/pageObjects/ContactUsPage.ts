@@ -1,42 +1,53 @@
-import type { ContactMessage } from '../testData/contactFactory';
+import type { ContactFormData } from '../testData/contactFactory';
+import { clickQaField, fillQaFields } from './components/FormControls';
 
 export class ContactUsPage {
   assertContactUsPageVisible() {
+    cy.logStep('Assert contact us page is visible');
     cy.url().should('include', 'contact_us');
     cy.get('#contact-page').should('be.visible');
+
     return this;
   }
 
-  fillForm(data: ContactMessage) {
-    cy.get("[data-qa='name']").clear();
-    cy.get("[data-qa='name']").type(data.name);
-    cy.get("[data-qa='email']").clear();
-    cy.get("[data-qa='email']").type(data.email);
-    cy.get("[data-qa='subject']").clear();
-    cy.get("[data-qa='subject']").type(data.subject);
-    cy.get("[data-qa='message']").clear();
-    cy.get("[data-qa='message']").type(data.message);
+  fillContactForm(data: ContactFormData) {
+    cy.logStep(`Fill contact form for ${data.email}`);
+
+    fillQaFields({
+      name: data.name,
+      email: data.email,
+      subject: data.subject,
+      message: data.message,
+    });
+
     return this;
   }
 
   uploadFile(fixtureFileName: string) {
+    cy.logStep(`Upload fixture file: ${fixtureFileName}`);
     cy.get('[type="file"]').should('exist').selectFile(`cypress/fixtures/${fixtureFileName}`);
 
     return this;
   }
 
-  submit() {
-    cy.get("[data-qa='submit-button']").click();
+  submitContactForm() {
+    cy.logStep('Submit contact form');
+    clickQaField('submit-button');
+
     return this;
   }
 
   assertSuccessMessageVisible() {
+    cy.logStep('Assert contact form success message is visible');
     cy.contains('Success! Your details have been submitted successfully.').should('be.visible');
+
     return this;
   }
 
-  clickHome() {
+  goToHomePage() {
+    cy.logStep('Navigate to home page from contact us page');
     cy.contains('Home').click();
+
     return this;
   }
 }

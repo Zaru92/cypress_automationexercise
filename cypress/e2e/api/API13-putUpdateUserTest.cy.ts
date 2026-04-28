@@ -1,129 +1,46 @@
-import { createRandomUser } from '../../testData/userFactory';
-import type { User } from '../../testData/userFactory';
-import { parseApiResponse } from '../../support/apiResponse';
+import { createRandomTestUser } from '../../testData/userFactory';
+import type { TestUser } from '../../testData/userFactory';
 
-describe('API | API 13: PUT METHOD To Update User Account', () => {
-  let user: User;
-  let newUser: User;
+import {
+  createAccountViaApi,
+  deleteAccountViaApi,
+  getUserDetailsByEmail,
+  updateAccountViaApi,
+} from '../../support/api/accountApi';
+import {
+  type GetUserDetailsResponseBody,
+  expectOkApiResponseBody,
+  expectApiResponseMessage,
+  expectApiUserDetailsToMatch,
+  expectSuccessfulCreateAccount,
+  expectSuccessfulDeleteAccount,
+} from '../../support/api/assertions';
+
+describe('API | API 13: PUT /api/updateAccount', () => {
+  let user: TestUser;
+  let newUser: TestUser;
 
   before(() => {
-    user = createRandomUser();
+    user = createRandomTestUser();
 
-    cy.request({
-      method: 'POST',
-      url: '/api/createAccount',
-      form: true,
-      body: {
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        title: user.title,
-        birth_date: user.dob.day,
-        birth_month: user.dob.month,
-        birth_year: user.dob.year,
-        firstname: user.firstName,
-        lastname: user.lastName,
-        company: user.company,
-        address1: user.address1,
-        address2: user.address2,
-        country: user.country,
-        zipcode: user.zipcode,
-        state: user.state,
-        city: user.city,
-        mobile_number: user.mobile,
-      },
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-
-      const body = parseApiResponse(response);
-
-      expect(body.responseCode).to.eq(201);
-      expect(body.message).to.eq('User created!');
-    });
+    createAccountViaApi(user).then(expectSuccessfulCreateAccount);
   });
 
   after(() => {
-    cy.request({
-      method: 'DELETE',
-      url: '/api/deleteAccount',
-      form: true,
-      body: {
-        email: user.email,
-        password: user.password,
-      },
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-
-      const body = parseApiResponse(response);
-
-      expect(body.responseCode).to.eq(200);
-      expect(body.message).to.eq('Account deleted!');
-    });
+    deleteAccountViaApi(user).then(expectSuccessfulDeleteAccount);
   });
 
-  it('update user account', () => {
-    newUser = createRandomUser();
+  it('updates an existing account and verifies the changed user details by email', () => {
+    newUser = createRandomTestUser();
 
-    cy.request({
-      method: 'PUT',
-      url: '/api/updateAccount',
-      form: true,
-      body: {
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        title: newUser.title,
-        birth_date: newUser.dob.day,
-        birth_month: newUser.dob.month,
-        birth_year: newUser.dob.year,
-        firstname: newUser.firstName,
-        lastname: newUser.lastName,
-        company: newUser.company,
-        address1: newUser.address1,
-        address2: newUser.address2,
-        country: newUser.country,
-        zipcode: newUser.zipcode,
-        state: newUser.state,
-        city: newUser.city,
-        mobile_number: newUser.mobile,
-      },
-    }).then((response) => {
-      expect(response.status).to.eq(200);
+    updateAccountViaApi(user, newUser).then((response) => {
+      expectApiResponseMessage(response, 200, 'User updated!');
 
-      const body = parseApiResponse(response);
-
-      expect(body.responseCode).to.eq(200);
-      expect(body.message).to.eq('User updated!');
-
-      cy.request({
-        method: 'GET',
-        url: '/api/getUserDetailByEmail',
-        qs: {
-          email: user.email,
-        },
-      }).then((response) => {
-        expect(response.status).to.eq(200);
-
-        const body = parseApiResponse(response);
+      getUserDetailsByEmail(user.email).then((response) => {
+        const body = expectOkApiResponseBody<GetUserDetailsResponseBody>(response);
 
         expect(body.responseCode).to.eq(200);
-        expect(body.user).to.include({
-          name: user.name,
-          email: user.email,
-          title: newUser.title,
-          birth_day: newUser.dob.day,
-          birth_month: newUser.dob.month,
-          birth_year: newUser.dob.year,
-          first_name: newUser.firstName,
-          last_name: newUser.lastName,
-          company: newUser.company,
-          address1: newUser.address1,
-          address2: newUser.address2,
-          country: newUser.country,
-          state: newUser.state,
-          city: newUser.city,
-          zipcode: newUser.zipcode,
-        });
+        expectApiUserDetailsToMatch(body.user, user, newUser);
       });
     });
   });

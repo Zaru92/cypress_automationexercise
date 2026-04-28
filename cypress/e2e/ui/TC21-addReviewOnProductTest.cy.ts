@@ -1,12 +1,12 @@
-import { createRandomContactMessage } from '../../testData/contactFactory';
+import { createRandomContactFormData } from '../../testData/contactFactory';
 
 import { HomePage } from '../../pageObjects/HomePage';
 import { ProductsPage } from '../../pageObjects/ProductsPage';
 import { ProductDetailsPage } from '../../pageObjects/ProductDetailsPage';
 
-describe('Regression | Test Case 21: Add review on product', () => {
-  it('open page with products and add review', () => {
-    const data = createRandomContactMessage();
+describe('Regression | TC21: Product review submission', () => {
+  it('opens a product details page, submits a review, and verifies the success message', () => {
+    const data = createRandomContactFormData();
 
     const home = new HomePage();
     const products = new ProductsPage();
@@ -14,13 +14,13 @@ describe('Regression | Test Case 21: Add review on product', () => {
 
     home.visit().assertLoaded().goToProductsPage();
 
-    products.assertProductsPageVisible().viewFirstProduct();
+    products.assertProductsPageVisible().openFirstProductDetails();
 
     details
       .assertProductDetailsPageVisible()
-      .assertReviewFormisible()
+      .assertReviewFormVisible()
       .fillReviewForm(data)
-      .submit()
+      .submitReview()
       .assertSuccessMessageVisible();
   });
 });

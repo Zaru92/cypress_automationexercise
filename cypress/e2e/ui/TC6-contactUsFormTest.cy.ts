@@ -1,11 +1,11 @@
-import { createRandomContactMessage } from '../../testData/contactFactory';
+import { createRandomContactFormData } from '../../testData/contactFactory';
 
 import { HomePage } from '../../pageObjects/HomePage';
 import { ContactUsPage } from '../../pageObjects/ContactUsPage';
 
-describe('Smoke | "Test Case 6: Contact Us Form"', () => {
-  it('fill in and submit contact form', () => {
-    const data = createRandomContactMessage();
+describe('Smoke | TC6: Contact us form submission', () => {
+  it('submits the contact form with an uploaded file and returns to the home page', () => {
+    const data = createRandomContactFormData();
 
     const home = new HomePage();
     const contact = new ContactUsPage();
@@ -14,11 +14,11 @@ describe('Smoke | "Test Case 6: Contact Us Form"', () => {
 
     contact
       .assertContactUsPageVisible()
-      .fillForm(data)
+      .fillContactForm(data)
       .uploadFile('sample_upload.txt')
-      .submit()
+      .submitContactForm()
       .assertSuccessMessageVisible()
-      .clickHome();
+      .goToHomePage();
 
     home.assertLoaded();
   });

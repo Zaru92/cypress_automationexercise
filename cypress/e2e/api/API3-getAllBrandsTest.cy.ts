@@ -1,14 +1,10 @@
-import { parseApiResponse } from '../../support/apiResponse';
+import { requestBrandsListViaApi } from '../../support/api/catalogApi';
+import { expectArrayResponseProperty } from '../../support/api/assertions';
 
-describe('API | API 3: Get All Brands List', () => {
-  it('returns brands list', () => {
-    cy.request('GET', '/api/brandsList').then((response) => {
-      expect(response.status).to.eq(200);
-
-      const body = parseApiResponse(response);
-
-      expect(body).to.have.property('brands');
-      expect(body.brands).to.be.an('array');
+describe('API | API 3: GET /api/brandsList', () => {
+  it('returns 200 with a brands array', () => {
+    requestBrandsListViaApi().then((response) => {
+      expectArrayResponseProperty(response, 'brands');
     });
   });
 });

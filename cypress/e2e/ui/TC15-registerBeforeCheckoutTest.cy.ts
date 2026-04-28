@@ -1,64 +1,23 @@
-import { createRandomUser } from '../../testData/userFactory';
-import { createRandomContactMessage } from '../../testData/contactFactory';
-import { createRandomPaymentDetails } from '../../testData/paymentFactory';
+import { createRandomTestUser } from '../../testData/userFactory';
+import { createRandomContactFormData } from '../../testData/contactFactory';
+import { createRandomCardPaymentDetails } from '../../testData/paymentFactory';
 
-import { HomePage } from '../../pageObjects/HomePage';
-import { AuthPage } from '../../pageObjects/AuthPage';
-import { SignupPage } from '../../pageObjects/SignupPage';
-import { AccountCreationSuccessPage } from '../../pageObjects/AccountCreationSuccessPage';
-import { CartPage } from '../../pageObjects/CartPage';
-import { CheckoutPage } from '../../pageObjects/CheckoutPage';
-import { PaymentPage } from '../../pageObjects/PaymentPage';
-import { OrderPlacementSuccessPage } from '../../pageObjects/OrderPlacementSuccessPage';
+import { addProductsToCartAndProceedToCheckout } from '../../support/flows/cartFlows';
+import { placeOrderAndContinue } from '../../support/flows/orderFlows';
+import { deleteLoggedInUserViaUi, registerUserViaUi } from '../../support/flows/userFlows';
 
-describe('Regression | Test Case 15: Place Order: Register before Checkout', () => {
-  it('register account before placing order', () => {
-    const user = createRandomUser();
-    const data = createRandomContactMessage();
-    const paymentData = createRandomPaymentDetails();
+describe('Regression | TC15: Register before checkout and place order', () => {
+  it('registers a user, adds products, places an order, and deletes the account', () => {
+    const user = createRandomTestUser();
+    const data = createRandomContactFormData();
+    const paymentData = createRandomCardPaymentDetails();
 
-    const home = new HomePage();
-    const auth = new AuthPage();
-    const signup = new SignupPage();
-    const confirmation = new AccountCreationSuccessPage();
-    const cart = new CartPage();
-    const checkout = new CheckoutPage();
-    const payment = new PaymentPage();
-    const orderConfirmation = new OrderPlacementSuccessPage();
+    const home = registerUserViaUi(user);
 
-    home.visit().assertLoaded().goToSignupLoginPage();
+    home.assertLoaded();
+    addProductsToCartAndProceedToCheckout(home, [1, 2]);
 
-    auth
-      .assertLoginOrSignupPageVisible()
-      .enterSignupName(user.name)
-      .enterSignupEmail(user.email)
-      .clickSignupButton();
-
-    signup
-      .assertSignupFormVisible()
-      .fillAccountInformation(user)
-      .selectNewsletterAndOffers()
-      .fillAddressDetails(user)
-      .confirmAccountCreation();
-
-    confirmation.assertAccountCreated().continueAfterCreation();
-
-    home
-      .assertLoaded()
-      .assertLoggedInAs(user.name)
-      .addToCart(1)
-      .continueShopping()
-      .addToCart(2)
-      .viewCart();
-
-    cart.assertCartPageVisible().proceedToCheckout();
-
-    checkout.assertCheckoutPageVisible().assertAddressDetails(user).fillForm(data).placeOrder();
-
-    payment.assertPaymentPageVisible().fillForm(paymentData).submit();
-
-    orderConfirmation.assertOrderPlaced().continueAfterPlacement();
-
-    home.assertLoaded().deleteAccount().continueAfterDeleted().assertAccountDeleted(user.name);
+    placeOrderAndContinue(user, data, paymentData);
+    deleteLoggedInUserViaUi(user);
   });
 });

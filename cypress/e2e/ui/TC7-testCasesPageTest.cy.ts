@@ -1,8 +1,8 @@
 import { HomePage } from '../../pageObjects/HomePage';
 import { TestCasesPage } from '../../pageObjects/TestCasesPage';
 
-describe('Regression | Test Case 7: Verify Test Cases Page', () => {
-  it('open page with test cases', () => {
+describe('Regression | TC7: Test cases page navigation', () => {
+  it('opens the test cases page from the home page', () => {
     const home = new HomePage();
     const testCases = new TestCasesPage();
 

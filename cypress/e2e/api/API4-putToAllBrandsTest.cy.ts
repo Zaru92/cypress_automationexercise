@@ -1,14 +1,10 @@
-import { parseApiResponse } from '../../support/apiResponse';
+import { requestBrandsListViaApi } from '../../support/api/catalogApi';
+import { expectApiResponseMessage } from '../../support/api/assertions';
 
-describe('API | API 4: PUT To All Brands List', () => {
-  it('add brand to the list', () => {
-    cy.request('PUT', '/api/brandsList').then((response) => {
-      expect(response.status).to.eq(200);
-
-      const body = parseApiResponse(response);
-
-      expect(body.responseCode).to.eq(405);
-      expect(body.message).to.eq('This request method is not supported.');
+describe('API | API 4: PUT /api/brandsList', () => {
+  it('returns 405 method not supported for brands list PUT requests', () => {
+    requestBrandsListViaApi('PUT').then((response) => {
+      expectApiResponseMessage(response, 405, 'This request method is not supported.');
     });
   });
 });

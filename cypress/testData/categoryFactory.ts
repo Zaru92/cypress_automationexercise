@@ -1,9 +1,11 @@
-type CategoryData = {
+import { randomChoice } from './random';
+
+type CategorySelection = {
   category: string;
   subcategory: string;
 };
 
-const categories: CategoryData[] = [
+const categories: CategorySelection[] = [
   { category: 'Women', subcategory: 'Dress' },
   { category: 'Women', subcategory: 'Tops' },
   { category: 'Women', subcategory: 'Saree' },
@@ -13,10 +15,12 @@ const categories: CategoryData[] = [
   { category: 'Kids', subcategory: 'Tops & Shirts' },
 ];
 
-export const getRandomCategoryData = (excludedCategory?: CategoryData): CategoryData => {
+export const getRandomCategorySelection = (
+  excludedCategory?: CategorySelection,
+): CategorySelection => {
   const availableCategories = excludedCategory
     ? categories.filter(({ category }) => category !== excludedCategory.category)
     : categories;
 
-  return availableCategories[Math.floor(Math.random() * availableCategories.length)];
+  return randomChoice(availableCategories);
 };

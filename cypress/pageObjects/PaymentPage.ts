@@ -1,30 +1,32 @@
-import type { PaymentDetails } from '../testData/paymentFactory';
+import type { CardPaymentDetails } from '../testData/paymentFactory';
+import { clickQaField, fillQaFields } from './components/FormControls';
 
 export class PaymentPage {
   assertPaymentPageVisible() {
+    cy.logStep('Assert payment page is visible');
     cy.url().should('include', 'payment');
     cy.get('.payment-information').should('be.visible');
 
     return this;
   }
 
-  fillForm(data: PaymentDetails) {
-    cy.get('[data-qa="name-on-card"]').clear();
-    cy.get('[data-qa="name-on-card"]').type(data.nameOnCard);
-    cy.get('[data-qa="card-number"]').clear();
-    cy.get('[data-qa="card-number"]').type(data.cardNumber);
-    cy.get('[data-qa="cvc"]').clear();
-    cy.get('[data-qa="cvc"]').type(data.cvc);
-    cy.get('[data-qa="expiry-month"]').clear();
-    cy.get('[data-qa="expiry-month"]').type(data.expirationMonth);
-    cy.get('[data-qa="expiry-year"]').clear();
-    cy.get('[data-qa="expiry-year"]').type(data.expirationYear);
+  fillPaymentForm(data: CardPaymentDetails) {
+    cy.logStep(`Fill payment form for cardholder: ${data.nameOnCard}`);
+
+    fillQaFields({
+      'name-on-card': data.nameOnCard,
+      'card-number': data.cardNumber,
+      cvc: data.cvc,
+      'expiry-month': data.expirationMonth,
+      'expiry-year': data.expirationYear,
+    });
 
     return this;
   }
 
-  submit() {
-    cy.get('[data-qa="pay-button"]').click();
+  submitPayment() {
+    cy.logStep('Submit payment');
+    clickQaField('pay-button');
 
     return this;
   }

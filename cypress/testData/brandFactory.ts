@@ -1,8 +1,10 @@
-type BrandData = {
+import { randomChoice } from './random';
+
+type BrandSelection = {
   brand: string;
 };
 
-const brands: BrandData[] = [
+const brands: BrandSelection[] = [
   { brand: 'Polo' },
   { brand: 'H&M' },
   { brand: 'Madame' },
@@ -13,10 +15,10 @@ const brands: BrandData[] = [
   { brand: 'Biba' },
 ];
 
-export const getRandomBrand = (excludedBrand?: BrandData): BrandData => {
+export const getRandomBrand = (excludedBrand?: BrandSelection): BrandSelection => {
   const availableBrands = excludedBrand
     ? brands.filter(({ brand }) => brand !== excludedBrand.brand)
     : brands;
 
-  return availableBrands[Math.floor(Math.random() * availableBrands.length)];
+  return randomChoice(availableBrands);
 };

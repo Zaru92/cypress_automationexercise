@@ -1,22 +1,12 @@
-import { parseApiResponse } from '../../support/apiResponse';
+import { requestVerifyLoginViaApi } from '../../support/api/accountApi';
+import { expectApiResponseMessage } from '../../support/api/assertions';
 
-describe('API | API 9: DELETE To Verify Login', () => {
-  it('returns method not supported for verify login DELETE request', () => {
-    cy.request({
-      method: 'DELETE',
-      url: '/api/verifyLogin',
-      form: true,
-      body: {
-        email: 'Email',
-        password: 'Password',
+describe('API | API 9: DELETE /api/verifyLogin', () => {
+  it('returns 405 method not supported for verify login DELETE requests', () => {
+    requestVerifyLoginViaApi({ email: 'Email', password: 'Password' }, 'DELETE').then(
+      (response) => {
+        expectApiResponseMessage(response, 405, 'This request method is not supported.');
       },
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-
-      const body = parseApiResponse(response);
-
-      expect(body.responseCode).to.eq(405);
-      expect(body.message).to.eq('This request method is not supported.');
-    });
+    );
   });
 });

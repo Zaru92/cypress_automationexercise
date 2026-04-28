@@ -1,18 +1,12 @@
-import { parseApiResponse } from '../../support/apiResponse';
+import { searchProductsViaApi } from '../../support/api/catalogApi';
+import { expectApiResponseMessage } from '../../support/api/assertions';
 
-describe('API | API 6: POST To Search Product without search_product parameter', () => {
-  it('returns error for empty parameter', () => {
-    cy.request({
-      method: 'POST',
-      url: '/api/searchProduct',
-      form: true,
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-
-      const body = parseApiResponse(response);
-
-      expect(body.responseCode).to.eq(400);
-      expect(body.message).to.eq(
+describe('API | API 6: POST /api/searchProduct without search_product', () => {
+  it('returns 400 when search_product is missing from the POST request', () => {
+    searchProductsViaApi().then((response) => {
+      expectApiResponseMessage(
+        response,
+        400,
         'Bad request, search_product parameter is missing in POST request.',
       );
     });

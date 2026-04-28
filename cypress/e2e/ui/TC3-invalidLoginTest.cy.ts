@@ -1,21 +1,21 @@
 import { HomePage } from '../../pageObjects/HomePage';
-import { AuthPage } from '../../pageObjects/AuthPage';
+import { LoginSignupPage } from '../../pageObjects/LoginSignupPage';
 
-describe('Regression | "Test Case 3: Login User with incorrect email and password"', () => {
-  it('logs in with incorrect credentials', () => {
+describe('Regression | TC3: Login with invalid credentials', () => {
+  it('shows an invalid-login error for an unknown email and password', () => {
     const invalidEmail = 'test@test.test';
     const invalidPassword = 'invalidPassword';
 
     const home = new HomePage();
-    const auth = new AuthPage();
+    const auth = new LoginSignupPage();
 
     home.visit().assertLoaded().goToSignupLoginPage();
 
     auth
-      .assertLoginOrSignupPageVisible()
+      .assertLoginSignupPageVisible()
       .enterLoginEmail(invalidEmail)
-      .enterPassword(invalidPassword)
-      .clickLoginButton()
+      .enterLoginPassword(invalidPassword)
+      .submitLogin()
       .assertInvalidLoginErrorMessageVisible();
   });
 });
