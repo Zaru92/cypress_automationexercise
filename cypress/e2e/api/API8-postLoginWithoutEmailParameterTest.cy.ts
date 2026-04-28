@@ -1,11 +1,14 @@
 import { parseApiResponse } from '../../support/apiResponse';
 
-describe('API | API 6: POST To Search Product without search_product parameter', () => {
-  it('returns error for empty parameter', () => {
+describe('API | API 8: POST To Verify Login without email parameter', () => {
+  it('verifies login with valid user credentials', () => {
     cy.request({
       method: 'POST',
-      url: '/api/searchProduct',
+      url: '/api/verifyLogin',
       form: true,
+      body: {
+        password: 'Password',
+      },
     }).then((response) => {
       expect(response.status).to.eq(200);
 
@@ -13,7 +16,7 @@ describe('API | API 6: POST To Search Product without search_product parameter',
 
       expect(body.responseCode).to.eq(400);
       expect(body.message).to.eq(
-        'Bad request, search_product parameter is missing in POST request.',
+        'Bad request, email or password parameter is missing in POST request.',
       );
     });
   });

@@ -1,4 +1,5 @@
 import { getSearchQuery } from '../../testData/productSearchFactory';
+import { parseApiResponse } from '../../support/apiResponse';
 
 describe('API | API 5: POST To Search Product', () => {
   it('returns searched products list', () => {
@@ -14,7 +15,7 @@ describe('API | API 5: POST To Search Product', () => {
     }).then((response) => {
       expect(response.status).to.eq(200);
 
-      const body = typeof response.body === 'string' ? JSON.parse(response.body) : response.body;
+      const body = parseApiResponse(response);
 
       expect(body.responseCode).to.eq(200);
       expect(body).to.have.property('products');

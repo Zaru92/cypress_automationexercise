@@ -1,18 +1,10 @@
 import { createRandomUser } from '../../testData/userFactory';
 import type { User } from '../../testData/userFactory';
+import { parseApiResponse } from '../../support/apiResponse';
 
-type ApiMessageResponse = {
-  responseCode: number;
-  message: string;
-};
-
-const parseApiResponse = (response: Cypress.Response<string | ApiMessageResponse>) =>
-  typeof response.body === 'string'
-    ? (JSON.parse(response.body) as ApiMessageResponse)
-    : response.body;
-
-describe('API | API 7: POST To Verify Login with valid details', () => {
+describe('API | API 13: PUT METHOD To Update User Account', () => {
   let user: User;
+  let newUser: User;
 
   before(() => {
     user = createRandomUser();
@@ -69,14 +61,31 @@ describe('API | API 7: POST To Verify Login with valid details', () => {
     });
   });
 
-  it('verifies login with valid user credentials', () => {
+  it('update user account', () => {
+    newUser = createRandomUser();
+
     cy.request({
-      method: 'POST',
-      url: '/api/verifyLogin',
+      method: 'PUT',
+      url: '/api/updateAccount',
       form: true,
       body: {
+        name: user.name,
         email: user.email,
         password: user.password,
+        title: newUser.title,
+        birth_date: newUser.dob.day,
+        birth_month: newUser.dob.month,
+        birth_year: newUser.dob.year,
+        firstname: newUser.firstName,
+        lastname: newUser.lastName,
+        company: newUser.company,
+        address1: newUser.address1,
+        address2: newUser.address2,
+        country: newUser.country,
+        zipcode: newUser.zipcode,
+        state: newUser.state,
+        city: newUser.city,
+        mobile_number: newUser.mobile,
       },
     }).then((response) => {
       expect(response.status).to.eq(200);
@@ -84,7 +93,7 @@ describe('API | API 7: POST To Verify Login with valid details', () => {
       const body = parseApiResponse(response);
 
       expect(body.responseCode).to.eq(200);
-      expect(body.message).to.eq('User exists!');
+      expect(body.message).to.eq('User updated!');
     });
   });
 });
