@@ -94,6 +94,37 @@ describe('API | API 13: PUT METHOD To Update User Account', () => {
 
       expect(body.responseCode).to.eq(200);
       expect(body.message).to.eq('User updated!');
+
+      cy.request({
+        method: 'GET',
+        url: '/api/getUserDetailByEmail',
+        qs: {
+          email: user.email,
+        },
+      }).then((response) => {
+        expect(response.status).to.eq(200);
+
+        const body = parseApiResponse(response);
+
+        expect(body.responseCode).to.eq(200);
+        expect(body.user).to.include({
+          name: user.name,
+          email: user.email,
+          title: newUser.title,
+          birth_day: newUser.dob.day,
+          birth_month: newUser.dob.month,
+          birth_year: newUser.dob.year,
+          first_name: newUser.firstName,
+          last_name: newUser.lastName,
+          company: newUser.company,
+          address1: newUser.address1,
+          address2: newUser.address2,
+          country: newUser.country,
+          state: newUser.state,
+          city: newUser.city,
+          zipcode: newUser.zipcode,
+        });
+      });
     });
   });
 });
