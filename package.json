@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "cy:open": "cypress open",
-    "cy:run": "node scripts/run-cypress-in-browsers.js",
+    "cy:run": "node scripts/run-cypress-with-report.js --browser electron",
     "cy:run:single": "node scripts/run-cypress-with-report.js",
     "cy:run:electron": "npm run cy:run:single -- --browser electron",
     "cy:run:chrome": "npm run cy:run:single -- --browser chrome",
